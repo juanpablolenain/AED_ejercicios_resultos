@@ -1,1 +1,60 @@
 Escriba un algoritmo que permita ingresar 3 valores numéricos y determine cuál es el mayor, el medio y el menor. 
+
+
+Análisis previo:
+  - Datos de entrada --> 6 enteros
+  - Salida de datos --> mayor, medio y menor valor
+  - Estructura de control --> condicionales anidados
+
+ACCION ejercicio_1_1_6 ES
+
+  AMBIENTE
+
+    a, b, c : entero;  // se pueden definir todas las variables en una misma línea porque son del mismo tipo de dato, pero por cuestiones de orden, las separo.
+    mayor, medio, menor : entero;
+
+    PROCESO
+
+      ESC("Ingrese un número: "), LEER(a);
+      ESC("Ingrese otro número: "), LEER(b);
+      ESC("Ingrese un úlitmo número: "), LEER(c);
+
+      SI (a >= b) Y (a >= c) ENTONCES
+        mayor := a;
+        SI (b >= c) ENTONCES
+          medio := b;
+          menor := c;
+      SINO
+        SI (b >= a) Y (b >= c) ENTONCES
+          mayor := b;
+          SI (a >= c) ENTONCES
+            medio := a;
+            menor := c;
+          SINO
+            medio := c;
+            menor := a;
+        SINO
+          mayor := c;
+          SI (a >= b) ENTONCES
+            medio := a;
+            menor := b;
+          SINO
+            medio := b;
+            menor := a:
+    FIN_SI
+
+    ESC("El mayor es: ", mayor);
+    ESC("El del medio es: ", medio);
+    ESC("El menor es: ", menor);
+
+  FIN_PROCESO
+
+FIN_ACCION;
+  
+
+      
+          
+      
+        
+        
+      
