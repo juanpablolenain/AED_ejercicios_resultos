@@ -1,0 +1,42 @@
+Escriba un algoritmo que permita conocer la edad de una persona, con solo ingresar la fecha de nacimiento y la fecha actual,
+ambas en el formato: DIA, MES, AÑO.
+
+- Análisis del problema:
+  Para determinar que una persona haya cumplido años, se debe de cumplir una de estas dos condiciones:
+    a) MA > MN
+    b) ((MA = MN) Y (DA >= DN))
+  Si se da la 1 no se puede dar la dos y viceversa. Pero, con que una de las dos sea verdadera, podemos afirmar que la persona cumplió años.
+  
+  Entonces, tenemos:
+    1. Si (mes actual > mes nacimiento) O ((mes actual = mes nacimiento) Y (día actual >= día nacimiento)) => edad = (año actual - año nacimiento) 
+    2. Si (mes actual < mes nacimiento) => edad = (año actual - año nacimiento) - 1
+  
+
+ACCION ejercicio_1_1_8 ES
+
+  AMBIENTE
+
+    DA,DN: 1..31;           		//DA:dia de actual, DN:dia de nacimiento//
+    MA,MN: 1..12;    				    //MA: mes actual, MN: mes de naciemiento//
+    AA,AN,EDAD: ENTERO;     		//AA: año actual, AN: año de nacimiento//
+
+  PROCESO
+
+    ESC("Ingrese el número de día actual: "), LEER(DA);
+    ESC("Ingrese el número de día de su nacimiento: "), LEER(DN);
+    ESC("Ingrese el número de més actual: "), LEER(MA);
+    ESC("Ingrese el número de més de su nacimiento: "), LEER(MN);
+    ESC("Ingrese el año actual: "), LEER(AA);
+    ESC("Ingrese el año de su nacimiento: "), LEER(AN);
+
+    EDAD := (AA - AN) - 1; // asumo que aún no cumplió años
+    
+    SI ((MA > MN) O ((MA = MN) Y (DA >= DN))) ENTONCES
+      EDAD := EDAD + 1;
+    FIN_SI;
+
+    ESC("La edad actual de la persona es: ", EDAD);
+
+  FIN_PROCESO
+
+FIN_ACCION;
