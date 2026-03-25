@@ -34,14 +34,14 @@ que considere necesarias (por ejemplo la cotizacion en pesos de dólar y/o del e
 
     AMBIENTE
 
-      valor_viaje, dinero_disponible, dolar_euro, peso_euro, d: real;
+      valor_viaje, dinero_disponible, dolar_euro, euro_peso, d: real;
 
       PROCESO
 
         ESC("Ingrese el monto total del viaje: "), LEER(valor_viaje);
         ESC("Ingrese el dinero que tiene disponible: "), LEER(dinero_disponible);
         ESC("Ingrese la equivalencia de 1 dolar --> x euros: "), LEER(dolar_euro);
-        ESC("Ingrese la equivalencia de 1 peso --> x euros: "), LEER(peso_euro);
+        ESC("Ingrese la equivalencia de 1 euro --> x pesos: "), LEER(peso_euro);
 
         dinero_disponible := (dinero_disponible * dolar_euro)
 
