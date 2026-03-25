@@ -1,0 +1,54 @@
+Escriba un algoritmo que acepte dos números, calcule la suma e imprima el mensaje de acuerdo al resultado obtenido.
+
+Suma <= 50
+Suma > 50 y <= 100
+Suma > 100 y <= 200
+Suma > 200
+
+Análisis previo:
+  - Datos de entrada: 3 enteros;
+  - Procesamiento de los datos:
+    1. Sumar dos números.
+    2. Almacenar el resultado.
+    3. En base al valor del resultado, imprimir el mensaje.
+  - Datos de salida: valor de la suma.
+  - Estructura de control: debido a que se realizan comparaciones lógicas y evaluación de rangos númericos, no es posible usar un condicional multiple.
+      El condcional multiple solo puede evaluar valores discretos. No está diseñado para evaluar operaciones relacionales o rangos numéricos.
+      Por lo tanto, se utilizarán condicionales anidados.
+
+ACCION ejercicio_1_1_7 ES
+
+  AMBIENTE
+
+    a, b, suma : entero;
+
+    PROCESO
+
+      ESC("Ingrese un número: "), LEER(a);
+      ESC("Ingrese otro número: "), LEER (b);
+      suma := a + b;
+
+      SI (suma <= 50) ENTONCES
+        ESC("El valor de la suma es: ", suma);
+      SINO
+        SI (suma <= 100) ENTONCES
+          ESC("El valor de la suma es: ", suma);
+        SINO
+          SI (suma <= 200) ENTONCES
+            ESC("El valor de la suma es: ", suma);
+          SINO
+            ESC("El valor de la suma es: ", suma);
+        FIN_SI;
+
+      FIN_PROCESO;
+
+FIN_ACCION;    
+      
+
+
+
+
+
+
+
+        
