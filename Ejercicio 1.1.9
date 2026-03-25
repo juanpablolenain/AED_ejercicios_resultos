@@ -43,7 +43,7 @@ que considere necesarias (por ejemplo la cotizacion en pesos de dólar y/o del e
         ESC("Ingrese la equivalencia de 1 dolar --> x euros: "), LEER(dolar_euro);
         ESC("Ingrese la equivalencia de 1 peso --> x euros: "), LEER(peso_euro);
 
-        dinero_disponible := (dinero_disponible / dolar_euro)
+        dinero_disponible := (dinero_disponible * dolar_euro)
 
         SI (dinero_disponible >= valor_viaje) ENTONCES
           ESC("Usted puede realizar el viaje")
