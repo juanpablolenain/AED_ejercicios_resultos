@@ -1,0 +1,84 @@
+En un experimento se obtuvieron un conjunto de pares de valores (S, V) y se requiere que desarrolle un programa que determine e imprima:
+
+1. Cuantos pares (S, V) tienen el mismo valor de S que el primer par (S, V) de la lista.
+2. Primer valor de S mayor que V
+3. En cuantos pares (S, V) se cumple que S es el doble de V
+4. Productoria de los valores se S no nulos, donde V es nulo
+
+- Análisis del problema
+  1. Para lograr el item 1, se debe de guardar en una variable el valor S del primer par de valores ingresado, declarar una variable contador,
+     he ir comparando los sucesivos valores de S con el primer valor de S, en donde si se cumple que: (S_actual = S_incial) => contador := contador +1.
+  2. Para lograr el item 2, se debe de guardar en una variable el valor V del primer par de valores ingresado, declarar una variable para almacenar
+     el primer valor S que cumpla:  S > V.
+  3. Para lograr el item 3, se debe declarar una variable "contador", comparar cada elemento del par (S,V) y si S = V*2 => contador := contador + 1;
+  4. Para lograr el item 4, se debe declarar una variable "productoria" que sea acumulativa, donde si se cumple que en un mismo par (S,V)
+     S != 0 y V = 0 => productoria := productoria * S 
+
+ACCION ejercicio_1_1_14 ES
+
+  AMBIENTE
+
+    s, v, s_incial, mismo_s, primer_s_mayor_v, s_doble_v, productoria : entero;
+    entrar: boolean;
+
+    PROCESO
+
+      productoria := 1;
+      mismo_s := 0;
+      s_doble_v := 0;
+      entrar := verdadero;
+
+      ESC("Ingrese el primer par (S,V): "), LEER (s,v);
+      s_incial := s;
+
+      SI (s_incial > v) ENTONCES
+        primer_s_mayor_v := s_inicial;
+      FIN_SI;
+      SI (s_incial = v * 2) ENTONCES
+        s_doble_v :=  s_doble_v + 1;
+      FIN_SI;
+      SI (s_inicial != 0) Y (v = 0) ENTONCES
+        productoria := s_inicial;
+      FIN_SI;
+
+      ESC("Ingrese un otro par (S,V): "), LEER(s,v);
+
+      MIENTRAS (s <> -1) HACER
+
+        SI (s > v) Y (entrar) ENTONCES
+          primer_s_mayor_v := s;
+          entrar := falso;
+        FIN_SI;
+        SI (s = v * 2) ENTONCES
+          s_doble_v :=  s_doble_v + 1;
+        FIN_SI;
+        SI (s != 0) Y (v = 0) ENTONCES
+          productoria := productoria * s;
+        FIN_SI;
+        SI (s = s_inicial) ENTONCES
+          mismo_s := mismo_s + 1;
+        FIN_SI;
+
+        ESC("Ingrese un otro par (S,V): "), LEER(s,v);
+
+      FIN_MIENTRAS;
+
+      ESC("La cantidad de pares (S,V) que tienen el mismo valor de S que el primer par (S, V) de la lista son: ", mismo_s);
+      ESC("El primer valor de S mayor que V es: ", primer_s_mayor_v);
+      ESC("La cantidad de pares en los que se cumple que S es el doble de V son: ", s_doble_v);
+      ESC("La productoria de los valores de S no nulos pertenecientes a pares donde V es nulo, es: ", productoria);
+
+    FIN_PROCESO
+
+FIN_ACCION;
+        
+
+
+
+
+
+
+
+
+        
+     
