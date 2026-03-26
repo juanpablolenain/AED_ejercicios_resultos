@@ -7,7 +7,7 @@ y si es múltiplo de 3 (Recordar: todo número cuya suma de sus dígitos sea mú
     2. Mostrar como está compuesto dicho número. Para ello:
         2.1 Realizar división parte entera (DIV) --> n DIV 100 => obtenemos centenas
         2.2 Realizar módulo (MOD) --> n MOD 10 => obtenemos unideades
-        2.3 Realizar módulo (MOD) --> n MOD 100. Guardar resultado y aplicar n DIV 10 => obtenemos decenas
+        2.3 Realizar módulo (MOD) y DIV --> (n MOD 100) DIV 10 => obtenemos centenas
 
 ACCION ejercicio_1_1_12 ES
 
