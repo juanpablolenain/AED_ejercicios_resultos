@@ -1,0 +1,27 @@
+Dado un año ingresado por el usuario, emitir el mensaje 'ACTUAL' si corresponde al año en curso, 'PASADO' si es menor y 'FUTURO' si es mayor.
+
+ACCION ejercicio_1_1_11 ES
+
+  AMBIENTE
+
+    actual := 2026;
+    x: entero;
+
+    PROCESO
+
+      ESC("Ingrese un año: "), LEER(x);
+
+      SI (x < actual) ENTONCES
+        ESC("PASADO");
+      SINO
+        SI (x = actual) ENTONCES
+          ESC("PRESENTE");
+        SINO
+          ESC("FUTURO");
+        FIN_SI
+      FIN_SI;
+
+    FIN_PROCESO;
+
+FIN_ACCION;
+      
