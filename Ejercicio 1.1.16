@@ -2,6 +2,8 @@ Diseñe un algoritmo que obtenga el porcentaje de alumnos de ISI, IQ e IEM, sobr
 
 - Análisis previo:
 
+  * Entendamos "alumnos de ISI, IQ e IEM" como alumnos egresados.
+
   - Ingreso de datos:
     + cantidad de alumnos por carrera --> ISI, IQ, IEM (entero)
     + cantidad de egresados (cant_egresados) (entero)
@@ -23,7 +25,7 @@ ACCION ejercicio_1_1_16 ES
 
   AMBIENTE
 
-    alumnos_ISI, alumnos_IQ, alumnos_IEM, cant_egresados, n: entero;
+    ISI, IQ, IEM, cant_egresados, n: entero;
     p_ISI, p_IQ, p_IEM: real;
 
     PROCESO
@@ -38,9 +40,9 @@ ACCION ejercicio_1_1_16 ES
       p_IQ := (IQ * 100)/cant_egresados;
       p_IEM := (IEM * 100)/cant_egresados;
 
-      ESC("El porcentaje de alumnos de ISI sobre el total de egresados de la UTN-FRRe del año ", n, "es del: ", p_ISI, "%");
-      ESC("El porcentaje de alumnos de IQ sobre el total de egresados de la UTN-FRRe del año ", n, "es del: ", p_IQ, "%");
-      ESC("El porcentaje de alumnos de IEM sobre el total de egresados de la UTN-FRRe del año ", n, "es del: ", p_IEM, "%");
+      ESC("El porcentaje de alumnos egresados de ISI sobre el total de egresados de la UTN-FRRe del año ", n, "es del: ", p_ISI, "%");
+      ESC("El porcentaje de alumnos egresados de IQ sobre el total de egresados de la UTN-FRRe del año ", n, "es del: ", p_IQ, "%");
+      ESC("El porcentaje de alumnos egresados de IEM sobre el total de egresados de la UTN-FRRe del año ", n, "es del: ", p_IEM, "%");
 
     FIN_PROCESO;
 
