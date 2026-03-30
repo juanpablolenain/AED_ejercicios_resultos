@@ -48,9 +48,15 @@ ACCION ejercicio1_1_18 ES
             FIN_SI;
           FIN_SI;
         FIN_SI;
+        ESC("El cociente es: ", cociente);
+        ESC("El resto es: ", resto);
       SINO
         ESC("No aplica. El divisor debe de ser mayor que cero.")
       FIN_SI;
+
+    FIN_PROCESO;
+
+FIN_ACCION;
 
 
 
