@@ -20,15 +20,31 @@ ACCION ejercicio1_1_18 ES
   AMBIENTE
 
     F, G, resto, cociente: entero;
+    cociente_negativo: boolean;
 
     PROCESO
 
       cociente := 0;
+      cociente_negativo := false;
 
       ESC("Ingrese un dividendo: "), LEER(F);
       ESC("Ingrese un divisor distinto de cero: "), LEER(G):
 
-      SI (G > 0) ENTONCES
+      SI (G != 0) ENTONCES
+
+        SI (F < 0) Y (G > 0) ENTONCES  // La idea aquí es eliminar los factores negativos si los hubiese
+          F := F * (-1)
+          cociente_negativo := true;
+        SINO
+          SI (F > 0) Y (G < 0) ENTONCES
+            G := G * (-1)
+            cociente_negativo := true;
+          SINO
+            SI (F < 0) Y (G < 0) ENTONCES
+              F := F * (-1)
+              G := G * (-1)
+        FIN_SI;
+
         SI (F = 0) ENTONCES
           cociente := 0;
           resto := 0;
@@ -49,10 +65,15 @@ ACCION ejercicio1_1_18 ES
             FIN_SI;
           FIN_SI;
         FIN_SI;
+
+        SI (cociente_negativo) ENTONCES
+          cociente := cociente * (-1)
+        FIN_SI;
+
         ESC("El cociente es: ", cociente);
         ESC("El resto es: ", resto);
       SINO
-        ESC("No aplica. El divisor debe de ser mayor que cero.")
+        ESC("No aplica. El divisor debe de ser distinto de cero.")
       FIN_SI;
 
     FIN_PROCESO;
