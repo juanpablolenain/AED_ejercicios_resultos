@@ -6,17 +6,16 @@ Diseñe un algoritmo que obtenga el porcentaje de alumnos de ISI, IQ e IEM, sobr
 
   - Ingreso de datos:
     + cantidad de alumnos por carrera --> ISI, IQ, IEM (entero)
-    + cantidad de egresados (cant_egresados) (entero)
     + año (entero)
 
   - Salida de datos:
     + procentaje de alumnos de cada carrera sobre el total de egresados de la UTN-FRRe dado un año n (real)
 
   - Procesamiento de datos:
-    + Pedir ingreso de cantidad de alumnos por carrera
-    + Pedir año de egreso
-    + Pedir cantidad de egresntes de dicho año
-    + Calcular la frecuencia relativa de cada una de esas carreras respecto al total de egresantes respecto al año n
+    + Pedir ingreso de cantidad de alumnos egresados por carrera.
+    + Pedir año de egreso.
+    + Calcular total de egresados (suma egresados por carrera).
+    + Calcular la frecuencia relativa de cada una de esas carreras respecto al total de egresantes respecto al año n.
       * p_ISI := (ISI * 100)/cant_egresados
       * p_IQ := (IQ * 100)/cant_egresados
       * p_IEM := (IEM * 100)/cant_egresados
