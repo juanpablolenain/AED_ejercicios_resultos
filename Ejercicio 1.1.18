@@ -7,3 +7,58 @@ Elabore un algoritmo que calcule el cociente de dos enteros F y G y el Resto de 
     3. F = 0 --> cociente = 0; resto = 0
     4. F = G --> cociente = 1; resto = 0
     5. G = 0 --> no es posible realizar la operación. Cociente indefinido
+
+- Datos de entrada:
+  + F (dividendo) y G (divisor) --> entero
+
+- Datos de salida:
+  + Cociente (de poder realizarse la división) --> real
+  + Resto --> entero
+
+ACCION ejercicio1_1_18 ES
+
+  AMBIENTE
+
+    F, G, resto: entero;
+    cociente: real;
+
+    PROCESO
+
+      ESC("Ingrese un dividendo: "), LEER(F);
+      ESC("Ingrese un divisor distinto de cero: "), LEER(G):
+
+      SI (G > 0) ENTONCES
+        SI (F = 0) ENTONCES
+          cociente := 0;
+          resto := 0;
+        SINO
+          SI (F = G) ENTONCES
+            cociente := 1;
+            resto := 0;
+          SINO
+            SI (F > G) ENTONCES
+              MIENTRAS (A >= B) HACER
+                A := A - B;
+                cociente := cociente + 1;
+              FIN_MIENTRAS
+
+              SI (A = 0) ENTONCES
+                resto := 0;
+              SINO
+                resto := B - A;
+              FIN_SI;
+            SINO
+              A := A * 10;
+            FIN_SI;
+          FIN_SI;
+        FIN_SI;
+      FIN_SI;
+
+
+
+
+
+
+
+
+
