@@ -1,0 +1,76 @@
+Elabore un algoritmo que calcule el producto de dos enteros A y B empleando sólo la operación suma.
+
+- Análisis previo:
+  + Mulilicar es realizar sumas sucesivas. Entonces, tomo A como el "multiplicando" y B como el "multiplicador", y sumo A tantas veces como valga B.
+  + Edge cases:
+    1. Multiplicador B = 0 --> el producto vale automaticamente 0.
+    2. Ambos factores negativos --> el producto es positivo
+    3. Uno de ambos factores es negativo --> el producto es negativo
+        
+- Datos de entrada:
+  + A y B (enteros)
+
+- Datos de salida:
+  + Producto
+
+- Procesamiento de los datos
+  + Sumar A tantas veces como valga B.
+
+ACCION ejercicio_1_1_17 ES
+
+  AMBIENTE
+
+    A, B, producto, i: entero;
+    producto_negativo: boolean;
+
+    PROCESO
+
+      producto := 0;
+      producto_negativo := false;
+      
+      ESC("Ingrese un número: "), LEER(A);
+      ESC("Ingrese otro número: "), LEER(B);
+
+      SI (B = 0) ENTONCES
+        ESC("El producto de ", A, " por ", B, " es: ", producto);
+      SINO
+        SI (A < 0) Y (B < 0) ENTONCES  // Resultado positivo. Convierto ambos factores en positivo.
+         A := A * (-1);
+         B := B * (-1);
+       SINO
+          SI (A) < 0 ENTONCES
+           A := A * (-1);
+           producto_negativo:= true;
+          SINO
+           SI (B) < 0 ENTONCES
+             B := B * (-1);
+             producto_negativo:= true;
+            FIN_SI;
+          FIN_SI;
+        FIN_SI;        
+      
+        PARA i := 0 HASTA (B - 1) HACER   // // Dentro del ciclo PARA, A y B ya fueron normalizados para trabajar con valores no negativos.
+          producto := producto + A
+        FIN_PARA;
+
+        SI (producto_negativo) ENTONCES
+          producto := producto * (-1);
+        FIN_SI;
+
+        ESC("El producto de ", A, " por ", B, " es: ", producto);
+
+      FIN_SI;
+
+    FIN_PROCESO;
+
+FIN_ACCION;
+
+
+
+
+
+
+
+
+
+
