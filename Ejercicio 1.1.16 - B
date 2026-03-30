@@ -1,0 +1,39 @@
+1. Diseñe un algoritmo que obtenga el porcentaje de alumnos de ISI, IQ e IEM, sobre el total de egresados de la UTN-FRRe de un año.
+2. Modifique el algoritmo del punto 1. para que permita obtener e informar los mismos porcentajes pero para varias Facultades
+y al final emitir el total de alumnos por carrera y total general.
+
+
+ACCION ejercicio_1_1_16 ES
+
+  AMBIENTE
+
+    ISI, IQ, IEM, cant_egresados, n, seguir: entero;
+    p_ISI, p_IQ, p_IEM: real;
+    universidad: caracter;
+
+    PROCESO
+
+      RETIR
+      
+      ESC("Ingrese el nombre de la universidad: "), LEER(universidad);
+      ESC("Ingrese el año de egreso: "), LEER(n);
+      ESC("Ingrese el número total de egresados de ISI de la universidad: ", universidad), LEER(ISI);
+      ESC("Ingrese el número total de egresados de IQ de la universidad: ", universidad), LEER(IQ);
+      ESC("Ingrese el número total de egresados de IEM de la universidad: ", universidad), LEER(IEM);
+      ESC("Ingrese la cantidad total de egresados durante el año lectivo: ", n), LEER(cant_egresados)
+
+      p_ISI := (ISI * 100)/cant_egresados;
+      p_IQ := (IQ * 100)/cant_egresados;
+      p_IEM := (IEM * 100)/cant_egresados;
+
+      ESC("El porcentaje de alumnos egresados de ISI sobre el total de egresados de la universidad: ", universidad, " durante el año: ", n, "es del: ", p_ISI, "%");
+      ESC("El porcentaje de alumnos egresados de IQ sobre el total de egresados de la universidad: ", universidad, " durante el año: ", n, "es del: ", p_IQ, "%");
+      ESC("El porcentaje de alumnos egresados de IEM sobre el total de egresados de la universidad: ", universidad, " durante el año: ", n, "es del: ", p_IEM, "%");
+
+      ESC("Si desea ingresar otra universidad, presione 1. Sino, presione 0"), LEER(seguir);
+
+      HASTA QUE (seguir = 0);
+      
+    FIN_PROCESO;
+
+FIN_ACCION;
