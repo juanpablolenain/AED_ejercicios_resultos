@@ -34,7 +34,8 @@ ACCION ejercicio1_1_15 ES
 
       seguir := 1;
 
-      REPETIR
+      REPETIR // si o si se debe ejecutar una vez el ciclo. Si lo hiciera con MIENTRAS, también lo podría lograr, agregando la peteción y lectura
+                  de ingreso de datos antes del ciclo, pero luego tendría que duplicar el mismo código dentro del ciclo.
 
         ESC("Ingrese el número de pisos del edificio: "), LEER(cantidad_pisos);
         ESC("Ingrese la altura promedio de los pisos: "), LEER(altura_pisos);
