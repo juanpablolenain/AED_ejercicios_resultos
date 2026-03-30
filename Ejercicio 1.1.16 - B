@@ -2,38 +2,63 @@
 2. Modifique el algoritmo del punto 1. para que permita obtener e informar los mismos porcentajes pero para varias Facultades
 y al final emitir el total de alumnos por carrera y total general.
 
+- Análisis previo:
+  + Informar el total de los egresados de cada carrera de todas las universidades. Para ello, utlizar un acumulador por cada carrera.
+  + Informar el total de egresados de todas las universidades. Para ello, utilizar un acumulador total.
+
 
 ACCION ejercicio_1_1_16 ES
 
   AMBIENTE
 
-    ISI, IQ, IEM, cant_egresados, n, seguir: entero;
+    ISI, IQ, IEM, cant_egresados, n, a_ISI, a_IQ, a_IEM, a_total, seguir: entero;
     p_ISI, p_IQ, p_IEM: real;
     universidad: caracter;
 
     PROCESO
 
-      RETIR
+      a_ISI := 0;
+      a_IQ := 0;
+      a_IEM := 0;
+      a_total := 0;
+      seguir := 1;
+
+      REPETIR
       
-      ESC("Ingrese el nombre de la universidad: "), LEER(universidad);
-      ESC("Ingrese el año de egreso: "), LEER(n);
-      ESC("Ingrese el número total de egresados de ISI de la universidad: ", universidad), LEER(ISI);
-      ESC("Ingrese el número total de egresados de IQ de la universidad: ", universidad), LEER(IQ);
-      ESC("Ingrese el número total de egresados de IEM de la universidad: ", universidad), LEER(IEM);
-      ESC("Ingrese la cantidad total de egresados durante el año lectivo: ", n), LEER(cant_egresados)
+        ESC("Ingrese el nombre de la universidad: "), LEER(universidad);
+        ESC("Ingrese el año de egreso: "), LEER(n);
+        ESC("Ingrese el número total de egresados de ISI de la universidad: ", universidad), LEER(ISI);
+        ESC("Ingrese el número total de egresados de IQ de la universidad: ", universidad), LEER(IQ);
+        ESC("Ingrese el número total de egresados de IEM de la universidad: ", universidad), LEER(IEM);
+        cant_egresados := ISI + IQ + IEM;
 
-      p_ISI := (ISI * 100)/cant_egresados;
-      p_IQ := (IQ * 100)/cant_egresados;
-      p_IEM := (IEM * 100)/cant_egresados;
+        a_ISI := a_ISI + ISI;
+        a_IQ := a_IQ + IQ;
+        a_IEM := a_IEM + IEM;
+        a_total := (a_ISI + a_IQ + a_IEM);
 
-      ESC("El porcentaje de alumnos egresados de ISI sobre el total de egresados de la universidad: ", universidad, " durante el año: ", n, "es del: ", p_ISI, "%");
-      ESC("El porcentaje de alumnos egresados de IQ sobre el total de egresados de la universidad: ", universidad, " durante el año: ", n, "es del: ", p_IQ, "%");
-      ESC("El porcentaje de alumnos egresados de IEM sobre el total de egresados de la universidad: ", universidad, " durante el año: ", n, "es del: ", p_IEM, "%");
+        SI (cant_egresados = 0) ENTONCES
+          ESC("Deben de existir alumnos egresados para realizar el análisis.")
+        SINO
+          p_ISI := (ISI * 100)/cant_egresados;
+          p_IQ := (IQ * 100)/cant_egresados;
+          p_IEM := (IEM * 100)/cant_egresados;
 
-      ESC("Si desea ingresar otra universidad, presione 1. Sino, presione 0"), LEER(seguir);
+          ESC("El porcentaje de alumnos egresados de ISI sobre el total de egresados de la universidad: ", universidad, " durante el año: ", n, "es del: ", p_ISI, "%");
+          ESC("El porcentaje de alumnos egresados de IQ sobre el total de egresados de la universidad: ", universidad, " durante el año: ", n, "es del: ", p_IQ, "%");
+          ESC("El porcentaje de alumnos egresados de IEM sobre el total de egresados de la universidad: ", universidad, " durante el año: ", n, "es del: ", p_IEM, "%");
+
+        FIN_SI;
+
+        ESC("Si desea ingresar otra universidad, presione 1. Sino, presione 0"), LEER(seguir);
 
       HASTA QUE (seguir = 0);
-      
+
+      ESC("El total de egresados en todas las universidades en la carrera de ISI es: ", a_ISI);
+      ESC("El total de egresados en todas las universidades en la carrera de IQ es: ", a_IQ);
+      ESC("El total de egresados en todas las universidades en la carrera de IEM es: ", a_IEM);
+      ESC("El total de egresados en todas las universidades es: ", a_total);
+
     FIN_PROCESO;
 
 FIN_ACCION;
