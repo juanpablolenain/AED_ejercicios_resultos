@@ -3,7 +3,7 @@ Elabore un algoritmo que calcule el cociente de dos enteros F y G y el Resto de 
 - Análisis previo:
   Edge cases:
     1. F > G
-    2. F < G --> no aplica en este caso porque definiremos a cociente como entero
+    2. F < G --> cociente = 0; resto  = F;
     3. F = 0 --> cociente = 0; resto = 0
     4. F = G --> cociente = 1; resto = 0
     5. G = 0 --> no es posible realizar la operación. Cociente indefinido
@@ -44,7 +44,8 @@ ACCION ejercicio1_1_18 ES
               FIN_MIENTRAS;
               resto := F;
             SINO
-              ESC("No aplica. El dividendo debe de ser mayor o igual que el divisor.")
+              cociente := 0;
+              resto := F;
             FIN_SI;
           FIN_SI;
         FIN_SI;
