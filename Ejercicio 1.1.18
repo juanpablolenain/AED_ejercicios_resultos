@@ -1,0 +1,9 @@
+Elabore un algoritmo que calcule el cociente de dos enteros F y G y el Resto de la operación, empleando sólo las operaciones suma y diferencia.
+
+- Análisis previo:
+  Edge cases:
+    1. F > G
+    2. F < G
+    3. F = 0 --> cociente = 0; resto = 0
+    4. F = G --> cociente = 1; resto = 0
+    5. G = 0 --> no es posible realizar la operación. Cociente indefinido
