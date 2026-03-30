@@ -1,0 +1,60 @@
+1. Hacer un algoritmo que calcule la altura aproximada de un edificio en pies, ingresando como dato la cantidad de pisos del mismo
+y la altura promedio de cada piso, en metros. (1 m = 3.28 pies)
+2. Modifique el algoritmo del punto 1. para que permita calcular la altura de 50 edificios.
+3. Modifique el algoritmo del punto 1. para que permita calcular la altura de una cantidad indeterminada de edificios. Prevea una condición de fin.
+
+Análisis previo:
+
+  - Ingreso de datos: 
+    + cantidad de pisos por edificio --> entero
+    + altura promedio de cada piso por edificio, en unidad de medida metro --> real
+    + equivalencia de metro a pie --> real
+
+  - Salida de datos:
+    + altura de cada edificio expresada en pies.
+
+  - Procesamiento de los datos:
+    + Pedir el ingreso del número de pisos del edificio.
+    + Pedir el ingreso de la altura promedio de cada piso.
+    + Entrar un un ciclo REPETIR. Dentro de él, realizar los sigiuente cálculos:
+        + altura_edificio := (cantidad_pisos * altura_piso) * pie
+    + Mostrar el resultado por pantalla.
+    + Pedir al usuario el ingreso de nuevos datos para calcular la altura del próximo edificio.
+    + Si se cumple condición de fin de ciclo, se sale del mismo y termina el algoritmo.
+
+ACCION ejercicio1_1_15 ES
+
+  AMBIENTE
+
+    cantidad_pisos, seguir: entero;
+    altura_pisos, altura_edificio: real;
+    pie = 3.28;
+
+    PROCESO
+
+      seguir := 1;
+
+      REPETIR
+
+        ESC("Ingrese el número de pisos del edificio: "), LEER(cantidad_pisos);
+        ESC("Ingrese la altura promedio de los pisos: "), LEER(altura_pisos);
+
+        altura_edificio := (cantidad_pisos * altura_piso) * pie
+
+        ESC("La altura del edificio en pies es: ", altura_edificio);
+        ESC("Si desea conocer la altura de un nuevo edificio, presione 1. De lo contrario, presione 0: "), LEER(seguir);
+
+      HASTA QUE (seguir = 0);
+
+    FIN_PROCESO;
+
+FIN_ACCION;
+        
+
+
+
+
+
+
+
+
