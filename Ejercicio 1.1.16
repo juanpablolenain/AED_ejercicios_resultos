@@ -1,0 +1,52 @@
+Diseñe un algoritmo que obtenga el porcentaje de alumnos de ISI, IQ e IEM, sobre el total de egresados de la UTN-FRRe de un año.
+
+- Análisis previo:
+
+  - Ingreso de datos:
+    + cantidad de alumnos por carrera --> ISI, IQ, IEM (entero)
+    + cantidad de egresados (cant_egresados) (entero)
+    + año (entero)
+
+  - Salida de datos:
+    + procentaje de alumnos de cada carrera sobre el total de egresados de la UTN-FRRe dado un año n (real)
+
+  - Procesamiento de datos:
+    + Pedir ingreso de cantidad de alumnos por carrera
+    + Pedir año de egreso
+    + Pedir cantidad de egresntes de dicho año
+    + Calcular la frecuencia relativa de cada una de esas carreras respecto al total de egresantes respecto al año n
+      * p_ISI := (ISI * 100)/cant_egresados
+      * p_IQ := (IQ * 100)/cant_egresados
+      * p_IEM := (IEM * 100)/cant_egresados
+
+ACCION ejercicio_1_1_16 ES
+
+  AMBIENTE
+
+    alumnos_ISI, alumnos_IQ, alumnos_IEM, cant_egresados, n: entero;
+    p_ISI, p_IQ, p_IEM: real;
+
+    PROCESO
+
+      ESC("Ingrese el año lectivo: "), LEER(n);
+      ESC("Ingrese el número total de estudiantes de ISI de la UTN-FRRe"), LEER(ISI);
+      ESC("Ingrese el número total de estudiantes de IQ de la UTN-FRRe"), LEER(IQ);
+      ESC("Ingrese el número total de estudiantes de IEM de la UTN-FRRe"), LEER(IEM);
+      ESC("Ingrese la cantidad total de egresados durante el año lectivo: ", n), LEER(cant_egresados)
+
+      p_ISI := (ISI * 100)/cant_egresados;
+      p_IQ := (IQ * 100)/cant_egresados;
+      p_IEM := (IEM * 100)/cant_egresados;
+
+      ESC("El porcentaje de alumnos de ISI sobre el total de egresados de la UTN-FRRe del año ", n, "es del: ", p_ISI, "%");
+      ESC("El porcentaje de alumnos de IQ sobre el total de egresados de la UTN-FRRe del año ", n, "es del: ", p_IQ, "%");
+      ESC("El porcentaje de alumnos de IEM sobre el total de egresados de la UTN-FRRe del año ", n, "es del: ", p_IEM, "%");
+
+    FIN_PROCESO;
+
+FIN_ACCION;
+
+
+
+
+
