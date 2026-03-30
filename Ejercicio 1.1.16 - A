@@ -30,9 +30,9 @@ ACCION ejercicio_1_1_16 ES
     PROCESO
 
       ESC("Ingrese el año lectivo: "), LEER(n);
-      ESC("Ingrese el número total de estudiantes de ISI de la UTN-FRRe"), LEER(ISI);
-      ESC("Ingrese el número total de estudiantes de IQ de la UTN-FRRe"), LEER(IQ);
-      ESC("Ingrese el número total de estudiantes de IEM de la UTN-FRRe"), LEER(IEM);
+      ESC("Ingrese el número total de egresados de ISI de la UTN-FRRe"), LEER(ISI);
+      ESC("Ingrese el número total de egresados de IQ de la UTN-FRRe"), LEER(IQ);
+      ESC("Ingrese el número total de egresados de IEM de la UTN-FRRe"), LEER(IEM);
       ESC("Ingrese la cantidad total de egresados durante el año lectivo: ", n), LEER(cant_egresados)
 
       p_ISI := (ISI * 100)/cant_egresados;
