@@ -1,0 +1,20 @@
+Escribir un algoritmo que ingrese una variable V y emita el valor de ésta, su cuadrado y su cubo.
+
+ACCION ejercicio1_1_19 ES
+
+  AMBIENTE
+
+    v, cuadrado, cubo: real;
+
+    PROCESO
+
+      ESC("Ingrese un numero: "), LEER(v);
+      cuadrado := v **2;
+      cubo := V**3;
+
+      ESC("El cuadrado de ", v, "es: ", cuadrado);
+      ESC("El cubo de ", v, "es: ", cubo);
+
+    FIN_PROCESO
+
+FIN_ACCION;  
