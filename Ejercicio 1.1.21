@@ -18,22 +18,21 @@ ACCION ejercicio1_1_21 ES
         ESC("Ingrese un número: "), LEER(v);
         ESC("¿Cuántas veces desea incrementar el valor ingresado?"), LEER(x);
         
-        MIENTRAS (i > x) HACER
+        MIENTRAS (i < x) HACER
 
           cuadrado := v ** 2;
           cuadrado_suma := cuadrado_suma + cuadrado;
           cubo := v ** 3;
 
-          v := v + 1;
-
           ESC("El cuadrado de: ", v, " es: ", cuadrado);
           ESC("El cubo de: ", v, " es: ", cubo);
-
+          
+          v := v + 1;          
           i := i + 1;
 
         FIN_MIENTRAS
 
-        ESC("La suma de los cuadrados de: ", v, " es: ", suma_cuadrado);
+        ESC("La suma de los cuadrados de: ", v, " es: ", cuadrado_suma);
 
     FIN_PROCESO
 
