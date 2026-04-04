@@ -1,0 +1,33 @@
+Elabore un algoritmo para calcular los primeros 50 números de FIBONACCI
+
+- Análisis previo:
+  + La serie de Fibonacci comienza con los dos primeros números A1 = 0 y A2 = 1. Los An subsiguientes son An = (An - 2 + An - 1)
+  + El problema nos indica el número de iteraicones a realizar (50), => utilizamos un ciclo for
+
+ACCION ejercicio1_1_25 ES
+
+  AMBIENTE
+    a,b,an,i: entero;
+
+    PROCESO
+
+      a := 0;
+      b := 1;
+
+      ESC("El elemento: ", 1, " de la serie de Fibonacci vale: ", a);
+      ESC("El elemento: ", 2, " de la serie de Fibonacci vale: ", b);
+
+      PARA i := 3 HASTA 50 HACER
+
+        an := (a + b)
+        a := b
+        b := an
+
+        ESC("El elemento: ", i, " de la serie de Fibonacci vale: ", an);
+
+      FIN_PARA;
+
+    FIN_PROCESO;
+FIN_ACCION;
+  
+  
