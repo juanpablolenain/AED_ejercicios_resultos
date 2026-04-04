@@ -1,0 +1,29 @@
+Construya un algoritmo capaz de encontrar todas las cifras de tres dígitos
+que cumplan con la condición de que la suma de los cubos de sus dígitos sea igual al número que la cifra representa.
+
+
+ACCION encontrar_narcisistas ES
+  AMBIENTE
+    i, a, b, c: entero;
+
+  PROCESO
+    ESC("Los números de tres cifras que cumplen la condición son:");
+
+    PARA i := 100 HASTA 999 HACER
+      
+      a := (i DIV 100) ** 3;
+      
+      b := ((i DIV 10) MOD 10) ** 3;
+      
+      c := (i MOD 10) ** 3;
+
+      SI (a + b + c = i) ENTONCES
+        ESC(i);
+      FIN_SI;
+
+    FIN_PARA;
+
+  FIN_PROCESO;
+  
+FIN_ACCION;
+  
