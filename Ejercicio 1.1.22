@@ -1,0 +1,51 @@
+Escriba un algoritmo que determine si un número es primo.
+
+Análisis previo:
+
+ACCION ejercicio1_1_22 ES
+
+  AMBIENTE
+
+    n, i, e: entero;
+    es_primo: booleano;
+
+    PROCESO
+
+      ESC("Ingrese un número: "), LEER(n);
+
+      es_primo := true;
+      i := 2;
+      e := -2;
+
+      SI (n > 1) ENTONCES
+          MIENTRAS(i < n) Y (es_primo) HACER
+          SI (n MOD i = 0) ENTONCES
+            es_primo := false;
+          FIN_SI;
+          i := i + 1;
+        FIN_MIENTRAS;
+
+      SINO
+
+        SI (-1 > n) ENTONCES
+          MIENTRAS (e > n) Y (es_primo) HACER
+            SI (n MOD e = 0) ENTONCES
+              es_primo := false;
+            FIN_SI;
+            e := e - 1;
+          FIN_MIENTRAS;
+        SINO
+          es_primo := false;
+        FIN_SI;
+      FIN_SI;
+
+      SI (es_primo) ENTONCES
+          ESC(n, "es primo");
+        SINO
+          ESC(n, "no es primo");
+      FIN_SI;
+
+      FIN_PROCESO
+
+FIN_ACCION;
+
