@@ -1,0 +1,41 @@
+Repita el ejercicio anterior con un cálculo de n veces, con n > 1. Por final emitir la suma de los cuadrados de V.
+
+Análisis previo:
+- No conocemos el número de veces a iterar. Esto lo detemrina el usuario => estructura de control "while-do".
+- En cada iteración se almacena e una variable acumuladora la suma de los cuadrados de v.
+
+ACCION ejercicio1_1_21 ES
+
+    AMBIENTE
+
+      v, cuadrado, cuadrado_suma, cubo, i, x: entero;
+
+      PROCESO;
+
+        cuadrado_suma := 0;
+        i := 0;
+        
+        ESC("Ingrese un número: "), LEER(v);
+        ESC("¿Cuántas veces desea incrementar el valor ingresado?"), LEER(x);
+        
+        MIENTRAS (i > x) HACER
+
+          cuadrado := v ** 2;
+          cuadrado_suma := cuadrado_suma + cuadrado;
+          cubo := v ** 3;
+
+          v := v + 1;
+
+          ESC("El cuadrado de: ", v, " es: ", cuadrado);
+          ESC("El cubo de: ", v, " es: ", cubo);
+
+          i := i + 1;
+
+        FIN_MIENTRAS
+
+        ESC("La suma de los cuadrados de")
+
+    FIN_PROCESO
+
+FIN_ACCION;
+
