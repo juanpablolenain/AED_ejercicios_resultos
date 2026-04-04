@@ -1,6 +1,10 @@
 Escriba un algoritmo que determine si un número es primo.
 
 Análisis previo:
+- Los casos de n = (-1), 0 y 1, son automáticamente detectados como no primos.
+- Números enteros positivos: comenzamos dividiendo por (i = 2) hasta (n - 1), incrementamos i de a uno.
+- Números enteros negativos: comenzamos dividiendo por (e = -2) hasta (n + 1), decrementando e de a menos uno.
+- Inializamos una variable bandera es_primo := true
 
 ACCION ejercicio1_1_22 ES
 
