@@ -1,5 +1,7 @@
 Tomo valor 9999 como centinela (valor no tratable) pero utilizando una estructura while
 
+Si el importe = 9999 no debe procesarse, utilizar while. Si debe procesarse y luego terminar el calculo de importes, utilizar do-while
+
 ACCION ejercicio1_1_24_v_2 ES
 
   AMBIENTE
