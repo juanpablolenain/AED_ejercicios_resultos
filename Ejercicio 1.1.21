@@ -33,7 +33,7 @@ ACCION ejercicio1_1_21 ES
 
         FIN_MIENTRAS
 
-        ESC("La suma de los cuadrados de")
+        ESC("La suma de los cuadrados de: ", v, " es: ", suma_cuadrado);
 
     FIN_PROCESO
 
