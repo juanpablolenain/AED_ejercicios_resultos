@@ -1,0 +1,42 @@
+Escriba un algoritmo para calcular cada renglón de una factura (valor unitario * cantidad vendida) y el total de la misma,
+suponiendo que el número de renglones es variable. Emitir un mensaje de error si el valor unitario es <= 0.
+
+Análisis previo:
+- No se conoce de antemano el número de renglones de la factura. Es un dato ingresado por el usuario => ciclo de control "while-do".
+- Se debe pedir al usuario el ingreso del número de renglones de la factura (r).
+- Se debe pedir al usuario el ingreso del valor unitario y la cantidad vendida.
+- Se debe almacenar el total de la factura en una variable (total_facura), que es igual a la suma de cada (valor unitario * cantidad vendida) por renglón.
+
+ACCION ejercicio1_1_23 ES
+
+  AMBIENTE
+
+    r, i, cantidad_vendida: entero;
+    valor_unitario, valor_renglon, total_factura: real;
+
+    PROCESO
+
+      i := 0;
+      total_facura := 0;
+
+      ESC("Ingrese el número de renglones de la factura: "), LEER(r);
+
+      MIENTRAS (i < r) HACER
+        ESC("Ingrese el valor unitario: "), LEER(valor_unitario);
+        SI (valor_unitario <= 0) ENTONCES
+          ESC("No puede existir un valor negativo o cero. Ingrese el valor unitario nuevamente");
+        SINO
+          ESC("Ingrese la cantidad vendida: "), LEER(cantidad_vendida);
+          valor_renglon := cantidad_vendida * valor_unitario;
+          ESC("El valor del renglón es: ", valor_renglon);
+          total_factura := total_factura + (cantidad_vendida * valor_unitario);
+          i := i + 1;
+        FIN_SI;
+      FIN_MIENTRAS;
+
+      ESC("El valor de la factura es: ", total_factura);
+
+    FIN_PROCESO;
+
+FIN_ACCION;
+      
