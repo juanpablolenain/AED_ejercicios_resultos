@@ -1,0 +1,30 @@
+Tomo valor 9999 como centinela pero utilizando una estructura do-while
+
+ACCION ejercicio1_1_24_v_3 ES
+
+  AMBIENTE
+
+    importe, impuesto, valor_cuota: real;
+
+    PROCESO
+
+      ESC("Ingrese el importe: "), LEER(importe);
+      
+      REPETIR        
+        impuesto := (importe/100) * 10
+
+        SI (importe > 500) Y (importe =< 1000) ENTONCES
+          valor_cuota := impuesto / 2;
+          ESC ("Usted debe pagar un impuesto de: $", impuesto, " en 2 cuotas de: $", valor_cuota);
+        SINO
+          SI (importe > 1000) ENTONCES
+            valor_cuota := impuesto / 3;
+            ESC ("Usted debe pagar un impuesto de: $", impuesto, " en 3 cuotas de: $", valor_cuota);
+          SINO
+            ESC ("Usted debe pagar un impuesto de: $", impuesto, " en una sola cuota);
+          FIN_SI;
+        FIN_SI;
+
+        ESC("Ingrese el importe: "), LEER(importe);
+        
+      HASTA QUE (importe = 9999);
