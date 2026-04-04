@@ -1,0 +1,36 @@
+Escribir un algoritmo que, dado un importe dinero, permia calcular e informar cuanto corresponde pagar por un impuesto,
+en cuantas cuotas y el valor de las mismas. Tener en cuenta los siguientes datos:
+
+IMPUESTO = 10% del importe dado.
+Los importes mayores que $500 y menor o igual que $1000 se pagan en dos cuotas.
+Los mayores de $1000 en tres cuotas. El algoritmo debe permitir tratar varios importes finalizando cuando se ingresa 9999 como importe.
+
+- Análisis previo:
+    + Lo tomo como si el procesamiento del importe 9999 sí debe de hacerse y luego finalzar.
+
+ACCION ejercicio1_1_24 ES
+
+  AMBIENTE
+
+    importe, impuesto, valor_cuota: real;
+
+    PROCESO
+
+      REPETIR
+        
+        ESC("Ingrese el importe: "), LEER(importe);
+        impuesto := (importe/100) * 10
+
+        SI (importe > 500) Y (importe =< 1000) ENTONCES
+          valor_cuota := impuesto / 2;
+          ESC ("Usted debe pagar un impuesto de: $", impuesto, " en 2 cuotas de: $", valor_cuota);
+        SINO
+          SI (importe > 1000) ENTONCES
+            valor_cuota := impuesto / 3;
+            ESC ("Usted debe pagar un impuesto de: $", impuesto, " en 3 cuotas de: $", valor_cuota);
+          SINO
+            ESC ("Usted debe pagar un impuesto de: $", impuesto, " en una sola cuota);
+          FIN_SI;
+        FIN_SI;
+
+    HASTA QUE (importe = 9999);
