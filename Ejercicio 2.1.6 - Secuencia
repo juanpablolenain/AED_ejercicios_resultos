@@ -1,0 +1,51 @@
+Dada una secuencia de enteros que almacena la cantidad de habitantes de las ciudades capitales de las 23 provincias de la República Argentina,
+discriminados 4 categorías: menores de 18 años (varones y mujeres) y mayores de 18 años (varones y mujeres).
+Se pide determinar la población total y los siguientes porcentajes: masculinos, femeninos, mayores de 18 y menores de 18.
+
+
+ACCION ejercicio2_1_6 ES
+
+  AMBIENTE
+
+    secuencia: secuencia de enteros;
+    v, i: entero;
+    menores_varones, menores_mujeres, mayores_varones, mayores_mujeres: entero;
+
+    PROCESO
+
+      ARR(secuencia), AVZ(secuencia, v);
+      menores_varones := 0;
+      menores_mujeres := 0;
+      mayores_varones := 0;
+      mayores_mujeres := 0;
+
+      MIENTRAS NFDS (secuencia) HACER
+
+        PARA i:= 1 HASTA 4 HACER
+
+          SEGUN (i) HACER
+
+            1: menores_varones := menores_varones + v;
+            2: menores_mujeres := menores_mujeres + v;
+            3: mayores_varones := mayores_varones + v;
+            4: mayores_mujeres := mayores_mujeres + v;
+
+          FIN_SEGUN;
+
+          AVZ(secuencia,v);
+
+        FIN_PARA;
+
+
+      FIN_MIENTRAS;
+
+      total := (menores_varones + menores_mujeres + mayores_varones + mayores_mujeres)
+      ESC("El total de la población de las ciudades capitales de las 23 provincias de la República Argentina es: ", total);
+      ESC("El porcentage de varones es: ", ((menores_varones + mayores_ varones) * 100) / total);
+      ESC("El porcentage de mujeres es: ", ((menores_mujeres + mayores_mujeres) * 100) / total);
+      ESC("El porcentage de menores de 18 años es: ", ((menores_varones + menores_mujeres) * 100) / total);
+      ESC("El porcentage de mayores de 18 años es: ", ((mayores_varones + mayores_mujeres) * 100) / total);
+
+    FIN_PROCESO;
+
+FIN_ACCION;
