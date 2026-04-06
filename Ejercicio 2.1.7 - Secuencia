@@ -1,0 +1,39 @@
+Se tiene una secuencia de enteros que contiene todos los CUIT de los empleados de una empresa, la misma termina con el CUIT 0.
+Para evitar largas esperas en los días de pago, la empresa necesita organizarlos de acuerdo al último dígito de su documento,
+generar una secuencia con los CUIT de las personas que su número de documento termine con 0, 1, 2 o 3.
+
+- Análisis previo
+    + Un CUIT se compone de 11 dígitos --> 2 prefijos + 8 digitos (DNI) + 1 sufijo
+    + Fin de la secuencia marcado por el CUIT = 0
+    + Hay que generar 1 secuencia nueva de salida con los DNI que terminan en 0, 1, 2 o 3
+
+
+ACCION ejercicio2_1_7 ES
+
+  AMBIENTE
+
+    empleados, salida: secuencia de enteros;
+    v: entero;
+    sufijos: {0,1,2,3};
+
+    PROCESO
+
+      CREAR(salida);
+      ARR(empleados), AVZ(empleados, v);
+
+      MIENTRAS (v <> 0) HACER
+
+        SI (((v MOD 100) DIV 10 )) EN sufijos ENTONCES
+          ESC(salida, v);
+        FIN_SI;
+
+        AVZ(empleados, v);
+
+      FIN_MIENTRAS;
+
+      CERRAR(empleados);
+      CERRAR(salida);
+
+  FIN_PROCESO;
+
+FIN_ACCION;
