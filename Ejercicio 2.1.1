@@ -1,0 +1,32 @@
+Dada una secuencia de letras del alfabeto que finaliza con una marca '*', contar cuantas letras "A" hay en la secuencia.
+
+ACCION ejercicio2_2_1 ES
+
+  AMBIENTE
+
+    contador: entero;
+    letras: secuencia de caracteres;
+    v: caracter;
+
+    PROCESO
+
+      ARR(letras), AVZ(letras, v);
+      contador := 0;
+
+      MIENTRAS v <> "*" HACER
+        
+        SI v = "A" ENTONCES
+          contador := contador + 1;
+        FIN_SI;
+
+        AVZ(letras, v);
+
+      FIN_MIENTRAS;
+
+      CERRAR(letras);
+      ESC("La cantidad de letras ´A´ en la secuencia es de: ", contador);
+
+    FIN_PROCESO;
+
+  FIN_ACCION;
+        
