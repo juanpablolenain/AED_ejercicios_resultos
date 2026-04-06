@@ -6,21 +6,20 @@ ACCION ejercicio2_13 ES
   AMBIENTE
 
     sec_entrada, sec_salida: secuencia de caracteres;
-    v1, v2: caracter;
+    v: caracter;
 
     PROCESO
 
       CREAR(sec_salida);
-      ARR(sec_entrada), AVZ(sec_entrada, v1);
+      ARR(sec_entrada), AVZ(sec_entrada, v);
 
       MIENTRAS (NFDS sec_entrada) HACER
         
-        SI (v1 <> "$") ENTONCES
-          v2 := v1;
-          ESC(sec_salida, v2);
+        SI (v <> "$") ENTONCES
+          ESC(sec_salida, v);
         FIN_SI;
 
-        AVZ(sec_entrada, v1);
+        AVZ(sec_entrada, v);
 
       FIN_MIENTRAS;
 
