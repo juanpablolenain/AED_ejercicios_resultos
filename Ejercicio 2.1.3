@@ -1,0 +1,35 @@
+Se dispone de una secuencia de caracteres y se desea obtener una secuencia de salida
+que resulte de copiar la secuencia de entrada, descartando el caracter "$".
+
+ACCION ejercicio2_13 ES
+
+  AMBIENTE
+
+    sec_entrada, sec_salida: secuencia de caracteres;
+    v1, v2: caracter;
+
+    PROCESO
+
+      CREAR(sec_salida);
+      ARR(sec_entrada), AVZ(sec_entrada, v1);
+
+      MIENTRAS (NFDS sec_entrada) HACER
+        
+        SI (v1 <> "$") ENTONCES
+          v2 := v1;
+          ESC(sec_salida, v2);
+        FIN_SI;
+
+        AVZ(sec_entrada, v1);
+
+      FIN_MIENTRAS;
+
+      CERRAR(sec_entrada);
+      CERRAR(sec_salida);
+
+      ESC("Secuencia copiada!");
+
+  FIN_PROCESO;
+
+FIN_ACCION;
+        
