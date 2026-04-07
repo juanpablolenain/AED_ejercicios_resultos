@@ -1,0 +1,61 @@
+Teniendo en cuenta el ejercicio anterior, se solicita que la secuencia de salida sea una secuencia de caracteres
+y los CUIT se separen unos de otros con el caracter "-".
+
+- Análisis previo
+
+  + Para obtener los x últimos dígitos de un número N, realizamos --> N MOD 10 ** (cantidad de úlitmos dígitos que queremos obtener)
+    Ej: N := 20446143727 --> Quiero obtener el 27 => N MOD 10 ** 2
+
+  + Para obtener los x primeros dígitos de un número N, realizamos --> N DIV 10 ** (cantidad digitos N - cantidad primeros dígitos a obtener)
+    Ej: N := 20446143727 --> Quiero obtener el 20446 => N MOD 10 ** (11 - 5)
+
+
+  ACCION ejercicio2_1_8 ES
+
+    AMBIENTE
+
+      sec_1: secuencia de enteros;
+      sec_2: secuencia de caracteres;
+      v,i,n: entero;
+      x: caracter;
+      C: {0,1,2,3};
+
+      PROCESO
+
+        CREAR(sec_2);
+        ARR(sec_1), AVZ(sec_1, v);
+
+        MIENTRAS (v <> 0) HACER
+
+          SI ((v MOD 100) DIV 10) EN (C) ENTONCES
+            
+            PARA i:= 1 HASTA 11 HACER
+              n := v DIV 10**(11-i);
+              n := n MOD 10;
+
+              SEGUN (n) HACER
+                0: x:= "0";
+                1: x:= "1";
+                .
+                .
+                .
+                9: x:= "9";
+              FIN_SEGUN;
+
+              ESC(sec_2, x);
+              
+            FIN_PARA;
+            
+            ESC(sec_2, "-");
+
+          FIN_SI;
+
+          AVZ(sec_1, v);
+
+        FIN_MIENTRAS;
+        
+        CERRAR(sec_1), CERRAR(sec_2);
+
+      FIN_PROCESO;
+
+    FIN_ACCION;            
