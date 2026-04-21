@@ -1,0 +1,53 @@
+Dada una secuencia de caracteres, determinar la cantidad de palabras de 4 caracteres (letras)
+
+ACCION ejercicio2_1_11 ES
+
+  AMBIENTE
+
+    sec: secuencia de caracteres;
+    v: caracter;
+    contador: entero;
+    palabras: entero;
+
+    PROCESO
+
+      contador:= 0;
+      palabras:= 0;
+      
+      ARR(sec);
+      AVZ(sec,v);
+
+      MIENTRAS NFDS(sec) HACER
+      
+        MIENTRAS NFDS (sec) Y (v = " ") HACER  //estoy en blancos y los salteo
+          AVZ(sec,v)
+        FIN_MIENTRAS;
+
+        MIENTRAS NFDS (sec) Y (v != " ") HACER  //estoy en palabra y cuento sus caracteres
+          contador:= contador + 1
+          AVZ(sec,v)
+        FIN_MIENTRAS; 
+
+        SI (contador = 4) ENTONCES  
+          palabras:= palabras + 1
+          contador := 0
+        SINO
+          contador :=0
+        FIN_SI;
+
+    FIN_MIENTRAS;
+
+    ESC("La cantidad de palabras de 4 caracteres son: ", palabras);
+
+  FIN_PROCESO;
+
+FIN_ACCION;
+
+      
+
+
+
+
+          
+
+        
