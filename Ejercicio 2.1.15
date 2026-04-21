@@ -1,0 +1,54 @@
+Se desea saber la cantidad promedio de palabras que contienen las oraciones de una secuencia de caracteres.
+Supóngase que los puntos son siempre contiguos al último caracter de la palabra.
+La secuencia finaliza con una marca.
+
+ACCION ejercicio2_1_15 ES
+
+  AMBIENTE
+
+    sec: secuencia de caracteres;
+    v: caracter;
+    palabra: entero;
+    oracion: entero;
+    promedio: real;
+
+    PROCESO
+
+      palabra:= 0;
+      oracion:= 0;
+      promedio:= 0;
+                        
+      ARR(sec);
+      AVZ(sec,v);
+ 
+      MIENTRAS (v != "*") HACER                       //   Hola como estas. Queria preguntarte algo. Puede ser hoy .*
+        MIENTRAS (v != "*") Y (v = " ") HACER
+          AVZ(sec,v);
+        FIN_MIENTRAS;
+
+        SI (v != "*") Y (v != ".") ENTONCES   // Cuento palabra ni bien comienza (si no estoty en "*", " ", ni en ".", pues estoy en el comienzo de una palabra).    
+          palabra:= palabra + 1;  
+        FIN_SI;
+
+        MIENTRAS (v != "*") Y (v != " ") Y (v != ".") HACER  // Avanzo la palabra hasta el final (" " o ".")
+          AVZ(sec,v);
+        FIN_MIENTRAS;
+
+        SI (v = ".") ENTONCES     // Si el final de la palabra fue un ".", cuento una nueva oración
+          oracion:= oracion + 1;
+        FIN_SI;
+
+        AVZ(sec,v);
+
+      FIN_MIENTRAS;
+
+      SI (oracion != 0) ENTONCES
+        promedio:= (palabra/oracion);
+      FIN_SI;
+
+      ESC("La cantidad promedio de palabras por oración en la secuencia es de: ", promedio, " palabras");
+
+    FIN_PROCESO;
+
+FIN_ACCION;
+
