@@ -1,0 +1,51 @@
+Se dispone de una secuencia de caracteres y se desea saber la cantidad de caracteres (incluidos los espacios) que existen entre una coma y la siguiente.
+Se debe considerar que puede haber más de un par de comas, y que las subsecuencias inicial y final deben descartarse por no cumplir la condición enunciada.
+Supóngase que las comas son siempre contiguas al último caracter de la palabra.
+
+
+ACCION ejercicio2_1_14 ES
+  AMBIENTE
+    sec: secuencia de caracteres;
+    v: caracter;
+    contador: entero;
+
+  PROCESO
+    contador := 0;
+
+    ARR(sec);
+    AVZ(sec, v);
+
+    // 1. Descartar todo hasta la primera coma
+    MIENTRAS NFDS(sec) Y (v <> ",") HACER
+      AVZ(sec, v);
+    FIN_MIENTRAS;
+
+    // 2. Ciclo principal de procesamiento
+    MIENTRAS NFDS(sec) HACER
+      
+      // Salteo el bloque de comas (v está parado en una coma actualmente)
+      MIENTRAS NFDS(sec) Y (v = ",") HACER
+        AVZ(sec, v);
+      FIN_MIENTRAS;
+
+      // Cuento caracteres hasta la siguiente coma o el fin
+      MIENTRAS NFDS(sec) Y (v <> ",") HACER
+        contador := contador + 1;
+        AVZ(sec, v);
+      FIN_MIENTRAS;
+
+      // Si salí porque encontré una coma (NFDS es verdadero), muestro el resultado
+      // Si salí porque se terminó la secuencia, este tramo se descarta
+      SI NFDS(sec) ENTONCES
+        ESC("La cantidad de caracteres entre coma y coma fue de: ", contador);
+        contador := 0; // Reinicio para el siguiente par
+      FIN_SI;
+        
+    FIN_MIENTRAS;
+
+    CERRAR(sec);
+  FIN_PROCESO;
+FIN_ACCION;
+
+
+
