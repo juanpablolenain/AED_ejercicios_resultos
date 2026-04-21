@@ -17,15 +17,15 @@ ACCION ejercicio_2_1_9 ES
       
       MIENTRAS NFDS (sec) HACER
     
-        MIENTRAS (v = " ") HACER   // estoy en blaco
+        MIENTRAS NFDS(sec) Y (v = " ") HACER   // estoy en blaco
           AVZ(sec,v);
         FIN_MIENTRAS
 
-        SI v = "I" ENTONCES         // estoy en la primer letra de una palabra
+        SI NFDS(sec) Y (v = "I") ENTONCES         // estoy en la primer letra de una palabra
           contador := contador + 1;
         FIN_SI;
 
-        MIENTRAS (v != " ") HACER   // estoy en una palabra
+        MIENTRAS NFDS(sec) Y (v != " ") HACER   // estoy en una palabra
           AVZ(sec,v);
         FIN_MIENTRAS
 
