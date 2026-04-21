@@ -1,0 +1,39 @@
+Se dispone de una secuencia de caracteres. Se desea determinar la cantidad de palabras que comienzan con la letra 'I'
+
+ACCION ejercicio_2_1_9 ES
+
+  AMIBIENTE
+
+    sec: secuencia de caracteres;
+    v: caracter;
+    contador: entero;
+
+    PROCESO
+
+      contador:= 0;
+
+      ARR(sec);
+      AVZ(sec,v);
+      
+      MIENTRAS NFDS (sec) HACER
+    
+        MIENTRAS (v = " ") HACER   // estoy en blaco
+          AVZ(sec,v);
+        FIN_MIENTRAS
+
+        SI v = "I" ENTONCES         // estoy en la primer letra de una palabra
+          contador := contador + 1;
+        FIN_SI;
+
+        MIENTRAS (v != " ") HACER   // estoy en una palabra
+          AVZ(sec,v);
+        FIN_MIENTRAS
+
+      FIN_MIENTRAS
+
+      ESC("La cantidad de palabras que comenzaron con la letra "I" son: ", contador);
+
+    FIN_PROCESO
+
+FIN_ACCION;
+
