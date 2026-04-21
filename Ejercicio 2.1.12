@@ -1,0 +1,72 @@
+Se dispone de una secuencia de caracteres. Se desea listar las palabras que comiencen con "ALG".
+
+ACCION ejercicio2_1_12 ES
+
+  AMBIENTE
+
+    sec: secuencia de caracteres;
+    v: caracter;
+    uno, dos, tres: caracter;
+
+    PROCESO
+
+      ARR(sec);
+      AVZ(sec,v);                 
+    
+      MIENTRAS NFDS(sec) HACER
+
+        MIENTRAS NFDS(sec) Y (v = " ") HACER
+          AVZ(sec,v)
+        FIN_MIENTRAS;
+
+        SI NFDS(sec) Y (v = "A") ENTONCES
+          uno:= v      
+          AVZ(sec,v)
+
+          SI NFDS(sec) Y (v = "L") ENTONCES           // ALTIM ALGARRO  ALGORITMO AJ  ALGOR
+            dos:= v
+            AVZ(sec,v)
+
+            SI NFDS(sec) Y (v = "G") ENTONCES
+              tres:= v
+              ESC(uno);
+              ESC(dos);
+              ESC(tres);
+              AVZ(sec,v)
+
+              MIENTRAS NFDS(sec) Y (v != " ") HACER
+                ESC(v);
+                AVZ(sec,v)
+              FIN_MIENTRAS;
+
+              SI NFDS(sec) ENTONCES
+                ESC(" ")
+              FIN_SI;
+
+            SINO
+              MIENTRAS NFDS(sec) Y (v != " ") HACER
+                AVZ(sec,v)
+              FIN_MIENTRAS;
+            FIN_SI;
+
+          SINO
+            MIENTRAS NFDS(sec) Y (v != " ") HACER
+              AVZ(sec,v)
+            FIN_MIENTRAS;
+          FIN_SI;
+
+        SINO
+          MIENTRAS NFDS(sec) Y (v != " ") HACER
+            AVZ(sec,v)
+          FIN_MIENTRAS;
+        FIN_SI;
+
+      FIN_MIENTRAS;
+
+    FIN_PROCESO;
+
+FIN_ACCION;
+          
+          
+
+      
