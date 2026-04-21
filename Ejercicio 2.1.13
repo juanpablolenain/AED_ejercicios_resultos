@@ -1,2 +1,75 @@
 A partir del ejercicio anterior, determinar el porcentaje que representan las palabras que comienzan con "ALG" sobre todas las palabras de la secuencia.
 
+ACCION ejercicio2_1_13 ES
+
+  AMBIENTE
+
+    sec: secuencia de caracteres;
+    v: caracter;
+    palabras: entero;
+    palabras_alg: entero;
+    porcentaje: real;
+
+    PROCESO
+
+      palabras_alg:= 0;
+      palabras:= 0;
+
+      ARR(sec);
+      AVZ(sec,v);                 
+    
+      MIENTRAS NFDS(sec) HACER
+
+        MIENTRAS NFDS(sec) Y (v = " ") HACER
+          AVZ(sec,v)
+        FIN_MIENTRAS;
+
+        SI NFDS(sec) ENTONCES     // si no es espacio ni FDS, cuenta una palabra.
+          palabras:= palabras + 1;
+        FIN_SI;
+
+        SI NFDS(sec) Y (v = "A") ENTONCES    
+          AVZ(sec,v)
+
+          SI NFDS(sec) Y (v = "L") ENTONCES          
+            AVZ(sec,v)
+
+            SI NFDS(sec) Y (v = "G") ENTONCES
+              palabras_alg := palabras_alg + 1;
+              AVZ(sec,v)
+
+              MIENTRAS NFDS(sec) Y (v != " ") HACER
+                AVZ(sec,v)
+              FIN_MIENTRAS;
+
+            SINO
+              MIENTRAS NFDS(sec) Y (v != " ") HACER
+                AVZ(sec,v)
+              FIN_MIENTRAS;
+            FIN_SI;
+
+          SINO
+            MIENTRAS NFDS(sec) Y (v != " ") HACER
+              AVZ(sec,v)
+            FIN_MIENTRAS;
+          FIN_SI;
+
+        SINO
+          MIENTRAS NFDS(sec) Y (v != " ") HACER
+            AVZ(sec,v)
+          FIN_MIENTRAS;
+        FIN_SI;
+
+      FIN_MIENTRAS;
+
+      SI (palabras != 0) ENTONCES
+        porcentaje:= (palabras_alg * 100)/palabras
+      SINO
+        porcentaje:= 0
+      FIN_SI;
+
+      ESC("El porcentaje de palabras que comienzan con ´ALG´ en la secuencia sobre el total de palabras es del: ", porcentaje, "%");
+
+    FIN_PROCESO;
+
+FIN_ACCION;
