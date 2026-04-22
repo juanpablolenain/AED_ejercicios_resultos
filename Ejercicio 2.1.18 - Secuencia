@@ -1,0 +1,69 @@
+Escribir un algoritmo que produzca una secuencia de salida que contenga una oración formada por las palabras en posición par de cada oración
+de una secuencia texto de entrada, que además comienzan con la letra 'M'.
+
+
+-  Palabras en posición par de cada oración y que comiencen con M
+
+ACCION ejercicio2_1_18 ES
+
+  AMBIENTE
+
+    sec, sec_salida: secuencia de caracteres;
+    v: caracter;
+    es_par: entero;
+
+    PROCESO
+
+      es_par:= 0;
+ 
+      CREAR(sec_salida);                
+      ARR(sec);
+      AVZ(sec,v);
+
+      MIENTRAS NFDS(sec) HACER
+
+        MIENTRAS NFDS(sec) Y (v = " ") HACER
+          AVZ(sec,v);
+        FIN_MIENTRAS;
+
+        SI NFDS(sec) ENTONCES
+
+          SI (v = ".") ENTONCES  // nueva oración
+              es_par:= 0
+
+            MIENTRAS NFDS(sec) Y (v = ".") HACER
+              AVZ(sec,v)
+            FIN_MIENTRAS;
+
+          SINO                    // palabra de la misma oración
+            es_par:= es_par + 1; // cuento paridad
+            SI NFDS(sec) Y (es_par != 0) Y (es_par MOD 2 = 0) Y (v = "M") ENTONCES
+
+              MIENTRAS NFDS(sec) Y (v != " ") Y (v != ".") HACER       // Recorro la palabra y la guardo en la nueva secuencia
+                ESC(sec_salida,v);
+                AVZ(sec,v);
+              FIN_MIENTRAS;
+
+              ESC(sec_salida, " ");
+
+            SINO
+              MIENTRAS NFDS(sec) Y (v != " ") Y (v != ".") HACER     // Solo recorro la palabra
+                AVZ(sec,v);
+              FIN_MIENTRAS;
+            FIN_SI;
+          FIN_SI;
+        FIN_SI;
+
+      FIN_MIENTRAS;
+
+      CERRAR(sec);
+      CERRAR(sec_salida);
+
+    FIN_PROCESO;
+
+FIN_ACCION;
+
+    
+
+      
+        
