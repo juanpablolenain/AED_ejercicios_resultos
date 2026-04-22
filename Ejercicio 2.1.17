@@ -12,7 +12,7 @@ ACCION ejercicio2_1_17 ES
 
   AMBIENTE
 
-    costo: real;
+    costo, promedio: real;
     V1, V2: real;
     sec: secuencia de caracteres;
     v: caracter;
@@ -21,6 +21,7 @@ ACCION ejercicio2_1_17 ES
     PROCESO
 
       costo:= 0;
+      promedio:= 0;
       letra:= 0;
       palabra:= 0;
 
@@ -52,8 +53,8 @@ ACCION ejercicio2_1_17 ES
       FIN_MIENTRAS;
 
       SI (palabra > 0) ENTONCES
-        costo := letra/palabra;
-        SI (costo > 5) ENTONCES
+        promedio := letra/palabra;
+        SI (promedio > 5) ENTONCES
           costo := palabra * V2
         SINO
           costo := palabra * V1
