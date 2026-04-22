@@ -1,0 +1,29 @@
+Dada una secuencia de caracteres, generar otra secuencia con todas las palabras de tres caracteres.
+Informar el porcentaje de las mismas, sobre el total de palabras de la secuencia de entrada.
+Considerar que puede haber más de un blanco entre palabras.
+
+ACCION ejercicio2_1_19 ES
+
+  AMBIENTE
+
+    sec, sec_salida: secuencia de caracteres;
+    tres_caracteres, palabras := entero;
+    v: caracter;
+
+    PROCESO
+
+      CREAR(sec_salida);
+      ARR(sec);
+      AVZ(sec,v);
+
+      MIENTRAS NFDS(sec) HACER
+
+        MIENTRAS NFDS(sec) Y (v = " ") Y (v = ".") HACER
+          AVZ(sec,v);
+        FIN_MIENTRAS;
+
+        MIENTRAS NFDS(sec) Y (v = " ") Y (v = ".") HACER
+          AVZ(sec,v);
+        FIN_MIENTRAS;
+
+      FIN_MIENTRAS;
