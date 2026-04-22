@@ -1,0 +1,30 @@
+Se dispone de una secuencia de números de DNI asignados a un circuito electoral, generar otra secuencia de números que contenga los DNI múltiplos de 3.
+
+
+ACCION ejercicio2_1_16 ES
+
+  AMBIENTE
+
+    sec: secuencia de enteros;
+    sec_salida: secuciencia de enteros;
+    v: entero;
+
+    PROCESO
+
+      CREAR(sec_salida);
+      ARR(sec);
+      AVZ(sec,v);
+
+      MIENTRAS NFDS(sec) HACER
+        SI (v MOD 3 = 0) ENTNOCES
+          ESC(sec_salida,v);
+        FIN_SI;
+        AVZ(sec,v);
+      FIN_MIENTRAS;
+
+      CERRAR(sec);
+      CERRAR(sec_salida);  
+    
+    FIN_PROCESO;
+
+FIN_ACCION;
