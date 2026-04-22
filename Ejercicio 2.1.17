@@ -1,0 +1,81 @@
+Se desea calcular el costo de un telegrama, que se determina en función del número de palabras (que vale V1 cada una),
+salvo que el promedio de letras por palabra supere las cinco letras, caso en que cada palabra vale V2.
+
+-   Contar todas las palabras de la secuencia --> contador
+-   Contar las letras de todas las palabras de la secuencia --> contador
+
+-   Una palabra comienza despúes de un caracter disinto de blanco y de punto
+-   Una palabra termina al seguirle un blanco o punto
+-   Las letras de una palabra se cuentan mientras (v) sea distinto de blanco o de punto
+
+ACCION ejercicio2_1_17 ES
+
+  AMBIENTE
+
+    costo: real;
+    V1, V2: real;
+    sec: secuencia de caracteres;
+    v: caracter;
+    palabra, letra: entero;
+
+    PROCESO
+
+      costo:= 0;
+      letra:= 0;
+      palabra:= 0;
+
+      ESC("Ingrese el costo V1: ");
+      LEER(V1);
+      ESC("Ingrese el costo V2: ");
+      LEER(V2);
+
+      ARR(sec);
+      AVZ(sec,v);
+
+      MIENTRAS NFDS(sec) HACER                
+        MIENTRAS NFDS(sec) Y (v = " ") HACER
+          AVZ(sec,v);
+        FIN_MIENTRAS;
+
+        SI NFDS(sec) Y (v != ".") ENTONCES
+          palabra:= palabra + 1;
+          letra:= letra + 1;
+        FIN_SI;
+ 
+          AVZ(sec,v);
+
+          MIENTRAS NFDS(sec) Y (v != " ") Y (v != ".") HACER
+            letra:= letra + 1;
+            AVZ(sec,v);
+          FIN_MIENTRAS;
+
+      FIN_MIENTRAS;
+
+      SI (palabra > 0) ENTONCES
+        costo := letra/palabra;
+        SI (costo > 5) ENTONCES
+          costo := palabra * V2
+        SINO
+          costo := palabra * V1
+        FIN_SI;
+      FIN_SI;
+
+      ESC("El costo del telegrama es: $", costo);
+
+    FIN_PROCESO;
+
+FIN_ACCION;
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
