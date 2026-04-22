@@ -19,11 +19,11 @@ ACCION ejercicio2_1_11 ES
 
       MIENTRAS NFDS(sec) HACER
       
-        MIENTRAS NFDS (sec) Y (v = " ") HACER  //estoy en blancos y los salteo
+        MIENTRAS NFDS (sec) Y ((v = " ") O (v = ".")) HACER  //estoy en blancos o punto y los salteo
           AVZ(sec,v)
         FIN_MIENTRAS;
 
-        MIENTRAS NFDS (sec) Y (v != " ") HACER  //estoy en palabra y cuento sus caracteres
+        MIENTRAS NFDS (sec) Y (v != " ") Y (v != ".") HACER  //estoy en palabra y cuento sus caracteres
           contador:= contador + 1
           AVZ(sec,v)
         FIN_MIENTRAS; 
@@ -31,9 +31,9 @@ ACCION ejercicio2_1_11 ES
         SI (contador = 4) ENTONCES  
           palabras:= palabras + 1
           contador := 0
-        SINO
-          contador :=0
         FIN_SI;
+
+          contador :=0;
 
     FIN_MIENTRAS;
 
