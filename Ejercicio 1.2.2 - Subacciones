@@ -1,0 +1,43 @@
+Diseñe una función que devuelva la suma de los dígitos del número natural suministrado como parámetro.
+
+ACCION ejercicio1_2_2 ES
+
+  AMBIENTE
+
+    num: entero;
+
+    FUNCION suma_digitos(x:entero): entero
+
+      AMBIENTE
+
+        sum, aux: entero;
+
+      PROCESO
+
+        sum:= 0;
+        aux:= x;
+
+        MIENTRAS (aux > 0) HACER     
+
+          sum:= sum + (aux MOD 10);  
+          aux:= aux DIV 10;
+
+        FIN_MIENTRAS
+
+
+    FIN_FUNCION;
+
+  PROCESO
+
+    REPETIR
+
+      ESC("Ingrese un número natural: ");
+      LEER(num);
+
+    HASTA QUE (num >= 0);
+
+    ESC("La suma de las cifras que componen al número ingresado es igual a: ", suma_digitos(num));
+
+  FIN_PROCESO;
+
+FIN_ACCION;
