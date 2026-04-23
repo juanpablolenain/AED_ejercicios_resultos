@@ -1,0 +1,26 @@
+Realice una función que dado un número devuelva su cuadrado.
+
+ACCION ejercicio1_2_1 ES
+
+  AMBIENTE
+
+    n, c: entero;
+
+    FUNCION cuadrado(x:entero): entero   // la función devuelve el valor en su nombre
+
+        cuadrado:= x**2;
+
+    FIN_FUNCION;
+
+    PROCESO
+
+      ESC("Ingrese un número y el programa devolverá su cuadrado: ");
+      LEER(n);
+
+      c:= cuadrado(n);
+
+      ESC("El cuadrado de: ", n," es: ",c);
+
+    FIN_PROCESO;
+
+FIN_ACCION;
