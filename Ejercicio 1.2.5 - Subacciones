@@ -1,0 +1,35 @@
+Escribir una función que verifique si un caracter introducido es un dígito o no.
+
+
+ACCION ejercicio1_2_5 ES
+
+  AMBIENTE
+
+    input: caracter;
+
+    FUNCION es_digito(x: caracter): booleano
+      AMBIENTE
+        conjunto = {"0","1","2","3","4","5","6","7","8","9"};
+      PROCESO
+        SI (x en conjunto) ENTONCES
+          es_digito:= true;
+        SINO
+          es_digito:= false;
+        FIN_SI;
+      FIN_PROCESO;
+    FIN_FUNCION;
+
+    PROCESO
+
+      ESC("Ingrese una tecla del teclado: ");
+      LEER(input);
+
+      SI (es_digito(input)) ENTONCES
+        ESC("La tecla ingresada por teclado es un dígito.");
+      SINO
+        ESC("La tecla ingresada por teclado NO es un dígito.");
+      FIN_SI;
+
+    FIN_PROCESO;
+
+FIN_ACCION;
