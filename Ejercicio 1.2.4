@@ -1,0 +1,64 @@
+Elaborar una función que reciba un número entero y retorne -1 si el número es negativo. Si el número es positivo debe devolver una clave
+calculada de la siguiente manera: Se suma cada dígito que compone el número y a esa suma se le calcula el modulo 7.
+Por ejemplo: para la cifra 513, la clave será 5+1+3 =9; 9 mod 7 = 2.
+Utilice la función para diseñar un algoritmo que permita leer varios valores y determine, para cada uno, si el número leído fue negativo o,
+si fue positivo, que clave le corresponde.
+
+
+ACCION ejercicio1_2_4 ES
+
+  AMBIENTE
+
+    num, result, seguir: entero;
+
+    FUNCION evaluar_numero(x: entero): entero
+
+      AMBIENTE
+      
+        suma_digitos, clave: entero;
+        
+      PROCESO
+      
+        suma_digitos:= 0;
+        
+        SI (x < 0) ENTONCES
+          evaluar_numero:= -1;
+        SINO
+          MIENTRAS (x > 0) HACER
+            suma_digitos:= suma_digitos + (x MOD 10);
+            x:= x DIV 10;
+          FIN_MIENTRAS;
+          clave:= (suma_digitos MOD 7);
+          evaluar_numero:= clave;
+        FIN_SI;
+
+      FIN_PROCESO;
+    FIN_FUNCION;
+
+    PROCESO
+
+      REPETIR
+      
+        ESC("Ingrese un número entero: ");
+        LEER(num);
+        result:= evaluar_numero(num);
+        SI(result = -1) ENTONCES
+          ESC(result, ". El número ingresado fue negativo.");
+        SINO
+          ESC("Su clave es: ", result);
+        FIN_SI;
+        ESC("¿Desea ingresar otro número? --> 1 por SÍ, 0 por NO: ");
+        LEER(seguir);
+        
+      HASTA QUE (seguir = 0);
+
+    FIN_PROCESO;
+    
+  FIN_ACCION;
+
+
+
+
+
+      
+    
