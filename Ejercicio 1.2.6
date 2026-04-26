@@ -1,0 +1,56 @@
+Escribir una función que lea desde el teclado las unidades y el precio de un producto que se quiere comprar,
+y en función de las unidades introducidas calcule un descuento o no, según corresponda:
+cuando las unidades excedan media docena se aplicará 4% y el 10% cuando excedan la docena.
+La función debe devolver como resultado el valor del descuento o cero, en caso de que no corresponda.
+
+ACCION ejercicio1_2_6 ES
+
+  AMBIENTE
+
+    unidades: entero;
+    precio, d: real;
+
+    FUNCION descuento(p:real, u:entero): real
+      AMBIENTE
+        precio_sin_descuento: real
+        
+        PROCESO
+        precio_sin_descuento:= p*u;
+        
+          SI(u > 6) Y (u <= 12) ENTONCES
+            descuento:= precio_sin_descuento * 0.04;
+          SINO
+            SI (u > 12) ENTONCES
+              descuento:= precio_sin_descuento * 0.1;
+            SINO
+              descuento := 0;
+            FIN_SI;
+          FIN_SI;
+
+    FIN_FUNCION;
+
+    PROCESO
+
+      ESC("Ingrese el valor del producto a llevar: ");
+      LEER(precio);
+      ESC("Ingrese las unidades del producto a llevar: ");
+      LEER(unidades);
+
+      d:= descuento(precio, unidades);
+
+      SI (d = 0) ENTONCES
+        ESC("Usted no recibe descuento.")
+        ESC("Descuento: $", d);
+      SINO
+        ESC("Su descuento es: $", d);
+      FIN_SI;
+
+    FIN_PROCESO;
+
+  FIN_ACCION;
+
+
+
+
+
+      
