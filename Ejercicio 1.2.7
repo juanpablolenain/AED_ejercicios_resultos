@@ -1,0 +1,49 @@
+Escribir un procedimiento que verifique si un caracter introducido es un dígito o no.
+
+ACCION ejercicio1_2_7 ES
+
+  AMBIENTE
+
+    conjunto = {"0","1","2","3","4","5","6","7","8","9"};
+    input: caracter;
+
+    PROCEDIMIENTO caracter_o_digito(x: caracter) ES
+      SI (x EN conjunto) ENTONCES
+        ESC("La tecla ingresada es un dígito");
+      SINO
+        ESC("La tecla ingresada en un caracter");
+      FIN_SI;
+    FIN_PROCEDIMIENTO;
+
+    PROCESO
+      ESC("Ingrese una tecla desde el teclado: ");
+      LEER(input);
+      caracter_o_digito(input);
+    FIN_PROCESO;
+    
+FIN_ACCION;
+
+ALTERNATIVA utilizando rango en lugar de conjunto:
+
+ACCION ejercicio1_2_7 ES
+
+  AMBIENTE
+
+    input: caracter;
+
+    PROCEDIMIENTO caracter_o_digito(x: caracter) ES
+      SI (x >= "0") ENTONCES
+        ESC("La tecla ingresada es un dígito");
+      SINO
+        ESC("La tecla ingresada en un caracter");
+      FIN_SI;
+    FIN_PROCEDIMIENTO;
+
+    PROCESO
+      ESC("Ingrese una tecla desde el teclado: ");
+      LEER(input);
+      caracter_o_digito(input);
+    FIN_PROCESO;
+    
+FIN_ACCION;
+      
