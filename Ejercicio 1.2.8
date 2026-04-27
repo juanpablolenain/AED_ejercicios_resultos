@@ -1,0 +1,30 @@
+Crear un procedimiento que intercambie los valores de dos variables numéricas.
+
+ACCION ejercicio1_2_8 ES
+
+  AMBIENTE
+
+    uno, dos: entero;
+
+    PROCEDIMIENTO intercambio(x,y: entero) ES
+      AMBIENTE
+        aux: entero;
+      PROCESO
+        aux:= x;
+        x:= y;
+        y:= aux;
+        ESC("La valores se han intercambiado: ")
+        ESC("1: ", x);
+        ESC("2: ", y);
+      FIN_PROCESO;
+    FIN_PROCEDIMIENTO;
+
+    PROCESO
+      ESC("Ingrese el primer número: ");
+      LEER(uno);
+      ESC("Ingrese el segundo número: ");
+      LEER(dos);
+      intercambio(uno,dos);
+    FIN_PROCESO;
+
+FIN_ACCION;
