@@ -1,0 +1,85 @@
+Dada una secuencia de caracteres, generar otra secuencia con todas las palabras de tres caracteres.
+Informar el porcentaje de las mismas, sobre el total de palabras de la secuencia de entrada.
+Considerar que puede haber más de un blanco entre palabras.
+
+ACCION ejercicio2_1_19 ES
+
+  AMBIENTE
+
+    sec, sec_salida: secuencia de caracter;
+    v: caracter;
+    a,b,c: caracter;
+    palabra, tres, c: entero;
+    promedio: real;
+
+    PROCESO
+
+      c:= 0;
+      tres:= 0;
+      palabra:= 0;
+
+      CREAR(sec_salida);
+      ARR(sec);
+      AVZ(sec,v);
+
+      MIENTRAS NFDS(sec) HACER    / . ..HOLA... hola
+    
+        MIENTRAS NFDS(sec) Y (v = " ") HACER
+          AVZ(sec,v);
+        FIN_MIENTRAS;
+
+        MIENTRAS NFDS(sec) Y (v = ".")
+          AVZ(sec,v);
+        FIN_MIENTRAS;
+
+        MIENTRAS NFDS(sec) Y (v != " ") Y (v != ".") // entro a palabra
+          c:= c + 1;
+
+          SI (c <= 3) ENTONCES
+              SI (c = 1) ENTONCES
+                a:= v;
+              SINO
+                SI (c = 2) ENTONCES
+                  b:= v;
+                SINO
+                  c:= v;
+                FIN_SI;
+              FIN_SI;
+          FIN_SI;
+
+          AVZ(sec,v);
+
+        FIN_MIENTRAS; // salgo de palabra
+
+        SI (c > 0) ENTONCES
+          palabra:= palabra + 1;
+          SI (c = 3) ENTONCES // si la palabra contiene solo 3 letras, aumento contador "tres"
+            tres:= tres + 1;
+          FIN_SI;
+          c:= 0;
+        FIN_SI;
+
+      FIN_MIENTRAS;
+
+      promedio:= (tres*100)/palabra;
+
+      ESC("El promedio de palabras con 3 letras sobre el total de palabras es del: ", "%");
+
+      FIN_PROCESO;
+
+FIN_ACCION;
+      
+
+
+
+
+
+
+
+
+
+
+
+          
+
+      
