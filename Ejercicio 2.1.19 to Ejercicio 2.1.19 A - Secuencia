@@ -1,0 +1,69 @@
+ACCION ejercicio2_1_19 ES
+
+  AMBIENTE
+
+    sec, sec_salida: secuencia de caracter;
+    v: caracter;
+    a,b,c: caracter;
+    palabra, tres, cont: entero;
+    porcentaje: real;
+
+    PROCESO
+
+      cont:= 0;
+      tres:= 0;
+      porcentaje:= 0;
+      palabra:= 0;
+
+      CREAR(sec_salida);
+      ARR(sec);
+      AVZ(sec,v);
+
+      MIENTRAS NFDS(sec) HACER    / . ..HOLA... hola
+    
+        MIENTRAS NFDS(sec) Y ((v = " ") O (v = ".")) HACER // salteo todo lo que no sea una letra
+          AVZ(sec,v);
+        FIN_MIENTRAS;
+
+        SI NFDS(sec) ENTONCES
+          palabra:= palabra + 1;
+
+          MIENTRAS NFDS(sec) Y (v != " ") Y (v != ".") HACER // entro a palabra
+            cont:= cont + 1;
+            SI (cont <= 3) ENTONCES
+              SI (cont = 1) ENTONCES
+                a:= v;
+              SINO
+                SI (cont = 2) ENTONCES
+                  b:= v;
+                SINO
+                  c:= v;
+                FIN_SI;
+              FIN_SI;
+            FIN_SI;
+            AVZ(sec,v);
+          FIN_MIENTRAS; // salgo de palabra
+
+          SI (cont = 3) ENTONCES // si la palabra contiene solo 3 letras, aumento contador "tres"
+            ESCRIBIR(sec_salida,a);
+            ESCRIBIR(sec_salida,b);
+            ESCRIBIR(sec_salida,c);
+            tres:= tres + 1;
+          FIN_SI;
+          cont:= 0;
+        FIN_SI;
+
+      FIN_MIENTRAS;
+
+      SI (palabra > 0) ENTONCES
+        porcentaje:= (tres*100)/palabra;
+      FIN_SI;
+
+      ESC("El promedio de palabras con 3 letras sobre el total de palabras es del: ", porcentaje, "%");
+
+      CERRAR(sec);
+      CERRAR(sec_salida);
+
+      FIN_PROCESO;
+
+FIN_ACCION;
