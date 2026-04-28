@@ -1,0 +1,65 @@
+Promociona si: promedio ≥ 8 y es regular
+O bien:
+promedio ≥ 9 (independientemente de regularidad)
+En cualquier otro caso → no promociona
+
+ACCION promocion ES
+  AMBIENTE
+
+    regularidad, error: boolean;
+    r: entero;
+    promedio: real;
+
+    FUNCION verificar_promocion(reg: boolean, pro: real): boolean
+
+      SI ((pro ≥ 8) Y (reg) O (pro ≥ 9)) ENTONCES
+        verificar_promocion:= verdadero;
+      SINO
+        verificar_promocion:= falso;
+      FIN_SI;
+
+    FIN_FUNCION;     
+
+    PROCESO
+
+      error:= false;
+      promedio:= 0;
+
+      REPETIR
+
+        SI (error) ENTONCES
+          ESC("El promedio debe ser un número entre 0 y 10. Intene de nuevo.");
+        FIN_SI;
+
+        ESC("Ingrese su promedio: ");
+        LEER(promedio);
+        error:= true;
+
+      HASTA QUE (promedio >= 0) Y (promedio =< 10);
+
+      REPETIR
+        ESC("¿Usted es alumno regular? - Presione 1 para SÍ o 2 para NO: ");
+        LEER(r)
+      HASTA QUE (r = 1) O (r = 2);
+
+      SI (r = 1) ENTONCES
+        regularidad := verdadero;
+      SINO
+        regularidad:= falso;
+      FIN_SI;
+
+      SI (verificar_promocion(regularidad, promedio)) ENTONCES
+        ESC("El alumno promocionó la materia");
+      SINO
+        ESC("El alumno no promocionó la materia");
+      FIN_SI;
+
+    FIN_PROCESO;
+
+FIN_ACCION;
+        
+
+
+
+
+
