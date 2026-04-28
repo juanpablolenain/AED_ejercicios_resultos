@@ -9,13 +9,14 @@ ACCION ejercicio2_1_19 ES
     sec, sec_salida: secuencia de caracter;
     v: caracter;
     a,b,c: caracter;
-    palabra, tres, c: entero;
-    promedio: real;
+    palabra, tres, cont: entero;
+    porcentaje: real;
 
     PROCESO
 
-      c:= 0;
+      cont:= 0;
       tres:= 0;
+      porcentaje:= 0;
       palabra:= 0;
 
       CREAR(sec_salida);
@@ -28,42 +29,47 @@ ACCION ejercicio2_1_19 ES
           AVZ(sec,v);
         FIN_MIENTRAS;
 
-        MIENTRAS NFDS(sec) Y (v = ".")
+        MIENTRAS NFDS(sec) Y (v = ".") HACER
           AVZ(sec,v);
         FIN_MIENTRAS;
 
         MIENTRAS NFDS(sec) Y (v != " ") Y (v != ".") // entro a palabra
-          c:= c + 1;
-
-          SI (c <= 3) ENTONCES
-              SI (c = 1) ENTONCES
+          cont:= cont + 1;
+          SI (cont <= 3) ENTONCES
+              SI (cont = 1) ENTONCES
                 a:= v;
               SINO
-                SI (c = 2) ENTONCES
+                SI (cont = 2) ENTONCES
                   b:= v;
                 SINO
                   c:= v;
                 FIN_SI;
               FIN_SI;
           FIN_SI;
-
           AVZ(sec,v);
-
         FIN_MIENTRAS; // salgo de palabra
 
-        SI (c > 0) ENTONCES
+        SI (cont > 0) ENTONCES
           palabra:= palabra + 1;
-          SI (c = 3) ENTONCES // si la palabra contiene solo 3 letras, aumento contador "tres"
+          SI (cont = 3) ENTONCES // si la palabra contiene solo 3 letras, aumento contador "tres"
+            ESCRIBIR(sec_salida,a);
+            ESCRIBIR(sec_salida,b);
+            ESCRIBIR(sec_salida,c);
             tres:= tres + 1;
           FIN_SI;
-          c:= 0;
+          cont:= 0;
         FIN_SI;
 
       FIN_MIENTRAS;
 
-      promedio:= (tres*100)/palabra;
+      SI (palabra > 0) ENTONCES
+        porcentaje:= (tres*100)/palabra;
+      FIN_SI;
 
-      ESC("El promedio de palabras con 3 letras sobre el total de palabras es del: ", "%");
+      ESC("El promedio de palabras con 3 letras sobre el total de palabras es del: ", porcentaje "%");
+
+      CERRAR(sec);
+      CERRAR(sec_salida);
 
       FIN_PROCESO;
 
