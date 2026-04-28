@@ -1,3 +1,7 @@
+Dada una secuencia de caracteres, generar otra secuencia con todas las palabras de tres caracteres.
+Informar el porcentaje de las mismas, sobre el total de palabras de la secuencia de entrada.
+Considerar que puede haber más de un blanco entre palabras.
+
 ACCION ejercicio2_1_19 ES
 
   AMBIENTE
