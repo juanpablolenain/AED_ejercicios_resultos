@@ -1,0 +1,62 @@
+Escribir un algoritmo que produzca una secuencia de salida que contenga una oración formada por las palabras en posición par de cada oración
+de una secuencia texto de entrada, que además comienzan con la letra 'M'.
+
+Análisis previo:
+- Una oracion finaliza con un punto
+
+ACCION ejercicio2_1_18 ES
+
+  AMBIENTE
+    sec, sec_salida: secuencia de caracter;
+    v: caracter;
+    par: entero;
+
+    PROCESO
+    
+      CREAR(sec_salida);
+      ARR(sec);
+      AVZ(sec,v);
+
+      par:= 0;                
+      
+      MIENTRAS NFDS(sec) HACER
+        MIENTRAS NFDS(sec) Y (v != ".") HACER   // Dentro de este mientras se trata una oracion.
+          MIENTRAS NFDS(sec) Y (v = " ") HACER  // Salteo espacios en blanco.
+            AVZ(sec,v);
+          FIN_MIENTRAS 
+          
+            SI NFDS(sec) Y (v != ".") ENTONCES  // Como salí de MIENTRAS anterior, ya no estoy en blanco. 
+                                              // Pregunto por FDS y si (v) es distinto a punto. Si se cumple, estoy en la primer letra de una palabra.
+                                              // Cuento su paridad con --> par:= par + 1;
+            par:= par + 1;
+          FIN_SI;
+
+          SI (par MOD 2 = 0) Y (v = "M") ENTONCES  // Si esta condición se cumple, debo de copiar la palabra en la secuencia de salida.
+            MIENTRAS NFDS(sec) Y (v  != " ") Y (v != ".") HACER  // Mientras esta condición se cumpla, estoy dentro de una palabra.
+              ESCRIBIR(sec_salida,v);
+              AVZ(sec,v);
+            FIN_MIENTRAS;
+            ESC(sec_salida, " ");
+          SINO
+            MIENTRAS NFDS(sec) Y (v  != " ") Y (v != ".") HACER  // Mientras esta condición se cumpla, estoy dentro de una palabra.
+              AVZ(sec,v);
+            FIN_MIENTRAS;
+          FIN_SI;
+        FIN_MIENTRAS;
+        
+        SI NFDS(sec) Y (v = ".") ENTNOCES
+          par:= 0; // reinicio a cero porque voy a entrar a una nueva oración.
+          AVZ(sec,v);
+        FIN_SI;
+      FIN_MIENTRAS;
+
+      CERRAR(sec);
+      CERRAR(sec_salida);
+
+    FIN_PROCESO;
+
+  FIN_ACCION;
+
+      
+
+      
