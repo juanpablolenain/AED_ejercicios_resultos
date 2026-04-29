@@ -1,0 +1,31 @@
+ACCION contar_palabras ES
+
+  AMBIENTE
+    sec: secuencia de caracter;
+    v: caracter;
+    palabra: entero;
+
+    PROCESO
+    palabra:= 0;
+
+    ARR(sec);
+    AVZ(sec,v);
+
+    MIENTRAS NFDS(sec) HACER
+      MIENTRAS NFDS(sec) Y ((v = " ") O (v = ".")) HACER
+        AVZ(sec,v);
+      FIN_MIENTRAS;
+
+      SI NFDS(sec) Y (v != " ") Y (v != ".") ENTONCES
+        palabra:= palabra + 1;
+      FIN_SI;
+
+      MIENTRAS NFDS(sec) Y (v != " ") Y (v != ".") HACER
+        AVZ(sec,v);
+      FIN_MIENTRAS;
+    FIN_MIENTRAS
+
+    ESC("La cantidad de palabras totales en la secuencia son: ", palabra);
+
+  FIN_PROCESO;
+FIN_ACCION;
