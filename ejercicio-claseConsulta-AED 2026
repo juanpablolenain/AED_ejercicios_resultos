@@ -27,22 +27,20 @@ ACCION biblioteca_universitaria ES
     FIN_FUNCION;
 
     FUNCION cumpleCondicion(ult_digito: entero): boolean
-      AMBIENTE
-      conjunto: {4, 5, 6, 7};
-        PROCESO
-          SI (ult_digito EN conjunto) ENTONCES
-            obtenerUltimoDigito:= verdadero;
+          SI ((ult_digito >= 4) Y (ult_digito <= 7)) ENTONCES
+            cumpleCondicion:= verdadero;
           SINO
-            obtenerUltimoDigito:= FALSO;
+            cumpleCondicion:= FALSO;
           FIN_SI;
-        FIN_FUNCION;
+    FIN_FUNCION;
 
     PROCESO
+
     CREAR(sec_salida);
     ARR(sec_entrada);
     AVZ(sec_entrada, v);
 
-    MIENTRAS (v != 0) HACER
+    MIENTRAS (v <> 0) HACER
       ultimoDigito := obtenerUltimoDigito(v);
       califica:= cumpleCondicion(ultimoDigito);
       SI (califica) ENTONCES
@@ -54,13 +52,4 @@ ACCION biblioteca_universitaria ES
     CERRAR(sec_entrada);
     CERRAR(sec_salida);
 
-  FIN_PROCESO;
-
 FIN_ACCION;
-
-
-
-Preguntas: 
-
-Si dentro de la funcion no hay que declarar variables locales, ¿se escribe igual "PROCESO"?
-Cómo se expresa un conjunto en pseudocódigo? ¿rango: (digito >= 4) Y (digito <= 7)?
