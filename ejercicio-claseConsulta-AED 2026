@@ -1,0 +1,66 @@
+Una biblioteca universitaria desea organizar el acceso a sus salas de estudio.
+Para ello cuenta con una secuencia de números enteros que representan el DNI de los estudiantes, la cual finaliza con el valor 0.
+Debido a la capacidad limitada de las salas, se desea generar una nueva secuencia con los DNI de aquellos estudiantes
+cuyo número de documento termine en 4, 5, 6 o 7.
+
+El algoritmo debe resolverse utilizando las siguientes funciones, que debes desarrollar:
+1. obtenerUltimoDigito: Definir una función llamada obtenerUltimoDigito que:
+* Reciba como parámetro un número entero correspondiente al DNI de un estudiante
+* Calcule y retorne el último dígito del número
+
+2. cumpleCondicion
+Definir una función llamada cumpleCondicion que:
+* Reciba como parámetro un número entero correspondiente al último dígito de un DNI
+* Determine si dicho dígito pertenece al conjunto {4, 5, 6, 7}
+* Retorne verdadero en caso de cumplirse la condición, o falso en caso contrario
+
+ACCION biblioteca_universitaria ES
+
+  AMBIENTE
+    sec_entrada, sec_salida: secuencia de entero;
+    v: entero;
+    ultimoDigito: entero;
+    califica: boolean;
+
+    FUNCION obtenerUltimoDigito(dni: entero): entero
+      obtenerUltimoDigito:= dni MOD 10;
+    FIN_FUNCION;
+
+    FUNCION cumpleCondicion(ult_digito: entero): boolean
+      AMBIENTE
+      conjunto: {4, 5, 6, 7};
+        PROCESO
+          SI (ult_digito EN conjunto) ENTONCES
+            obtenerUltimoDigito:= verdadero;
+          SINO
+            obtenerUltimoDigito:= FALSO;
+          FIN_SI;
+        FIN_FUNCION;
+
+    PROCESO
+    CREAR(sec_salida);
+    ARR(sec_entrada);
+    AVZ(sec_entrada, v);
+
+    MIENTRAS (v != 0) HACER
+      ultimoDigito := obtenerUltimoDigito(v);
+      califica:= cumpleCondicion(ultimoDigito);
+      SI (califica) ENTONCES
+        ESC(sec_salida, v);
+      FIN_SI;
+      AVZ(sec_entrada, v);
+    FIN_MIENTRAS;
+
+    CERRAR(sec_entrada);
+    CERRAR(sec_salida);
+
+  FIN_PROCESO;
+
+FIN_ACCION;
+
+
+
+Preguntas: 
+
+Si dentro de la funcion no hay que declarar variables locales, ¿se escribe igual "PROCESO"?
+Cómo se expresa un conjunto en pseudocódigo? ¿rango: (digito >= 4) Y (digito <= 7)?
