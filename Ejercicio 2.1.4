@@ -21,3 +21,34 @@ ACCION socios ES
       ESC("El númer total de socios es: ", cont);
 
 FIN_ACCION;
+
+La secuencia de socios del problema anterior tiene el inconveniente de que los números están ordenados pero no son correlativos. Se desea generar una secuencia que contenga los números de socios que no figuran en la secuencia de socios.
+
+ACCION socios_2 ES
+  AMBIENTE
+    sec_entrada, sec_salida: secuencia de entero;    
+    v: entero;
+    anterior: entero;
+    PROCESO
+      CREAR(sec_salida);            
+      ARR(sec_entrada);
+      AVZ(sec_entrada,v);
+      MIENTRAS NFDS(sec_entrada) HACER
+        anterior:= v;                  
+        AVZ(sec_entrada,v);                 
+        SI (anterior <> (v - 1)) ENTONCES
+          anterior:= anterior + 1;        
+          MIENTRAS (anterior < v) HACER   
+            ESC(sec_salida, anterior);  
+            anterior:= anterior + 1;
+          FIN_MIENTRAS
+        FIN_SI;
+      FIN_MIENTRAS;
+      CERRAR(sec_entrada);
+      CERRAR(sec_salida);
+FIN_ACCION;
+
+
+
+
+
