@@ -1,0 +1,23 @@
+Se dispone de una secuencia de números de socios, y se desea saber la cantidad de socios que están registrados.
+
+ACCION socios ES
+
+  AMBIENTE
+    sec: secuencia de entero;
+    v: entero;
+    cont: entero;
+
+    PROCESO
+      cont:= 0;
+      
+      ARR(sec);
+      AVZ(sec,v);
+
+      MIENTRAS NFDS(sec) HACER
+        cont:= cont + 1;
+        AVZ(sec,v);
+      FIN_MIENTRAS;
+      
+      ESC("El númer total de socios es: ", cont);
+
+FIN_ACCION;
