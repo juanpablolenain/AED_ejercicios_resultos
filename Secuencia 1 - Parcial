@@ -1,0 +1,118 @@
+Se cuenta con una secuencia de caracteres que almacena expresiones matemáticas. Implementar una función en pseudocódigo
+que determine si los delimitadores ( (), [], {} ) de cada expresión están equilibrados.
+Hay equilibrio cuando el delimitador de apertura cuenta con el delimitador de cierre en el orden es el correcto.
+Ejemplo de expresión correcta: ()((())){([()])} • Ejemplo de expresión incorrecta: ({[])}
+
+ACCION expresiones ES
+  AMBIENTE
+    sec: secuencia de caracteres;
+    resultado: boolean;
+
+FUNCION equilibrio (secuania_operadores: secuencia de caracteres): booleano ES
+  AMBIENTE
+    v: caracter;
+    d: caracter:
+    apertura: entero;
+    a_parentesis: entero;
+    a_corchete
+    a_llave: entero;
+    cierre: entero;
+    c_parentesis: entero;
+    c_corchete: entero;
+    c_llave: entero;
+
+    PROCESO
+      apertura:= 0;
+      a_parentesis:= 0;
+      a_corchete:= 0;
+      a_llave:= 0;
+      cierre:= 0;
+      c_parentesis:= 0;
+      c_corchete:= 0;
+      c_llave:= 0;
+
+      AVZ(secuania_operadores,v);
+
+      MIENTRAS NFDS(secuania_operadores) HACER
+
+        MIENTRAS NFDS(secuania_operadores) Y ((v = "(") O (v = "[") O (v = "{")) HACER
+
+          SI(v = "(") ENTONCES
+            MIENTRAS NFDS(secuania_operadores) Y (v = "(") HACER
+              apertura:= apertura + 1;
+              a_parentesis:= a_parentesis + apertura;
+            FIN_MIENTRAS;
+
+          SI(v = "[") ENTONCES
+            MIENTRAS NFDS(secuania_operadores) Y (v = "[") HACER
+              apertura:= apertura + 1;
+              a_corchete:= a_corchete + apertura;
+            FIN_MIENTRAS;
+          FIN_SI;
+
+          SI(v = "{") ENTONCES
+            MIENTRAS NFDS(secuania_operadores) Y (v = "{") HACER
+              apertura:= apertura + 1;
+              a_llave:= a_llave + apertura;
+            FIN_MIENTRAS;
+          FIN_SI;
+
+        FIN_MIENTRAS
+
+        cierre:= apertura + 1;
+
+        MIENTRAS NFDS(secuania_operadores) Y ((v = ")") O (v = "]") O (v = "}")) HACER
+
+          SI(v = ")") ENTONCES
+            MIENTRAS NFDS(secuania_operadores) Y (v = ")") HACER
+              cierre:= cierre - 1;
+              c_parentesis:= c_parentesis + cierre;
+            FIN_MIENTRAS;
+          FIN_SI;
+
+          SI(v = "]") ENTONCES
+            MIENTRAS NFDS(secuania_operadores) Y (v = "]") HACER
+              cierre:= cierre - 1;
+              c_corchete:= c_corchete + cierre;
+            FIN_MIENTRAS;
+          FIN_SI;
+
+          SI(v = "}") ENTONCES
+            MIENTRAS NFDS(secuania_operadores) Y (v = "}") HACER
+              cierre:= cierre - 1;
+              c_llave:= c_llave + cierre;
+            FIN_MIENTRAS;
+          FIN_SI;
+
+        FIN_MIENTRAS;
+
+      FIN_MIENTRAS;
+
+      SI ((a_parentesis = c_parentesis) Y (a_corchete = c_corchete) Y (a_llave = c_llave)) ENTONCES
+        equilibro:= verdadero;
+      SINO
+        equilibrio:= falso;
+      FIN_SI;
+
+FIN_FUNCION;
+
+    PROCESO
+      ARR(sec);
+      resultado:= equilibrio(sec);
+
+      SI (resultado) ENTONCES
+        ESC("Las expresiones matemáticas en la secuencia están equilibradas");
+      SINO
+        ESC("Las expresiones matemáticas en la secuencia NO están equilibradas");
+      FIN_SI;
+
+FIN_ACCION;
+      
+      
+
+      
+  
+
+    
+  
+
