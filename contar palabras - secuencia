@@ -1,0 +1,33 @@
+Dada una secuencia de caracteres, determinar la cantidad de palabras de 4 caracteres (letras)
+
+ACCION contar_palabras ES
+  AMBIENTE
+    sec: secuencia de caracter;
+    cont: entero;
+    palabra: entero;
+
+    PROCESO
+      palabra:= 0;
+      ARR(sec);
+      AVZ(sec,v);
+
+      MIENTRAS NFDS(sec) HACER
+        MIENTRAS NFDS(sec) Y ((v = " ") O (v = ",")) HACER
+          AVZ(sec,v);
+        FIN_MIENTRAS;
+
+        SI NFDS(sec) ENTONCES
+          MIENTRAS NFDS(sec) Y ((v <> " ") Y (v <> ",")) HACER
+            cont:= cont + 1;
+            AVZ(sec, v);
+          FIN_MIENTRAS
+          SI (cont = 4) ENTONCES
+            palabra:= palabra + 1;
+          FIN_SI;
+          cont:= 0;
+        FIN_SI;
+      FIN_MIENTRAS;
+
+    ESC("El búero total de labras de 4 caracteres son: ", palabras);
+
+FIN_ACCION;
