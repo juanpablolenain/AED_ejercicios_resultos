@@ -1,0 +1,116 @@
+Se dispone de dos secuencias texto formadas por oraciones bimembres (sujeto y predicado, separados por comas ‘,’). Se desea una secuencia texto de salida formada por oraciones bimembres, de la siguiente forma:
+
+El sujeto, de la secuencia 2, y el predicado, de la secuencia 1.
+
+Al finalizar informar cuantas oraciones tiene cada secuencia.
+
+
+
+ACCION 2_1_21 ES
+
+  AMBIENTE
+
+    sec_1, sec_2, sec_salida: secuancia de caracter;
+    v1, v2: caracter;
+    cont: entero;
+    oracion_sec_1, oracion_sec_2: entero;
+
+    PROCESO
+
+      oracion_sec_1:= 0;
+      oracion_sec_2:= 0;
+
+      ARR(sec_1);
+      ARR(sec_2);
+      AVZ(sec_1,v1);
+      AVZ(sec_2,v2);
+      CREAR(sec_salida);
+
+      MIENTRAS NFDS(sec_1) Y NFDS(sec_2) HACER
+
+        MIENTRAS NFDS(sec_2) Y (v2 = " ") HACER  // avanzo si hay muchos blancos
+          AVZ(sec_2, v2);
+        FIN_MIENTRAS;
+
+        MIENTRAS NFDS(sec_2) Y (v2 <> ",") HACER  // escribo el sujeto de la sec2 en la secuencia de salida
+          ESC(sec_salida, v2);
+          AVZ(sec_2, v2);
+        FIN_MIENTRAS;
+
+        SI NFDS(sec_2) ENTONCES  // escribo coma
+          ESC(sec_salida, v2);
+        FIN_SI;
+
+        MIENTRAS NFDS(sec_2) Y (v2 <> ".") HACER  // avanzo hasta el final de la sec2
+          AVZ(sec_2, v2);
+        FIN_MIENTRAS;
+
+        oracion_sec_2:= oracion_sec_2 + 1;  //  cuento oracion de sec2 sin importar si salio del bucle anterior por FDS o por estár en punto 
+
+        SI NFDS(sec_2) ENTONCES  // dejo a la sec2 lista en la siguiente oración (suponiendo que cada oracion termina solo con un punto "." y no con más de uno)
+          AVZ(sec_2,v2);
+        FIN_SI;
+
+        MIENTRAS NFDS(sec_1) Y (v1 <> ",") HACER  // avanzo hasta el comienzo del predicado de la sec1
+          AVZ(sec_1, v1);
+        FIN_MIENTRAS;
+
+        SI NFDS(sec_1) ENTONCES
+          AVZ(sec_1, v1);
+        FIN_SI;
+
+        MIENTRAS NFDS(sec_1) Y (v1 = " ") HACER  // avanzo los blancos desues de la coma
+          AVZ(sec_1, v1);
+        FIN_MIENTRAS;
+
+        SI NFDS(sec_1) ENTONCES
+          ESC(sec_salida, " ");
+          MIENTRAS NFDS(sec_1) Y (v1 <> ".") HACER  // escribo el predicado de la sec1 en la secuencia de salida
+            ESC(sec_salida, v1);
+            AVZ(sec_1, v1);
+          FIN_MIENTRAS;
+
+        SI NFDS(sec_1) ENTONCES  // escribo punto
+          ESC(sec_salida, v1);
+          AVZ(sec_1, v1);
+        FIN_SI;
+
+          oracion_sec_1:= oracion_sec_1 + 1;  // cuento oracion de sec1 sin importar si salio del bucle anterior por FDS o por estár en punto 
+
+        FIN_SI;
+
+      FIN_MIENTRAS;
+
+      MIENTRAS NFDS(sec_1) HACER
+        SI (v1 = ".") ENTONCES
+          oracion_sec_1:= oracion_sec_1 + 1;
+        FIN_SI;
+        AVZ(sec_1,v1);
+      FIN_MIENTRAS;
+
+      MIENTRAS NFDS(sec_2) HACER
+        SI (v2 = ".") ENTONCES
+          oracion_sec_2:= oracion_sec_2 + 1;
+        FIN_SI;
+        AVZ(sec_2,v2);
+      FIN_MIENTRAS;
+
+      ESC("Cantidad de oraciones de la secuencia 1: ", oracion_sec_1);
+      ESC("Cantidad de oraciones de la secuencia 2: ", oracion_sec_2);
+      
+      CERRAR(sec_1), CERRAR(sec_2), CERRAR(sec_salida);
+
+FIN_ACCION;
+
+          
+
+
+
+
+
+
+
+
+
+
+      
