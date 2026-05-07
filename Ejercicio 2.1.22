@@ -23,7 +23,7 @@ ACCION nueva_secuencia ES
       impar:= 1;
 
       MIENTRAS NFDS(sec1) Y NFDS(sec2) HACER
-        SI NFDS(sec1) Y NFDS(sec2) Y (impar MOD 2 != 0) ENTONCES
+        SI (impar MOD 2 != 0) ENTONCES      //
           PARA i:= 1 HASTA 8 HACER
             ESC(sec3,v2);
             AVZ(sec2,v2);
