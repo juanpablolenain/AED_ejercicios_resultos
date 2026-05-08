@@ -1,0 +1,76 @@
+Pasar una secuencia de numeros enteros a caracter: Ej: 4561437665452438777654 (cada elemento cuenta con 8 dígitos)
+
+ACCION entero_a_caracter_dos ES
+
+  AMBIENTE
+    sec1: secuencia de entero;
+    sec2: secuencia de caracter;
+    v1,i,num,digito: entero;
+    exp:= 7;
+
+    PROCESO
+      CREAR(sec2);
+      ARR(sec1);
+      AVZ(sec1,v1);
+      num:= v1;
+
+      MIENTRAS NFDS(sec1) HACER
+        PARA i:= 1 HASTA 8 HACER
+          digito:= (v1 DIV 10**exp);
+          num:= (v1 MOD 10**exp);
+          exp:= exp - 1;
+        FIN_PARA;
+        AVZ(sec1,v1);
+        num:= v1;
+      FIN_MIENTRAS;
+
+FIN_ACCION;
+          
+Pasar una secuencia de numeros enteros a caracter: Ej: 4561437665452438777654 (cada elemento cuenta con 8 dígitos)
+
+ACCION entero_a_caracter_dos ES
+
+  AMBIENTE
+    sec1: secuencia de entero;
+    sec2: secuencia de caracter;
+    v1, i, num, exp, digito: entero;
+
+  PROCESO
+    CREAR(sec2);
+    ARR(sec1);
+    AVZ(sec1,v1);
+
+    MIENTRAS NFDS(sec1) HACER
+
+      num:= v1;
+      exp:= 7;
+
+      PARA i:= 1 HASTA 8 HACER
+
+        digito:= num DIV 10**exp;
+        num:= num MOD 10**exp;
+        exp:= exp - 1;
+
+        SEGUN (digito) HACER
+          0: ESC(sec2, "0");
+          1: ESC(sec2, "1");
+          2: ESC(sec2, "2");
+          3: ESC(sec2, "3");
+          4: ESC(sec2, "4");
+          5: ESC(sec2, "5");
+          6: ESC(sec2, "6");
+          7: ESC(sec2, "7");
+          8: ESC(sec2, "8");
+          9: ESC(sec2, "9");
+        FIN_SEGUN;
+
+      FIN_PARA;
+
+      AVZ(sec1,v1);
+
+    FIN_MIENTRAS;
+
+    CERRAR(sec1);
+    CERRAR(sec2);
+
+FIN_ACCION;
