@@ -1,0 +1,185 @@
+  
+
+
+ACCION mascotas_en_adopcion ES
+  AMBIENTE
+    rescatados, adoptados, perros_adopatdos: secuencia de caracter;
+    no_adopatados: secuencia de entero;
+    perros_no_adoptados, gatos_no_adoptados, total_no_adoptados, i, unidad, decena, id_r, id_a: entero;
+    r, a: caracter;
+    avanzar_a: booleano;
+
+    FUNCION a_entero(x: caracter): entero ES
+      AMBIENTE
+        i: entero;
+        PROCESO
+          SEGUN(x) HACER
+            "0": i:= 0:
+            "1": i:= 1;
+            "2": i:= 2:
+            "3": i:= 3;
+            "4": i:= 4:
+            "5": i:= 5;
+            "6": i:= 6:
+            "7": i:= 7;
+            "8": i:= 8:
+            "9": i:= 9;
+          FIN_SEGUN;
+          a_entero:= i;
+    FIN_FUNCION;
+            
+    PROCESO
+      perros_no_adoptados, gatos_no_adoptados, total_no_adoptados:= 0;
+      avanzar_a: verdadero;
+
+      CREAR(perros_adoptados), CREAR(no_adoptados);
+      ARR(rescatados), ARR(adoptados);
+      AVZ(rescatados, r), AVZ(adoptados, a);
+
+      MIENTRAS (r <> "*") Y (a <> "*") HACER
+
+        decena:= a_entero(r) * 10;
+        AVZ(rescatados, r);
+        unidad:= a_entero(r);
+        id_r:= decena + unidad;
+        SI (avazar_a) ENTONCES
+          decena:= a_entero(a) * 10;
+          AVZ(adoptados, a);
+          unidad:= a_entero(a);
+          id_a:= decena + unidad;
+        FIN_SI;
+
+        SI (id_r = id_a) ENTONCES
+          AVZ(rescatados, r);
+          SI (r = "C") ENTONCES
+            AVZ(rescatados, r);
+            MIENTRAS(r <> "#") HACER
+              ESC(perros_adoptados,r);
+              AVZ(rescatados, r);
+            FIN_MIENTRAS;
+
+            PARA (i:= 1 hasta 4) HACER
+              AVZ(rescatdos, r);
+            FIN_PARA;
+
+            MIENTRAS(a <> "%") HACER
+              AVZ(adoptados, a);
+            FIN_MIENTRAS;
+
+            AVZ(adoptados,a);
+
+            PARA (i:= 1 hasta 9) HACER
+              ESC(perrods_adoptados, a);
+              AVZ(adotados, a);
+            FIN_PARA;
+
+            ESC(perros_adoptados, "$");
+            AVZ(adotados, a);
+
+          SINO
+              MIENTRAS(r <> "#") HACER
+                AVZ(rescatados, r);
+              FIN_MIENTRAS;
+
+              PARA (i:= 1 hasta 4) HACER
+                AVZ(rescatdos, r);
+              FIN_PARA;
+
+              MIENTRAS(a <> "%") HACER
+                AVZ(adoptados, a);
+              FIN_MIENTRAS;
+
+              PARA (i:= 1 hasta 11) HACER
+                AVZ(adotados, a);
+              FIN_PARA;
+
+              avanzar_a:= verdadero;
+
+            FIN_SI;
+          SINO
+              ESC(no_adoptado, id_r);
+              total_no_adoptados:= totalno_adotados + 1;
+              AVZ(rescatados, r);
+              SI (r = "C") ENTONCES
+                perros_rescatados:= perros_rescatados + 1;
+              SINO
+                gatos_rescatados:= gatos_rescatados + 1;
+              FIN_SI;
+
+              MIENTRAS(r <> "#") HACER
+                AVZ(rescatados, r);
+              FIN_MIENTRAS;
+
+              PARA (i:= 1 hasta 4) HACER
+                AVZ(rescatdos, r);
+              FIN_PARA;
+
+              avanzar_a:= falso;
+
+            FIN_SI;
+          FIN_MIENTRAS;
+
+          MIENTRAS (r <> "*") HACER
+
+            decena:= a_entero(r) * 10;
+            AVZ(rescatados, r);
+            unidad:= a_entero(r);
+            id_r:= decena + unidad;
+
+            ESC(no_adoptados, id_r);
+
+            MIENTRAS(r <> "#") HACER
+                AVZ(rescatados, r);
+            FIN_MIENTRAS;
+
+            PARA (i:= 1 hasta 4) HACER
+                AVZ(rescatdos, r);
+            FIN_PARA;
+
+        FIN_MIENTRAS;
+
+        ESC("El porcentaje de perros no adoptados sobre el porcentaje de aniamles no adoptados es del: ", (perros_no_adoptados*100)/total_no_adoptados);
+        ESC("El porcentaje de gatos no adoptados sobre el porcentaje de aniamles no adoptados es del: ", (gatos_no_adoptados*100)/total_no_adoptados);
+
+        CERRAR(perros_adoptados), CERRAR(no_adoptados), CERRAR(rescatados), CERRAR(adoptados);
+
+FIN_ACCION;
+        
+        
+
+
+
+
+              
+            
+        
+
+            
+
+            
+
+            
+
+
+
+
+
+
+
+
+        
+        
+          
+        
+
+
+
+
+
+
+
+
+
+
+      
+      
