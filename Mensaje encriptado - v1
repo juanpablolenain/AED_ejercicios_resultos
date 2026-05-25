@@ -1,7 +1,7 @@
 ACCION ejemplo_parcial ES
   AMBIENTE
     sec_entrada, sec_salida: secuencia de caracter;
-    reporte_total, reporte_analizado, palabra, mas_corto, error: entero;
+    reporte_total, reporte_analizado, palabra, mas_corto, error, const: entero;
     key: booleano;
     vocales = ("a", "e", "i", "o", "u");
     consonantes = ("b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "ñ", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z");
@@ -41,6 +41,8 @@ ACCION ejemplo_parcial ES
             SINO
               SI (v NO EN vocales) ENTONCES   // si v no está en vocales, consonantes ni es un "$", entonces es un caracter erroneo
                 error:= error + 1;
+                AVZ(sec_entrada, v);
+              SINO
                 AVZ(sec_entrada, v);
               FIN_SI;
             FIN_SI;  
