@@ -1,7 +1,7 @@
 ACCION ejemplo_parcial ES
   AMBIENTE
     sec_entrada, sec_salida: secuencia de caracter;
-    reporte_total, reporte_analizado, palabra, mas_corto, error, min: entero;
+    reporte_total, reporte_analizado, palabra, mas_corto, error, min, const: entero;
     vocales = ("a", "e", "i", "o", "u");
     consonantes = ("b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "ñ", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z");
 
@@ -34,12 +34,14 @@ ACCION ejemplo_parcial ES
 
           MIENTRAS (v <> "$") Y (v <> "&") HACER
             SI (v EN consonantes) ENTONCES
-              consonante:= DECODI(v);
-              ESCRIBIR(sec_salida, consonante);  
+              const:= DECODI(v);
+              ESCRIBIR(sec_salida, const);  
               AVZ(sec_entrada, v);
             SINO
               SI (v NO EN vocales) ENTONCES   // si v no está en vocales, consonantes ni es un "$", entonces es un caracter erroneo
                 error:= error + 1;
+                AVZ(sec_entrada, v);
+              SINO
                 AVZ(sec_entrada, v);
               FIN_SI;
             FIN_SI;  
@@ -77,7 +79,7 @@ ACCION ejemplo_parcial ES
         ESC("El porcentaje de reportes analziados sobre el total recibidos es del: 0%");
       FIN_si;
 
-      ESC("Las palabras del reporte más corto son: ", mas_corto, "palabras");
+      ESC("Las palabras del reporte más corto son: ", min, "palabras");
       ESC("Total de caracteres erróneos encontrados: ", error);
 
 FIN_ACCION;
