@@ -1,1 +1,92 @@
-dfd
+ACCION ejemplo_parcial ES
+  AMBIENTE
+    sec_entrada, sec_salida: secuencia de caracter;
+    reporte_total, reporte_analizado, palabra, mas_corto, error: entero;
+    vocales = ("a", "e", "i", "o", "u");
+    consonantes = ("b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "ñ", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z");
+
+
+    PROCESO
+      reporte_total, reporte_analizado, palabra, mas_corto:= 0;
+      error:= 0;
+      CREAR(sec_salida);
+      ARR(sec_entrada);
+      AVZ(sec_entrada, v);
+
+      MIENTRAS (v <> "*") HACER
+
+        SEGUN (v) HACER
+          "1": ESCRIBIR(sec_salida, "a"); 
+          "2": ESCRIBIR(sec_salida, "e"); 
+          "3": ESCRIBIR(sec_salida, "i");
+          "4": ESCRIBIR(sec_salida, "o"); 
+          "5": ESCRIBIR(sec_salida, "u");
+        FIN_SEGUN;
+
+        AVZ(sec_entrada, v);
+
+        MIENTRAS (v <> "&") HACER
+
+          SI (v <> "$") ENTONCES
+            palabra:= palabra + 1;
+          FIN_SI;
+
+          MIENTRAS (v <> "$") Y (v <> "&") HACER
+            SI (v EN consonantes) ENTONCES
+              consonante:= DECODI(v);
+              ESCRIBIR(sec_salida, consonante);  
+              AVZ(sec_entrada, v);
+            SINO
+              SI (v NO EN vocales) ENTONCES   // si v no está en vocales, consonantes ni es un "$", entonces es un caracter erroneo
+                error:= error + 1;
+                AVZ(sec_entrada, v);
+              FIN_SI;
+            FIN_SI;  
+
+          FIN_MIENTRAS;
+
+          SI (v = "$") ENTONCES
+            MIENTRAS (v = "$") HACER
+              ESC(sec_salida, v);    // grabo "$"
+              AVZ(sec_entrada, v);
+            FIN_MIENTRAS;
+          FIN_SI;
+
+        FIN_MIENTRAS;
+
+        SI (key) ENTONCES
+          mas_corto:= palabra;
+          key:= falso;
+        SINO
+          SI (palabra < mas_corto) ENTONCES
+            mas_corto:= palabra;
+          FIN_SI;
+        FIN_SI;
+        palabra:= 0;
+
+        AVZ(sec_entrada, v);
+
+        SI (v = "A") ENTONCES
+          reporte_analizado:= reporte_analizado + 1;
+        FIN_SI;
+
+        reporte_total:= reporte_total + 1;
+        AVZ(sec_entrada, v);
+
+      FIN_MIENTRAS;
+
+      SI (reporte_total <> 0) ENTONECES
+        ESC("El porcentaje de reportes analziados sobre el total recibidos es del: ", (reporte_analizado*100)/reporte_total), "%");
+      SINO
+        ESC("El porcentaje de reportes analziados sobre el total recibidos es del: 0%");
+      FIN_si;
+
+      ESC("Las palabras del reporte más corto son: ", mas_corto, "palabras");
+      ESC("Total de caracteres erróneos encontrados: ", error);
+
+FIN_ACCION;
+        
+
+
+
+
