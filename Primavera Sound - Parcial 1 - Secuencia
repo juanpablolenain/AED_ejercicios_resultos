@@ -4,6 +4,18 @@ ACCION primavera_sound ES
     fv, c: caracter;
     diferencia, ev, ec: entero;
 
+    FUNCION a_entero(x: caracter): entero ES
+      AMBIENTE
+        i: entero;
+        PROCESO
+          SEGUN (x) HACER
+            "O": i:= 0;
+            ...
+            "9": i:= 9;
+          FIN_SEGUN;
+          a_entero:= i;
+      FIN_FUNCIÓN:
+
     PROCESO
     diferencia, ev, ec: entero:= 0;
     CREAR(SS);
@@ -16,7 +28,7 @@ ACCION primavera_sound ES
 
       SI (FV = "T") ENTONCES
         AVZ(SFV, fv);
-        ev:= fv;
+        ev:= a_entero(fv);
         PARA (i:= 1 hasta 2) HACER
           AVZ(SFV,fv);
         FIN_PARA;
@@ -54,7 +66,7 @@ ACCION primavera_sound ES
           PARA(i:= 1 hasta 3) HACER
             AVZ(SC,c);
           FIN_PARA;
-          diferente:= diferente + 1;
+          diferencia:= diferencia + 1;
           ev:= 0;
         FIN_SI;
       SINO
@@ -92,6 +104,7 @@ ACCION primavera_sound ES
           PARA(i:= 1 hasta 3) HACER
             AVZ(SC,c);
           FIN_PARA;
+          diferendcia := diferencia + 1;
           ev:= 0;
         FIN_SI;
     FIN_MIENTRAS;
