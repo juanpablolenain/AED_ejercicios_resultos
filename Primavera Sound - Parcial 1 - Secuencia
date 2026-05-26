@@ -9,7 +9,7 @@ ACCION primavera_sound ES
         i: entero;
         PROCESO
           SEGUN (x) HACER
-            "O": i:= 0;
+            "0": i:= 0;
             ...
             "9": i:= 9;
           FIN_SEGUN;
@@ -71,7 +71,7 @@ ACCION primavera_sound ES
         FIN_SI;
       SINO
         AVZ(SFV, fv);
-        ev:= fv;
+        ev:= a_entero(fv);
         PARA (i:= 1 hasta 2) HACER
           AVZ(SFV,fv);
         FIN_PARA;
@@ -104,9 +104,10 @@ ACCION primavera_sound ES
           PARA(i:= 1 hasta 3) HACER
             AVZ(SC,c);
           FIN_PARA;
-          diferendcia := diferencia + 1;
+          diferencia := diferencia + 1;
           ev:= 0;
         FIN_SI;
+      FIN_SI;
     FIN_MIENTRAS;
 
     CERRAR(SFV), CERRAR(SC), CERRAR(SS);
