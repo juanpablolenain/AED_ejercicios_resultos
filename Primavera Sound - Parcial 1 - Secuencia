@@ -26,29 +26,35 @@ ACCION primavera_sound ES
         SI(c <> "#") ENTONCES
           MIENTRAS( c <> "+") HACER
             ESC(SS,c);
-            AVZ(SS,c);
+            AVZ(SC,c);
           FIN_MIENTRAS;
-          ESC(SS,c);
+          ESC(SS,c); // escribo "+"
           MIENTRAS(c <> "?") HACER
             AVZ(SC,c);
             PARA(i:= 1 hasta 8) HACER
               ESC(SS,c);
               AVZ(SC,c);
             FIN_PARA;
+            ESC(SS,"+"); // escribo "+"
             MIENTRAS(c <> ".") Y (c <> "?") HACER
               AVZ(SC,c);
             FIN_MIENTRAS;
+            SI (c = ".") ENTONCES
+              AVZ(SC,c);
+            FIN_SI;
             ec:= ec + 1;
           FIN_MIENTRAS;
+          ESC(SS,"#");
           SI (ev <> ec) ENTONCES
             diferencia := diferencia + 1;
           FIN_SI;
           ev, ec:= 0;
           AVZ(SC,c);
-        SINO
+        SINO                          // abandonó fila
           PARA(i:= 1 hasta 3) HACER
             AVZ(SC,c);
           FIN_PARA;
+          diferente:= diferente + 1;
           ev:= 0;
         FIN_SI;
       SINO
@@ -72,6 +78,9 @@ ACCION primavera_sound ES
             MIENTRAS(c <> ".") Y (c <> "?") HACER
               AVZ(SC,c);
             FIN_MIENTRAS;
+            SI (c = ".") ENTONCES
+              AVZ(SC,c);
+            FIN_SI;
             ec:= ec + 1;
           FIN_MIENTRAS;
           SI (ev <> ec) ENTONCES
