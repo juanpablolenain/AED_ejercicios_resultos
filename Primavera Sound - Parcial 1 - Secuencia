@@ -1,0 +1,103 @@
+ACCION primavera_sound ES
+  AMBIENTE
+    SFV, SC, SS: secuencia de caracter;
+    fv, c: caracter;
+    diferencia, ev, ec: entero;
+
+    PROCESO
+    diferencia, ev, ec: entero:= 0;
+    CREAR(SS);
+    ARR(SFV), ARR(SC);
+    AVZ(SFV,FV), AVZ(SC,V);
+    MIENTRAS NFDS(SFV) Y NFDS(SC) HACER
+      PARA (i:= 1 hasta 10) HACER
+        AVZ(SFV,fv);
+      FIN_PARA;
+
+      SI (FV = "T") ENTONCES
+        AVZ(SFV, fv);
+        ev:= fv;
+        PARA (i:= 1 hasta 2) HACER
+          AVZ(SFV,fv);
+        FIN_PARA;
+        PARA (i:= 1 hasta 6) HACER
+          AVZ(SC,c);
+        FIN_PARA;
+        SI(c <> "#") ENTONCES
+          MIENTRAS( c <> "+") HACER
+            ESC(SS,c);
+            AVZ(SS,c);
+          FIN_MIENTRAS;
+          ESC(SS,c);
+          MIENTRAS(c <> "?") HACER
+            AVZ(SC,c);
+            PARA(i:= 1 hasta 8) HACER
+              ESC(SS,c);
+              AVZ(SC,c);
+            FIN_PARA;
+            MIENTRAS(c <> ".") Y (c <> "?") HACER
+              AVZ(SC,c);
+            FIN_MIENTRAS;
+            ec:= ec + 1;
+          FIN_MIENTRAS;
+          SI (ev <> ec) ENTONCES
+            diferencia := diferencia + 1;
+          FIN_SI;
+          ev, ec:= 0;
+          AVZ(SC,c);
+        SINO
+          PARA(i:= 1 hasta 3) HACER
+            AVZ(SC,c);
+          FIN_PARA;
+          ev:= 0;
+        FIN_SI;
+      SINO
+        AVZ(SFV, fv);
+        ev:= fv;
+        PARA (i:= 1 hasta 2) HACER
+          AVZ(SFV,fv);
+        FIN_PARA;
+        PARA (i:= 1 hasta 6) HACER
+          AVZ(SC,c);
+        FIN_PARA;
+        SI (c <> "#") ENTONCE
+          MIENTRAS(c <> "+") HACER
+            AVZ(SC,c);
+          FIN_MIENTRAS;
+          AVZ(SC,c);
+          MIENTRAS(c <> "?") HACER
+            PARA(i:= 1 hasta 8) HACER
+              AVZ(SC,c);
+            FIN_PARA;
+            MIENTRAS(c <> ".") Y (c <> "?") HACER
+              AVZ(SC,c);
+            FIN_MIENTRAS;
+            ec:= ec + 1;
+          FIN_MIENTRAS;
+          SI (ev <> ec) ENTONCES
+            diferencia := diferencia + 1;
+          FIN_SI;
+          ev, ec:= 0;
+          AVZ(SC,c);
+        SINO
+          PARA(i:= 1 hasta 3) HACER
+            AVZ(SC,c);
+          FIN_PARA;
+          ev:= 0;
+        FIN_SI;
+    FIN_MIENTRAS;
+
+    CERRAR(SFV), CERRAR(SC), CERRAR(SS);
+    ESC("La cantidad de usuario que compraron una cantidad de entradas distinta a la que declararon en la fila virtual son: ", diferencia);
+
+FIN_ACCION;
+
+
+
+
+
+
+
+
+
+
