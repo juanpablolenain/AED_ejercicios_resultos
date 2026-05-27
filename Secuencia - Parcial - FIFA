@@ -32,6 +32,7 @@ ACCION FIFA ES
               ESC(sec_s, v);
               AVZ(sec1, v1);
             FM;
+            ESC(sec_s, "/");
             AVZ(sec1, v1); // quedo en la primer letra del nombre del jugador (debo determinar si lo avanzo y copio a la salida, o solo avanzo).
             MIENTRAS(v <> "%") HACER
               AVZ(sec2, v2);
@@ -54,6 +55,7 @@ ACCION FIFA ES
                   ESC(sec_s, v);
                   AVZ(sec1, v1);
                 FM;
+                ESC(sec_s, "_");
               SINO
                 MIENTRAS (v1 <> "*") HACER
                   AVZ(sec1, v1);
@@ -71,6 +73,7 @@ ACCION FIFA ES
               AVZ(sec1, v1);           // quedo parado en la primer letra del nombre del proximo jugador o en "%", lo cual significa que comienza un nuevo club
             FM;
             ESC("El promedio de edad de los judagadores de este equipo es: ", (edad/jugador), " años");
+            ESC(sec_s, "%");
             AVZ(sec1, v1); // quedo parado en la primer letra del nombre del proximo club o en "$", lo cual significa que comienza una nueva confederación
           FM;
           ESC("La cantidad de jugadores en esta confederación con más de tres tarjetas amarillas son: ", amarrila);
