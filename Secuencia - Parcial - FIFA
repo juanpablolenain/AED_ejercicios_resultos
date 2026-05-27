@@ -1,0 +1,95 @@
+ACCION FIFA ES
+  AMBIENTE
+    sec1, sec2, sec_2: secuencia de caracter;
+    v1, v2: caracter;
+    gol, asistencia: caracter:
+    edad, jugador, amarilla, d, u: entero;
+
+    FUNCION a_entero(x: caracter): entero ES
+      AMBIENTE
+        i: entero;
+        PROCESO
+          SEGUN (x) HACER
+            "0": i:= 0;
+            "1": i:= 1;
+            ...
+            "9": i:= 9;
+          FIN_SEGUN;
+    FIN_FUNCION;
+
+      PROCESO
+        jugador, edad, amarilla:= 0;
+        CREAR(sec_s);
+        ARR(sec1), ARR(sec2);
+        AVZ(sec1, v1), AVZ(sec2,v2);
+        MIENTRAS NFDS(sec1) Y NFDS(sec2) HACER
+          MIENTRAS(v1 <> "-") HACER
+            AVZ(sec1, v1);
+          FM;
+
+          MIENTRAS (v <> "$") HACER
+            MIENTRAS (v <> "-") HACER
+              ESC(sec_s, v);
+              AVZ(sec1, v1);
+            FM;
+            AVZ(sec1, v1); // quedo en la primer letra del nombre del jugador (debo determinar si lo avanzo y copio a la salida, o solo avanzo).
+            MIENTRAS(v <> "%") HACER
+              AVZ(sec2, v2);
+              gol:= v2;
+              AVZ(sec2, v2);
+              AVZ(sec2, v2);
+              asistencia:= v2;
+              PARA(i:= 1 HASTA 5) HACER
+                AVZ(sec2, v2);
+              FP;
+              SI(a_entero(v2) > 3) ENTONCES
+                amarilla:= amarilla + 1;
+              FS;
+              MIENTRAS (v2 <> "#") HACER
+                AVZ(sec2, v2);
+              FM;
+              AVZ(sec2, v2); // quedo en el proximo primer caracter de la secuencia de estadistica del siguiente jugador o en "*" --> FDS
+              SI (gol <> "0") Y (asistencia <> "0") ENTONCES
+                MIENTRAS (v1 <> "*") HACER
+                  ESC(sec_s, v);
+                  AVZ(sec1, v1);
+                FM;
+              SINO
+                MIENTRAS (v1 <> "*") HACER
+                  AVZ(sec1, v1);
+                FM;
+              FS;
+              AVZ(sec1, v1);
+              d:= a_entero(v1) * 10;
+              AVZ(sec1, v1);
+              u:= a_entero(v2);
+              edad:= (edad + d + u);
+              MIENTRAS (v1 <> "#") HACER
+                AVZ(sec1, v1);
+              FM;
+              jugador := jugador + 1;
+              AVZ(sec1, v1);           // quedo parado en la primer letra del nombre del proximo jugador o en "%", lo cual significa que comienza un nuevo club
+            FM;
+            ESC("El promedio de edad de los judagadores de este equipo es: ", (edad/jugador), " años");
+            AVZ(sec1, v1); // quedo parado en la primer letra del nombre del proximo club o en "$", lo cual significa que comienza una nueva confederación
+          FM;
+          ESC("La cantidad de jugadores en esta confederación con más de tres tarjetas amarillas son: ", amarrila);
+          AVZ(sec1, v1); // quedo parado en la primer letra del nombre de la próxima confederación o en "*", lo cual significa que terminó la secuencia.
+        FM;
+        CERRAR(sec1), CERRAR(sec2), CERRAR(sec_s);
+    FIN_ACCION;
+          
+            
+              
+          
+
+
+
+
+
+
+
+
+        
+       
+    
