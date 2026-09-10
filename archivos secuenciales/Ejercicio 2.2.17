@@ -1,0 +1,150 @@
+La Secretaria Academica de la Facultad lanza un proyecto para incentivar a aquellos alumnos que realizaron el Cursillo de Ingreso a la Universidad
+y no lograron aprobarlo en los turnos de Agosto y Febrero, de manera de brindarles apoyo Academico con el fin de que,
+en el Cursillo del año siguiente puedan aprobar los examenes necesarios e ingresar a la Universidad.
+
+Para esto, dicha Secretaria ­necesita crear un archivo donde se encuentren todos los aspirantes que realizaron el Cursillo de Ingreso
+en ambos turnos, y no lograron aprobarlo.
+
+Los datos correspondientes a cada uno de los turnos del Cursillo dictado están almacenados en dos archivos (uno para cada turno),
+los cuales presentan el siguiente formato:
+
+ASPIRANTES Ordenado por DNI
+
+DNI
+ApeyNom
+Carrera
+F_Nac
+Email
+ColegioSec
+FechaInscripcion
+Aprobado (Si/No)
+
+Se debe realizar un algoritmo que permita mezclar los archivos Aspirantes (de Agosto y Febrero) y generar un archivo SEGUIMIENTO con el siguiente formato:
+
+SEGUIMIENTO Ordenado por DNI
+
+DNI
+ApeyNom
+Email
+ColegioSec
+
+Al finalizar el proceso informar la cantidad de aspirantes que se grabaron en el archivo SEGUIMIENTO.
+
+
+ACCION ejercicio 2.2.17 ES
+
+  fecha = REGISTRO  
+    dd: 1..31;
+    mm: 1..12;
+    aa: N(4);
+  FIN_REGISTRO;
+
+  aspirante = REGISTRO
+    dni: N(7);
+    ApeyNom: AN(30);
+    carrera: ("ISI", "IEM", "IQ");
+    fecha_nacimiento: fecha;
+    email: AN(40);
+    colegioSecundario: AN(50);
+    fechaInscripcion: fecha;
+    aprobado: ("SI", "NO");
+  FIN_REGISTRO;
+
+
+  seguimiento = REGISTRO
+    dni: N(7);
+    ApeyNom: AN(30);
+    email: AN(40);
+    colegioSecundario: AN(50);
+  FIN_REGISTRO;
+
+
+  a_agosto, a_febrero: archivo de aspiante ordenado por dni;
+  a_seguimiento: archivo de seguimiento ordenado por dni;
+
+  reg_agosto, reg_febrero: aspirante;
+  reg_seguimiento: seguimiento;
+
+  HV: N(7);
+
+  SUBACCION leer_agosto ES
+    LEER(a_agosto, reg_agosto);
+    SI FDA(a_agosto) ENTONCES
+      reg_agosto.dni := HV;
+    FIN_SI;
+  FIN_SUBACCION;
+
+  SUBACCION leer_febrero ES
+    LEER(a_febrero, reg_febrero);
+    SI FDA(a_febrero) ENTONCES
+      reg_febrero.dni:= HV;
+    FIN_SI;
+  FIN_SUBACCION;
+
+  SUBACCION evaluar_alumno_agosto ES
+    SI (reg_agosto.aprobado = "NO") ENTONCES
+
+      reg_seguimiento.dni := reg_agosto.dni;
+      reg_seguimiento.ApeyNom := reg_agosto.ApeyNom;
+      reg_seguimiento.email := reg_agosto.email;
+      reg_seguimiento.colegioSecundario := reg_agosto.colegioSecundario;
+
+      GRABAR(a_seguimiento, reg_seguimiento);
+
+    FIN_SI;
+  FIN_SUBACCION;
+
+  SUBACCION evaluar_alumno_febrero ES
+    SI (reg_febrero.aprobado = "NO") ENTONCES
+
+      reg_seguimiento.dni := reg_febrero.dni;
+      reg_seguimiento.ApeyNom := reg_febrero.ApeyNom;
+      reg_seguimiento.email := reg_febrero.email;
+      reg_seguimiento.colegioSecundario := reg_febrero.colegioSecundario;
+
+      GRABAR(a_seguimiento, reg_seguimiento);
+
+    FIN_SI;
+  FIN_SUBACCION;
+
+
+  PROCESO
+
+    ABRIR E/(a_agosto);
+    ABRIR E/(a_febrero);
+
+    leer_agosto;
+    leer_febrero;
+
+    HV:= 9999999;
+
+    MIENTRAS (reg_agosto.dni <> HV) O (reg_febrero.dni <> HV) HACER
+      SI (reg_agosto.dni < reg_febrero.dni) ENTONCES
+        evaluar_alumno_agosto;
+        leer_agosto;
+      SINO
+        SI (reg_agosto.dni > reg_febrero.dni) ENTONCES
+          evaluar_alumno_febrero;
+          leer_febrero;
+        SINO
+          evaluar_alumno_febrero;
+          leer_febrero;
+        FIN_SI;
+      FIN_SI;
+    FIN_MIENTRAS;
+
+    CERRAR(a_agosto);
+    CERRAR(a_febrero);
+    CERRAR(a_seguimiento);
+
+FIN_ACCION;
+  
+
+
+
+
+
+
+
+
+
