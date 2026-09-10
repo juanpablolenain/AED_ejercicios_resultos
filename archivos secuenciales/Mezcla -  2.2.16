@@ -1,0 +1,94 @@
+Construir un algoritmo que a partir de un fichero de películas nuevas conteniendo:
+
+PELICULAS_NUEVAS Ordenado por Nro_Pelicula
+
+Nro_Pelicula
+Titulo
+Genero
+Cant_Copias
+Fecha_Estreno
+
+y otro fichero de peliculas existentes, ambos ordenados por película,
+
+PELICULAS Ordenado por Nro_Pelicula
+
+Nro_Pelicula
+Titulo
+Genero
+Cant_Copias
+Fecha_Estreno
+
+Genere un único archivo (con el mismo formato de los ficheros de entrada) que contenga todas las peliculas.
+Considerar que hay un solo registro por película y no se repiten entre ficheros. --> es decir, no puede existir a1.nro_pelicula = a2.nro_pelicula;
+
+ACCION ejercicio 2.2.16 ES
+
+  AMBIENTE
+
+    fecha = registro
+      dd: 1..31;
+      mm: 1..12;
+      aa: N(4);
+    fin_registro;
+
+    pelicula = registro
+      nro_pelicula: N(5);
+      titulo: AN(20);
+      genero: AN(15);
+      cant_copias: N(2);
+      fecha_estreno: fecha;
+    fin_registro;
+
+    a1, a2, a3: archivo de pelicula ordenado por nro_pelicula;
+    reg1, reg2, reg3: pelicula;
+
+    HV: N(5);
+
+    SUBACCION leer_a1 ES
+      LEER(a1, reg1);
+      SI FDA(a1) ENTONCES
+        reg1.nro_pelicula:= HV;
+      FIN_SI;
+    FIN_SUBACCION;
+
+    SUBACCION leer_a2 ES
+      LEER(a2, reg2);
+      SI FDA(a2) ENTONCES
+        reg2.nro_pelicula:= HV;
+      FIN_SI;
+    FIN_SUBACCION;
+
+    PROCESO
+
+      ABRIR E/(a1);
+      ABRIR E/(a2);
+      ABRIR S/(a3);
+
+      leer_a1;
+      leer_a2;
+
+      MIENTRAS (reg1.nro_pelicula <> HV) O (reg2.nro_pelicula <> HV) HACER
+        SI (reg1.nro_pelicula < reg2.nro_pelicula) ENTONCES
+          reg3:= reg1;
+          GRABAR(a3, reg3);
+          leer_a1;
+        SINO
+          reg3:= reg2;
+          GRABAR(a3, reg3);
+          leer_a2;
+        FIN_SI;
+      FIN_MIENTRAS;
+
+      CERRAR(a1);
+      CERRAR(a2);
+      CERRAR(a3);
+
+FIN_ACCION;
+
+
+
+
+
+
+
+
