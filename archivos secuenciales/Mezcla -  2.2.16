@@ -67,6 +67,8 @@ ACCION ejercicio 2.2.16 ES
       leer_a1;
       leer_a2;
 
+      HV:= 99999;
+
       MIENTRAS (reg1.nro_pelicula <> HV) O (reg2.nro_pelicula <> HV) HACER
         SI (reg1.nro_pelicula < reg2.nro_pelicula) ENTONCES
           reg3:= reg1;
