@@ -1,0 +1,121 @@
+Un supermercado desea conocer la totalidad de unidades existentes de cada artículo a fin de hacer un control de stock
+y decidir si se deben comprar nuevas unidades o redistribuir la mercadería existente.
+
+El supermercado posee dos sucursales, cada una de las cuales envió su información en un fichero con el siguiente formato:
+
+ARTICULOS
+
+Cod_Prod
+Tipo
+Marca
+Descripción
+Cant_Unidades
+
+Escribir un algortimo que permita obtener un único fichero de salida, con el mismo formato, que contenga la información solicitada
+y además, emita un listado con los siguientes datos: Cod_Prod	Tipo	Marca	Descripción	Cant_Suc_1	Cant_Suc_2	Total_Unidades
+
+ACCION ejercicio 2.2.18 ES
+
+  AMBIENTE
+
+    articulo = registro
+      cod_producto: N(5);
+      tipo: ("Bebida","Alimento","Limpieza");
+      marca: AN(20);
+      descripciOn: N(100);
+      cant_unidades: N(4);
+    fin_registro;
+
+    a_suc1, a_suc2, a_salida: archivo de articulo ordenado por cod_producto;
+    reg_suc1, reg_suc2, reg_salida: articulo;
+
+    HV: N(5);
+    total_unidades: N(5);
+
+    SUBACCION leer_suc1 ES
+      LEER(a_suc1, reg_suc1);
+      SI FDA(a_suc1) ENTONCES
+        reg_suc1.cod_producto:= HV;
+      FIN_SI;
+    FIN_SUBACCION;
+
+    SUBACCION leer_suc2 ES
+      LEER(a_suc2, reg_suc2);
+      SI FDA(a_suc2) ENTONCES
+        reg_suc2.cod_producto:= HV;
+      FIN_SI;
+   FIN_SUBACCION;
+
+   SUBACCION emitir_listado_suc1 ES
+      ESC(reg_suc1.cod_producto, reg_suc1.tipo, reg_suc1.marca, reg_suc1.descripcion, "Cantidad en sucursal 1: ", reg_suc1.cant_unidades, "Cantidad en sucursal 2: 0, Cantidad total: ", reg_suc1.cant_unidades);
+    FIN_SUBACCION;
+
+    SUBACCION emitir_listado_suc2 ES
+      ESC(reg_suc2.cod_producto, reg_suc2.tipo, reg_suc2.marca, reg_suc2.descripcion, "Cantidad en sucursal 1: 0", "Cantidad en sucursal 2: ", reg_suc2.cant_unidades, "Cantidad total: ", reg_suc2.cant_unidades););
+    FIN_SUBACCION;
+
+    SUBACCION emitir_listado ES
+      total_unidades:= reg_suc1.cant_unidades + reg_suc2.cant_unidades;
+      ESC(reg_suc2.cod_producto, reg_suc2.tipo, reg_suc2.marca, reg_suc2.descripcion, "Cantidad en sucursal 1: ", reg_suc1.cant_unidades, "Cantidad en sucursal 2: ", reg_suc2.cant_unidades, "Cantidad total: ", total_unidades);       
+      preparar_registro_salida(total_unidades);
+    FIN_SUBACCION;
+
+
+    SUBACCION preparar_registro_salida(par: N(5)) ES
+      reg_salida.cod_producto:= reg_suc2.cod_producto;
+      reg_salida.tipo:= reg_suc2.tipo;
+      reg_salida.marca:= reg_suc2.marca;
+      reg_salida.descripcion:= reg_suc2.descripcion;
+      reg_salida.cant_unidades:= total_unidades;
+      GRABAR(a_salida, reg_salida);
+      total_unidades:= 0;
+    FIN_SUBACCION;
+
+
+    PROCESO
+
+      ABRIR E/(a_suc1);
+      ABRIR E/(a_suc2);
+      ABRIR S/(a_salida);
+
+      HV:= 99999;
+      total_unidades:= 0;
+
+      leer_suc1;
+      leer_suc2;
+
+      MIENTRAS (reg_suc1.cod_producto <> HV) O (reg_suc2.cod_producto <> HV) ENTONCES
+        SI (reg_suc1.cod_prodcuto > reg_suc2.cod_producto) ENTONCES
+          emitir_listado_suc2;
+          reg_salida:= reg_suc2;
+          GRABAR(a_salida, reg_salida);
+          leer_suc2;
+        SINO
+          SI (reg_suc1.cod_prodcuto < reg_suc2.cod_producto) ENTONCES
+            emitir_listado_suc1;
+            reg_salida:= reg_suc1;
+            GRABAR(a_salida, reg_salida);
+            leer_suc1;
+          SINO
+            emitir_listado;
+            leer_suc1;
+            leer_suc_2;
+          FIN_SI;
+        FIN_SI;
+      FIN_SI;
+    FIN_MIENTRAS;
+
+    CERRAR(a_suc1);
+    CERRAR(a_suc2);
+    CERRAR(a_salida);
+
+FIN_ACCION;
+
+
+
+
+
+
+
+
+
