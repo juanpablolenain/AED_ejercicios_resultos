@@ -66,6 +66,7 @@ ACCION ejercicio 2.2.17 ES
   reg_seguimiento: seguimiento;
 
   HV: N(7);
+  cont: N(4);
 
   SUBACCION leer_agosto ES
     LEER(a_agosto, reg_agosto);
@@ -81,34 +82,24 @@ ACCION ejercicio 2.2.17 ES
     FIN_SI;
   FIN_SUBACCION;
 
-  SUBACCION evaluar_alumno_agosto ES
-    SI (reg_agosto.aprobado = "NO") ENTONCES
-
-      reg_seguimiento.dni := reg_agosto.dni;
-      reg_seguimiento.ApeyNom := reg_agosto.ApeyNom;
-      reg_seguimiento.email := reg_agosto.email;
-      reg_seguimiento.colegioSecundario := reg_agosto.colegioSecundario;
-
-      GRABAR(a_seguimiento, reg_seguimiento);
-
-    FIN_SI;
-  FIN_SUBACCION;
-
-  SUBACCION evaluar_alumno_febrero ES
+  
+  SUBACCION consultar ES
     SI (reg_febrero.aprobado = "NO") ENTONCES
 
+      cont:= cont + 1;
       reg_seguimiento.dni := reg_febrero.dni;
       reg_seguimiento.ApeyNom := reg_febrero.ApeyNom;
       reg_seguimiento.email := reg_febrero.email;
       reg_seguimiento.colegioSecundario := reg_febrero.colegioSecundario;
-
       GRABAR(a_seguimiento, reg_seguimiento);
 
     FIN_SI;
+
   FIN_SUBACCION;
 
 
-  PROCESO
+
+PROCESO
 
     ABRIR E/(a_agosto);
     ABRIR E/(a_febrero);
@@ -117,29 +108,51 @@ ACCION ejercicio 2.2.17 ES
     leer_febrero;
 
     HV:= 9999999;
+    cont:= 0;
 
-    MIENTRAS (reg_agosto.dni <> HV) O (reg_febrero.dni <> HV) HACER
-      SI (reg_agosto.dni < reg_febrero.dni) ENTONCES
-        evaluar_alumno_agosto;
-        leer_agosto;
+    MIENTRAS (reg_agosto.dni <> HV) O (reg_febrero.dni <> HV) HACER    // creo que en este caso, por optimización, conviene más un ciclo excliyente AND
+
+      SI (reg_agosto.dni > reg_febrero.dni) ENTONCES
+        leer_febrero;
       SINO
-        SI (reg_agosto.dni > reg_febrero.dni) ENTONCES
-          evaluar_alumno_febrero;
-          leer_febrero;
+        SI (reg_agosto.dni < reg_febrero.dni) ENTONCES
+          leer_agosto;
         SINO
-          evaluar_alumno_febrero;
+          consultar;
+          leer_agosto;
           leer_febrero;
         FIN_SI;
       FIN_SI;
+
     FIN_MIENTRAS;
+
+    ESC("La cantidad de aspirantes que se grabaron en el archivo seguimiento son: ", cont);
 
     CERRAR(a_agosto);
     CERRAR(a_febrero);
     CERRAR(a_seguimiento);
 
 FIN_ACCION;
-  
 
+VERSION 2 - Arranco solo desde el ciclo MIENTRAS
+
+     MIENTRAS (reg_agosto.dni <> HV) Y (reg_febrero.dni <> HV) HACER    // creo que en este caso, por optimización, conviene más un ciclo excliyente AND
+
+      SI (reg_agosto.dni > reg_febrero.dni) ENTONCES
+        leer_febrero;
+      SINO
+        SI (reg_agosto.dni < reg_febrero.dni) ENTONCES
+          leer_agosto;
+        SINO
+          consultar;
+          leer_agosto;
+          leer_febrero;
+        FIN_SI;
+      FIN_SI;
+
+    FIN_MIENTRAS;
+
+    ESC("La cantidad de aspirantes que se grabaron en el archivo seguimiento son: ", cont);
 
 
 
