@@ -22,7 +22,7 @@ ACCION ejercicio 2.2.18 ES
       cod_producto: N(5);
       tipo: ("Bebida","Alimento","Limpieza");
       marca: AN(20);
-      descripciOn: N(100);
+      descripcion: AN(100);
       cant_unidades: N(4);
     fin_registro;
 
@@ -57,11 +57,11 @@ ACCION ejercicio 2.2.18 ES
     SUBACCION emitir_listado ES
       total_unidades:= reg_suc1.cant_unidades + reg_suc2.cant_unidades;
       ESC(reg_suc2.cod_producto, reg_suc2.tipo, reg_suc2.marca, reg_suc2.descripcion, "Cantidad en sucursal 1: ", reg_suc1.cant_unidades, "Cantidad en sucursal 2: ", reg_suc2.cant_unidades, "Cantidad total: ", total_unidades);       
-      preparar_registro_salida(total_unidades);
+      preparar_registro_salida;
     FIN_SUBACCION;
 
 
-    SUBACCION preparar_registro_salida(par: N(5)) ES
+    SUBACCION preparar_registro_salida ES
       reg_salida.cod_producto:= reg_suc2.cod_producto;
       reg_salida.tipo:= reg_suc2.tipo;
       reg_salida.marca:= reg_suc2.marca;
@@ -84,7 +84,7 @@ ACCION ejercicio 2.2.18 ES
       leer_suc1;
       leer_suc2;
 
-      MIENTRAS (reg_suc1.cod_producto <> HV) O (reg_suc2.cod_producto <> HV) ENTONCES
+      MIENTRAS (reg_suc1.cod_producto <> HV) O (reg_suc2.cod_producto <> HV) HACER
         SI (reg_suc1.cod_prodcuto > reg_suc2.cod_producto) ENTONCES
           emitir_listado_suc2;
           reg_salida:= reg_suc2;
@@ -99,7 +99,7 @@ ACCION ejercicio 2.2.18 ES
           SINO
             emitir_listado;
             leer_suc1;
-            leer_suc_2;
+            leer_suc2;
           FIN_SI;
         FIN_SI;
       FIN_SI;
