@@ -1,0 +1,156 @@
+En una Empresa Farmacéutica se posee un archivo MAE_REMEDIOS (ordenado por Clave: Farmacia + Medicamento), el que se actualiza semanalmente,
+a traves de la información que se encuentra cargada en un archivo de MOVIMIENTOS (ordenado por Clavem: Farmacia + Medicamento, y Cod_Mov), de la siguiente forma:
+
+Si Clave (MAE_REMEDIOS) es menor que Clavem (MOVIMIENTOS), simplemente se transfieren los datos del Maestro a la salida y se graban.
+
+Si Clave (MAE_REMEDIOS) es igual a Clavem (MOVIMIENTOS) y el Codmov es 1, se considera error y se lista un mensaje indicando
+el tipo de error; pero si el Codmov es 2, entonces es un remedio que deja de fabricarse y se transfiere el registro al archivo de Remedios vencidos (REM_VENC);
+pero si el Cod_Mov es 3, se modifica la cantidad actual con la cantidad recibida.
+
+Si Clave (MAE_REMEDIOS) es mayor que Clavem (MOVIMIENTOS) y el Codmov es 1, se incorpora el remedio a nuestro Vademecum,
+considerando que la cantidad recibida configura la cantidad actual y la Fecha_Vencimiento es 30 días posterior a la fecha actual;
+pero si el Codmov es 2 o 3 se considera error y se deben producir los correspondientes mensajes de error.
+
+Archivo maestro remedios: Farmacia Medicamento Cant_Actual Fecha_Vencimiento
+Archivo movimientos: Farmacia Medicamento Cod_Mov Cant_Recibida
+Archivo vencimeintos: Medicamento Cant_Vencida
+
+ACCION ejercicio 2.2.19 ES
+  AMBIENTE
+
+    fecha = registro
+      dd: 1..31;
+      mm: 1..12;
+      aa: N(12);
+    fin_registro;
+
+    remedio = registro
+      clave: registro
+        farmacia: N(3);
+        medicamento: AN(20);
+      fin_registro;
+      cant_Actual: N(4);
+      fecha_vencimiento: fecha;
+    fin_registro;
+
+    maestro_remedios, salida_remedios: archivo de remedio ordenado por clace;
+    reg_maestro_remedios, reg_salida_remedios: remedio;
+
+    movimiento: = registro
+      clave: registro
+        farmacia: N(4);
+        medicamento: AN(20);
+      fin_registro;
+      cod_mov: ("1","2","3");
+      cant_recibida;
+    fin_registro;
+
+    movimientos: archivo de movimiento ordenado por clave y cod_mov;
+    reg_movimientos: movimiento;
+
+    vencimiento = registro
+      medicamento: AN(20);
+      cant_vencida: N(4);
+    fin_registro;
+
+    vencimientos: archivo de vencimiento ordenado por medicamento;
+    reg_vencimientos: vencimiento;
+
+    HV: N(5);
+  
+    SUBACCION leer_maestro_remedios ES
+      LEER(maestro_remedios, reg_maestro_remedios);
+      SI FDA(maestro_remedios) ENTONCES
+        reg_maestro_remedios.clave.famracia:= HV;
+      FIN_SI;
+    FIN_SUBACCION;
+
+    SUBACCION leer_movimientos ES
+      LEER(movimientos, reg_movimientos);
+      SI FDA(movimientos) ENTONCES
+        reg_movimientos.clave.famracia:= HV;
+      FIN_SI;
+    FIN_SUBACCION;    
+
+
+    SUBACCION copiar_maestro_salida ES
+      reg_salida_remedios:= reg_maestro_remedios;
+      GRABAR(salida_remedios, reg_salida_remedios);
+    FIN_SUBACCION;
+
+    SUBACCION procesar_alta ES
+      SI (reg_movimiento.cod_mov = "1") ENTONES
+        reg_salida_remedios.clave:= reg_movimientos.clave;
+        reg_salida_remedios.cant_actual:= reg_movimientos.cant_recibida;
+        reg_salida_remedios.fecha_vencimiento:= fecha_actual() + 30;
+      SINO
+        SI (reg_movimiento.cod_mov = "2") ENTONES
+          ESC(Error! No se puede eliminar un registro que no existe);
+        SINO
+          ESC(Error! No se puede modificar un registro que no existe);
+        FIN_SI;
+      FIN_SI;
+    FIN_SUBACCION;
+
+    SUBACCION analizar_movimiento ES
+      SI (reg_movimiento.cod_mov = "1") ENTONCES
+        ESC(Error! No se puede dar de alta un registro ya existente);
+      SINO
+        SI (reg_movimiento.cod_mov = "2") ENTONCES
+          modificar_registro;
+        SINO
+          eliminar_registro;
+        FIN_SI;
+      FIN_SI;
+    FIN_SUBACCION;
+
+    SUBACCION modificar_registro ES
+      reg_salida_remedios:= reg_maestro_remedio;
+      reg_salida_remedios.cant_actual:= reg_movimiento.cant_recibida;
+      GRABAR(salida_remedios, reg_salida_remedios)
+    FIN_SUBACCION;
+
+    SUBACCION eliminar_registro ES
+      reg_vencimientos.medicamento:= reg_maestro_remedios.clave.medicamento;
+      reg_vencimientos.cant_vencida:= reg_maestro_remedios.cant_actual;
+    FIN_SUBACCION;
+
+    PROCESO
+
+      ABRIR E/(maestro_remedios);
+      ABRIR E/(movimientos);
+      ABRIR S/(salida_remedios);
+      ABRIR S/(vencimientos);
+
+      HV:= 99999;
+
+      leer_maestro_remedios;
+      leer_movimientos;
+
+
+      MIENTRAS (reg_maestro_remedios.clave.farmacia <> HV) O (reg_movimientos.clave.farmacia <> HV) HACER
+        SI (reg_maestro_remedios.clave.farmacia < reg_movimientos.clave.farmacia) ENTONCES
+          copiar_maestro_salida;
+          leer_maestro;
+        SINO
+          SI (reg_maestro_remedios.clave.farmacia > reg_movimientos.clave.farmacia) ENTONCES
+            procesar_alta;
+            leer_movimiento;
+          SINO
+            analizar_movimiento;
+            leer_maestro;
+            leer_movimiento;
+          FIN_SI;
+        FIN_SI;
+    FIN_MIENTRAS;
+
+      
+
+
+
+
+
+
+      
+
+    
