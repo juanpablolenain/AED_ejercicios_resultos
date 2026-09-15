@@ -21,6 +21,12 @@ y que un alumno puede presentarse a rendir más de una materia en un mismo turno
 Supónganse ambas secuencias ordenadas por Número de Legajo.
 
 
+ANÁLISIS PREVIO
+
+- ALUMNOS es el archivo maestro, con un único registro por alumno.
+- EXAMENES es el archivo de movimientos, donde puede haber cero, uno o varios registros para un mismo alumno.
+- SALIDA será el nuevo maestro actualizado.
+
 
 
 ACCION ejercicio 2.2.20 ES
@@ -85,8 +91,7 @@ ACCION ejercicio 2.2.20 ES
         SUBACCION actualizar_fecha ES
             reg_salida:= reg_alumnos;
             SI (aprobado) ENTONCES
-                reg_salida:= aux_fecha;
-                aprobado:= false;
+                reg_salida.fecha_ult_examen_aprobado:= aux_fecha;
             FIN_SI;
             GRABAR(salida, reg_salida);
         FIN_SUBACCION;
@@ -97,29 +102,41 @@ ACCION ejercicio 2.2.20 ES
 
             ABRIR E/(alumnos);
             ABRIR E/(examenes);
+            ABRIR S/(salida);
+
+            HV:= 99999;  // debe inicializarse antes que las lecturas
+
             leer_alumnos;
             leer_examenes;
-            HV:= 99999;
-            aprobado:= false;
 
             MIENTRAS (reg_alumnos.legajo <> HV) Y (reg_examenes.legajo <> HV) HACER
                 SI (reg_alumnos.legajo < reg_examenes.legajo) ENTONCES
-                    copia_directa;
+                    copia_directa_alumnos;
                     leer_alumnos;
                 SINO
                     SI (reg_alumnos.legajo > reg_examenes.legajo) ENTONCES
                         ESC("Error! Un alumno que no existe no puede rendir un examen");
                         leer_examenes;
                     SINO
+                        aprobado:= false;
                         MIENTRAS (reg_alumnos.legajo = reg_examenes.legajo) HACER
+
                             SI (reg_examenes.nota >= 6) ENTONCES
-                                aprobado:= true;
-                                aux_fecha: reg_examenes.fecha_examen;
+
+                                SI NO(aprobado) ENTONCES // solo entra en el primer aprobado para guardar la referencia a la fecha
+                                    aprobado:= true;
+                                    aux_fecha:= reg_examenes.fecha_examen;
+                                SINO
+                                    SI (reg_examenes.fecha_examen > aux_fecha) ENTONCES
+                                        aux_fecha:= reg_examenes.fecha_examen;
+                                    FIN_SI;
+                                FIN_SI;
+
                             FIN_SI;
+                            leer_examenes;
                         FIN_MIENTRAS
                         actualizar_fecha;
                         leer_alumnos;
-                        leer_examenes;
                     FIN_SI;
                 FIN_SI;
             FIN_MIENTRAS;
@@ -128,6 +145,11 @@ ACCION ejercicio 2.2.20 ES
             MIENTRAS (reg_alumnos.legajo <> HV) HACER
                 copia_directa_alumnos;
                 leer_alumnos;
+            FIN_MIENTRAS;
+
+            MIENTRAS (reg_examenes.legajo <> HV) HACER
+                ESC("Error! Un alumno que no existe no puede rendir un examen");
+                leer_examenes;
             FIN_MIENTRAS;
 
             CERRAR(alumnos);
