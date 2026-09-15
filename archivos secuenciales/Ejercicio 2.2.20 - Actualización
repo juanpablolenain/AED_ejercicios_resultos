@@ -1,0 +1,44 @@
+A partir del siguiente archivo ALUMNOS ordenado por legajo:
+
+Apellido y Nombre
+Carrera (ISI - IEM - IQ)
+Nº de Legajo
+Fecha de Nacimiento
+Fecha de Ingreso
+D.N.I.
+Sexo (M o F)
+Fecha de último examen aprobado
+Nota
+
+se desea generar un archivo de salida, donde se actualice la fecha de aprobación del último exámen.
+Para ello, se cuenta con información del último turno de exámen, según el siguiente detalle:
+
+EXAMENES Ordenado por Nro_Legajo
+Nro_Legajo Carrera Cod_Materia Fecha_Examen Nota
+
+Se debe considerar que no necesariamente todos los alumnos se presentan en cada turno de exámen,
+y que un alumno puede presentarse a rendir más de una materia en un mismo turno.
+Supónganse ambas secuencias ordenadas por Número de Legajo.
+
+
+Analisis:
+- Un turno de examen puede durar varios días, ejemplo: una semana.
+- SI (reg_alumno.legajo < reg_examen.legajo) --> alumno no se presentó a rendir, se graba tal cual en archivo salida.
+- SI (reg_alumno.legajo > reg_examen.legajo) --> NO es posible, porque indicaría que dicho alumno no existe en el archivo de ALUMNOS.
+- SI (reg_alumno.legajo = reg_examen.legajo) --> Analizar! Un alumno puede rendir varias materias en el mismo turno, pero debemos quedarnos con la fecha de la última materia aprobada.
+
+    MIENTRAS (reg_alumno.legajo = reg_examen.legajo) HACER
+      SI (reg_examen.nota >= 6) ENTONCES
+        aprobado:= true;
+        aux_fecha:= reg_examen.fecha;
+      FIN_SI;
+      leer_examenes;
+    FIN_MIENTRAS;
+    reg_salida:= reg_alumno;
+    SI (aprobado) ENTONCES
+      reg_salida.fecha_ult_aprobacion:= aux_fecha;
+    FIN_SI;
+    GRABAR(salida, reg_salida);
+
+
+
