@@ -121,7 +121,7 @@ ACCION ejercicio 2.2.20 ES
             leer_alumnos;
             leer_examenes;
 
-            MIENTRAS (reg_alumnos.legajo <> HV) Y (reg_examenes.legajo <> HV) HACER
+            MIENTRAS (reg_alumnos.legajo <> HV) 0 (reg_examenes.legajo <> HV) HACER
                 SI (reg_alumnos.legajo < reg_examenes.legajo) ENTONCES
                     copia_directa_alumnos;
                     leer_alumnos;
@@ -155,20 +155,9 @@ ACCION ejercicio 2.2.20 ES
                 FIN_SI;
             FIN_MIENTRAS;
 
-
-            MIENTRAS (reg_alumnos.legajo <> HV) HACER
-                copia_directa_alumnos;
-                leer_alumnos;
-            FIN_MIENTRAS;
-
-            MIENTRAS (reg_examenes.legajo <> HV) HACER
-                ESC("Error! Un alumno que no existe no puede rendir un examen");
-                leer_examenes;
-            FIN_MIENTRAS;
-
             CERRAR(alumnos);
             CERRAR(examenes);
-            CERRRA(salida);
+            CERRAR(salida);
 
 FIN_SUBACCION;
 
