@@ -93,16 +93,24 @@ ACCION ejercicio 2.2.20 ES
             reg_salida:= reg_alumnos;
             SI (aprobado) ENTONCES
                 reg_salida.fecha_ult_examen_aprobado:= aux_fecha;
-                reg.salida.nota:= aux_nota;
+                reg_salida.nota:= aux_nota;
             FIN_SI;
             GRABAR(salida, reg_salida);
         FIN_SUBACCION;
 
         SUBACCION comparar_fecha(f_actual,f_aux: fecha): boolean ES
-            SI (f_actual.aa >= f_aux.aa) Y (f_actual.mm >= f_aux.mm) Y (f_actual.dd >= f_aux.dd) ENTONCES
+            SI (f_actual.aa > f_aux.aa) ENTONCES
                 comparar_fecha:= true;
-            SINO
-                comparar_fecha:= false;
+            SINO 
+                SI (f_actual.aa = f_aux.aa) Y (f_actual.mm > f_aux.mm) ENTONCES
+                    comparar_fecha:= true;
+                SINO 
+                    SI (f_actual.aa = f_aux.aa) Y (f_actual.mm = f_aux.mm) Y (f_actual.dd >= f_aux.dd) ENTONCES
+                        comparar_fecha:= true;
+                    SINO
+                        comparar_fecha:= false;
+                    FIN_SI;
+                FIN_SI;
             FIN_SI;
         FIN_SUBACCION;
           
@@ -159,7 +167,7 @@ ACCION ejercicio 2.2.20 ES
             CERRAR(examenes);
             CERRAR(salida);
 
-FIN_SUBACCION;
+FIN_ACCION;
 
 
         
