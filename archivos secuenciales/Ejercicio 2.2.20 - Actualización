@@ -68,6 +68,7 @@ ACCION ejercicio 2.2.20 ES
         HV: N(5);
         aprobado: boolean;
         aux_fecha: fecha;
+        aux_nota: N(2);
 
         SUBACCION leer_alumnos ES
             LEER(alumnos, reg_alumnos);
@@ -88,14 +89,25 @@ ACCION ejercicio 2.2.20 ES
             GRABAR(salida, reg_salida);
         FIN_SUBACCION;
 
-        SUBACCION actualizar_fecha ES
+        SUBACCION actualizar_fecha_nota ES
             reg_salida:= reg_alumnos;
             SI (aprobado) ENTONCES
                 reg_salida.fecha_ult_examen_aprobado:= aux_fecha;
+                reg.salida.nota:= aux_nota;
             FIN_SI;
             GRABAR(salida, reg_salida);
         FIN_SUBACCION;
 
+        SUBACCION comparar_fecha(f_actual,f_aux: fecha): boolean ES
+            SI (f_actual.aa >= f_aux.aa) Y (f_actual.mm >= f_aux.mm) Y (f_actual.dd >= f_aux.dd) ENTONCES
+                comparar_fecha:= true;
+            SINO
+                comparar_fecha:= false;
+            FIN_SI;
+        FIN_SUBACCION;
+          
+                    
+            
 
 
         PROCESO
@@ -126,16 +138,18 @@ ACCION ejercicio 2.2.20 ES
                                 SI NO(aprobado) ENTONCES // solo entra en el primer aprobado para guardar la referencia a la fecha
                                     aprobado:= true;
                                     aux_fecha:= reg_examenes.fecha_examen;
+                                    aux_nota:= reg_examenes.nota;
                                 SINO
-                                    SI (reg_examenes.fecha_examen > aux_fecha) ENTONCES
+                                    SI (comparar_fecha(reg_examenes.fecha_examen, aux_fecha)) ENTONCES
                                         aux_fecha:= reg_examenes.fecha_examen;
+                                        aux_nota:= reg_examenes.nota;
                                     FIN_SI;
                                 FIN_SI;
 
                             FIN_SI;
                             leer_examenes;
                         FIN_MIENTRAS
-                        actualizar_fecha;
+                        actualizar_fecha_nota;
                         leer_alumnos;
                     FIN_SI;
                 FIN_SI;
