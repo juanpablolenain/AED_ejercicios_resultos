@@ -21,24 +21,130 @@ y que un alumno puede presentarse a rendir más de una materia en un mismo turno
 Supónganse ambas secuencias ordenadas por Número de Legajo.
 
 
-Analisis:
-- Un turno de examen puede durar varios días, ejemplo: una semana.
-- SI (reg_alumno.legajo < reg_examen.legajo) --> alumno no se presentó a rendir, se graba tal cual en archivo salida.
-- SI (reg_alumno.legajo > reg_examen.legajo) --> NO es posible, porque indicaría que dicho alumno no existe en el archivo de ALUMNOS.
-- SI (reg_alumno.legajo = reg_examen.legajo) --> Analizar! Un alumno puede rendir varias materias en el mismo turno, pero debemos quedarnos con la fecha de la última materia aprobada.
 
-    MIENTRAS (reg_alumno.legajo = reg_examen.legajo) HACER
-      SI (reg_examen.nota >= 6) ENTONCES
-        aprobado:= true;
-        aux_fecha:= reg_examen.fecha;
-      FIN_SI;
-      leer_examenes;
-    FIN_MIENTRAS;
-    reg_salida:= reg_alumno;
-    SI (aprobado) ENTONCES
-      reg_salida.fecha_ult_aprobacion:= aux_fecha;
-    FIN_SI;
-    GRABAR(salida, reg_salida);
+
+ACCION ejercicio 2.2.20 ES
+
+    AMBIENTE
+
+        fecha = registro
+            dd: 1..31;
+            mm: 1..12;
+            aa: N(4);
+        fin_registro;
+
+        alumno = registro                                  // crear modelo y seguido archivo + variable registro
+            AyN: AN(40);
+            carrera: ("ISI","IQ","IEM");
+            legajo: N(5);
+            fecha_nacimiento: fecha;
+            fecha_ingreso: fecha;
+            dni: N(7);
+            sexo: ("M","F");
+            fecha_ult_examen_aprobado: fecha;
+            nota: N(2);
+        fin_registro;
+
+        alumnos, salida: archivo de alumno ordenado por legajo;
+        reg_alumnos, reg_salida: alumno;
+
+        examen = registro
+            legajo: N(5);
+            carrera: ("ISI","IQ","IEM");
+            cod_materia: N(3);
+            fecha_examen: fecha;
+            nota: N(2);
+        fin_registro;
+
+        examenes: archivo de examen ordenado por legajo;
+        reg_examenes: examen;
+        
+        HV: N(5);
+        aprobado: boolean;
+        aux_fecha: fecha;
+
+        SUBACCION leer_alumnos ES
+            LEER(alumnos, reg_alumnos);
+            SI FDA(alumnos) ENTONCES
+                reg_alumnos.legajo:= HV;
+            FIN_SI;
+        FIN_SUBACCION;
+
+        SUBACCION leer_examenes ES
+            LEER(examenes, reg_examenes);
+            SI FDA(examenes) ENTONCES
+                reg_examenes.legajo:= HV;
+            FIN_SI;
+        FIN_SUBACCION;
+
+        SUBACCION copia_directa_alumnos ES
+            reg_salida:= reg_alumnos;
+            GRABAR(salida, reg_salida);
+        FIN_SUBACCION;
+
+        SUBACCION actualizar_fecha ES
+            reg_salida:= reg_alumnos;
+            SI (aprobado) ENTONCES
+                reg_salida:= aux_fecha;
+                aprobado:= false;
+            FIN_SI;
+            GRABAR(salida, reg_salida);
+        FIN_SUBACCION;
+
+
+
+        PROCESO
+
+            ABRIR E/(alumnos);
+            ABRIR E/(examenes);
+            leer_alumnos;
+            leer_examenes;
+            HV:= 99999;
+            aprobado:= false;
+
+            MIENTRAS (reg_alumnos.legajo <> HV) Y (reg_examenes.legajo <> HV) HACER
+                SI (reg_alumnos.legajo < reg_examenes.legajo) ENTONCES
+                    copia_directa;
+                    leer_alumnos;
+                SINO
+                    SI (reg_alumnos.legajo > reg_examenes.legajo) ENTONCES
+                        ESC("Error! Un alumno que no existe no puede rendir un examen");
+                        leer_examenes;
+                    SINO
+                        MIENTRAS (reg_alumnos.legajo = reg_examenes.legajo) HACER
+                            SI (reg_examenes.nota >= 6) ENTONCES
+                                aprobado:= true;
+                                aux_fecha: reg_examenes.fecha_examen;
+                            FIN_SI;
+                        FIN_MIENTRAS
+                        actualizar_fecha;
+                        leer_alumnos;
+                        leer_examenes;
+                    FIN_SI;
+                FIN_SI;
+            FIN_MIENTRAS;
+
+
+            MIENTRAS (reg_alumnos.legajo <> HV) HACER
+                copia_directa_alumnos;
+                leer_alumnos;
+            FIN_MIENTRAS;
+
+            CERRAR(alumnos);
+            CERRAR(examenes);
+            CERRRA(salida);
+
+FIN_SUBACCION;
+
+
+        
+
+
+
+
+
+
+
 
 
 
