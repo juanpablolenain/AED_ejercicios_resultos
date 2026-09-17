@@ -87,8 +87,13 @@ ACICON ejercicio 2.3.1.b ES
           total_facturado:= 0;
           cantidad_facturas:= 0;
         SINO
+          aux:= reg_factura.nro_cliente;
           ESC("No existe un cliente con el número de cliente: ", reg_factura.nro_cliente);
-          LEER(facturas, reg_factura);
+
+          MIENTRAS NFDA(facturas) Y (reg_factura.nro_cliente = aux) HACER    // optimización para no ir a buscar nuevamente clientes no existentes a disco
+            LEER(facturas, reg_factura);
+          FIN_MIENTRAS
+
         FIN_SI;
 
       FIN_MIENTRAS;
