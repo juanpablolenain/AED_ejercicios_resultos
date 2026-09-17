@@ -59,16 +59,12 @@ ACICON ejercicio 2.3.1.a ES
       ESC("N° Cliente   -   Nombre cliente   -   N° Factura");
 
       LEER(facturas, reg_factura);
-      aux:= reg_factura_nro_cliente;
-
+      
       MIENTRAS NFDA(factura) HACER
 
         reg_cliente.nro_cliente := reg_factura.nro_cliente;
-
-        SI (buscar_en_indice) ENTONCES
-          LEER(clientes, reg_cliente);
-        FIN_SI;
-
+        LEER(clientes, reg_cliente);
+       
         SI EXISTE ENTONCES
           ESC(reg_cliente.nro_cliente, reg_cliente.nombre, reg_factura.nro_factura);
         SINO
@@ -76,14 +72,6 @@ ACICON ejercicio 2.3.1.a ES
         FIN_SI;
 
         LEER(facturas, reg_factura);
-
-        SI (aux = reg_factura.nro_cliente) ENTONCES
-          buscar_en_indices := false;
-        SINO
-          aux:= reg_factura_nro_cliente;
-          buscar_en_indices := true;
-        FIN_SI;
-          
 
       FM;
 
