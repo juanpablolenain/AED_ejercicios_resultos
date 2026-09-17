@@ -41,7 +41,7 @@ ACICON ejercicio 2.3.1.b ES
     fin_registro;
 
     facturas: archivo de factura oderdenado por nro_cliente y nro_factura;
-    reg_factura, aux: factura;
+    reg_factura: factura;
 
     cliente = registro
       nro_cliente: N(5);
@@ -56,6 +56,7 @@ ACICON ejercicio 2.3.1.b ES
 
     total_facturado: N(9);
     cantidad_facturas: N(4);
+    aux: N(5);
 
 
     PROCESO
@@ -73,21 +74,21 @@ ACICON ejercicio 2.3.1.b ES
       MIENTRAS NFDA(facturas) HACER
 
         reg_cliente.nro_cliente:= reg_factura.nro_cliente;
-        LEER(clentes, reg_cliente);
+        LEER(clientes, reg_cliente);
 
         SI EXISTE ENTONCES
-          aux:= reg_factura;
-          MIENTRAS NFDA (facturas) Y (reg_cliente.nro_cliente = reg_factura.nro_cliente) HACER
+          aux:= reg_factura.nro_cliente;
+          MIENTRAS NFDA (facturas) Y (reg_factura.nro_cliente = aux) HACER
             total_facturado:= reg_factura.importe + total_facturado;
             cantidad_facturas:= cantidad_facturas + 1;
             LEER(facturas, reg_factura);
           FIN_MIENTRAS;
-          ESC(aux.nro_cliente, reg_cliente.nombre, total_facturado, cantidad_facturas);
+          ESC(aux, reg_cliente.nombre, total_facturado, cantidad_facturas);
           total_facturado:= 0;
           cantidad_facturas:= 0;
         SINO
           ESC("No existe un cliente con el número de cliente: ", reg_factura.nro_cliente);
-          LEER(clentes, reg_cliente);
+          LEER(facturas, reg_factura);
         FIN_SI;
 
       FIN_MIENTRAS;
