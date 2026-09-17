@@ -92,7 +92,7 @@ ACICON ejercicio 2.3.1.b ES
 
           MIENTRAS NFDA(facturas) Y (reg_factura.nro_cliente = aux) HACER    // optimización para no ir a buscar nuevamente clientes no existentes a disco
             LEER(facturas, reg_factura);
-          FIN_MIENTRAS
+          FIN_MIENTRAS;
 
         FIN_SI;
 
