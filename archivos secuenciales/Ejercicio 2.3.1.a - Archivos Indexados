@@ -1,0 +1,88 @@
+Dado un fichero secuencial de Facturas, ordenado por Nro. de Cliente y Nro. de Factura, con la siguiente estructura:
+
+FACTURAS Ordenado por Nro_Cliente, Nro_Factura
+
+Nro_Cliente
+Nro_Factura
+Fecha
+Importe
+
+Se desea un listado con el siguiente detalle: Nro. Cliente	Nombre Cliente	Numero Factura
+
+Los datos del cliente se encuentran en un fichero indexado por Nro. de Cliente, que tiene la siguiente estructura:
+
+CLIENTES Indexado por Nro_Cliente
+
+Nro_Cliente
+Nombre
+DNI
+CUIT
+Domicilio
+
+ACICON ejercicio 2.3.1.a ES
+
+  AMBIENTE
+
+    fecha = registro
+      dd: 1..31;
+      mm: 1..12;
+      aa: 1980..2026;
+    fin_registro;
+
+    factura = registro
+      nro_cliente: N(5);
+      nro_factura: N(5);
+      fecha_factura: fecha;
+      domicilio: AN(40);
+    fin_registro;
+
+    facturas: archivo de factura oderdenado por nro_cliente y nro_factura;
+    reg_factura: factura;
+
+    cliente = registro
+      nro_cliente: N(5);
+      nombre: AN(30);
+      dni: N(8);
+      cuit: N(11);
+      domicilio: AN(40);
+    fin_registro;
+
+    clientes: archivo de cliente indexado por nro_cliente;
+    reg_cliente: cliente;
+
+
+    PROCESO
+
+      ABRIR E/(factura);
+      ABRIRE E/(cliente);
+
+      ESC("N° Cliente   -   Nombre cliente   -   N° Factura");
+
+      LEER(facturas, reg_factura);
+
+      MIENTRAS NFDA(factura) HACER
+        reg_cliente.nro_cliente := reg_factura.nro_cliente;
+        LEER(clientes, reg_cliente);
+
+        SI EXISTE ENTONCES
+          ESC(reg_cliente.nro_cliente, reg_cliente.nombre, reg_factura.nro_factura);
+        SINO
+          ESC("No existe un cliente con el número: ", reg_factura.nro_cliente);
+        FIN_SI;
+
+        LEER(facturas, reg_factura);
+
+      FM;
+
+      CERRAR(facturas);
+      CERRAR(clientes);
+
+FIN_ACCION;
+    
+    
+
+
+
+
+
+    
