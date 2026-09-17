@@ -1,0 +1,102 @@
+Dado un fichero secuencial de Facturas, ordenado por Nro. de Cliente y Nro. de Factura, con la siguiente estructura:
+
+FACTURAS Ordenado por Nro_Cliente, Nro_Factura
+
+Nro_Cliente
+Nro_Factura
+Fecha
+Importe
+
+Se desea un listado con el siguiente detalle: Nro. Cliente	Nombre Cliente	Total Facturado	Cantidad de Facturas
+
+Los datos del cliente se encuentran en un fichero indexado por Nro. de Cliente, que tiene la siguiente estructura:
+
+CLIENTES Indexado por Nro_Cliente
+
+Nro_Cliente
+Nombre
+DNI
+CUIT
+Domicilio
+
+
+
+
+
+ACICON ejercicio 2.3.1.b ES
+
+  AMBIENTE
+
+    fecha = registro
+      dd: 1..31;
+      mm: 1..12;
+      aa: 1980..2026;
+    fin_registro;
+
+    factura = registro
+      nro_cliente: N(5);
+      nro_factura: N(5);
+      fecha_factura: fecha;
+      importe: N(8);
+    fin_registro;
+
+    facturas: archivo de factura oderdenado por nro_cliente y nro_factura;
+    reg_factura, aux: factura;
+
+    cliente = registro
+      nro_cliente: N(5);
+      nombre: AN(30);
+      dni: N(8);
+      cuit: N(11);
+      domicilio: AN(40);
+    fin_registro;
+
+    clientes: archivo de cliente indexado por nro_cliente;
+    reg_cliente: cliente;
+
+    total_facturado: N(9);
+    cantidad_facturas: N(4);
+
+
+    PROCESO
+
+      ABRIR E/(facturas);
+      ABRIR E/(clientes);
+
+      total_facturado:= 0;
+      cantidad_facturas:= 0;
+
+      ESC("Nro. Cliente   -   	Nombre Cliente   -   Total Facturado   -   Cantidad de Facturas")
+
+      LEER(facturas, reg_factura);
+
+      MIENTRAS NFDA(facturas) HACER
+
+        reg_cliente.nro_cliente:= reg_factura.nro_cliente;
+        LEER(clentes, reg_cliente);
+
+        SI EXISTE ENTONCES
+          aux:= reg_factura;
+          MIENTRAS NFDA (facturas) Y (reg_cliente.nro_cliente = reg_factura.nro_cliente) HACER
+            total_facturado:= reg_factura.importe + total_facturado;
+            cantidad_facturas:= cantidad_facturas + 1;
+            LEER(facturas, reg_factura);
+          FIN_MIENTRAS;
+          ESC(aux.nro_cliente, reg_cliente.nombre, total_facturado, cantidad_facturas);
+          total_facturado:= 0;
+          cantidad_facturas:= 0;
+        SINO
+          ESC("No existe un cliente con el número de cliente: ", reg_factura.nro_cliente);
+          LEER(clentes, reg_cliente);
+        FIN_SI;
+
+      FIN_MIENTRAS;
+
+      CERRAR(facturas);
+      CERRAR(clientes);
+
+FIN_ACCION;
+
+
+
+
