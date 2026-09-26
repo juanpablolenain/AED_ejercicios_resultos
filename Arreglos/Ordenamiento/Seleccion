@@ -1,0 +1,28 @@
+A = [5,9,10,2,1,0]
+
+PROCESO
+
+  PARA (i:= 1 a N-1) HACER
+
+    x:= A[i];   --> valor menor
+    MIN:= i;    --> valor menor posición
+
+    PARA (j:=(i+1) a N) HACER
+
+      SI (A[j] < x) ENTONCES
+        MIN:= j;      --> resguardo valor menor posición
+        x:= A[j];     --> resguardo valor menor valor
+      FIN_SI;
+
+    FIN_PARA;
+
+    A[MIN]:= A[i];   --> desplazo viejo valor menor a su nueva posición
+    A[i]:= x;        --> llevo nuevo valor menor a su correcta posición
+
+  FIN_PARA;
+
+FIN_ACCION;
+
+// el algoritmo se apoya de forma directa en la propiedad matemática de la transitividad (específicamente, la transitividad de las relaciones de orden).
+// La propiedad transitiva establece que si A > B y B > C, entonces lógicamente A > C.
+
