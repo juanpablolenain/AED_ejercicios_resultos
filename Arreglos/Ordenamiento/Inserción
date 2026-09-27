@@ -1,0 +1,9 @@
+PARA (i:= 2 a N) HACER
+  x:= A[i];
+  j:= i-1;
+  MIENTRAS (x < A[j]) Y (j>0) HACER
+    A[j+1]:= A[j];
+    j:= j-1;
+  FIN_MIENTRAS;
+  A[j+1]:= x;
+FIN_PARA;
