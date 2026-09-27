@@ -1,0 +1,11 @@
+BANDERA:= falso;
+MIENTRAS NO(bandera) HACER
+  BANDERA:= verdadero;
+  PARA (i:= 1 a N-1) HACER
+    SI (A[i]>A[i+1]) ENTONCES
+      x:= A[i];
+      A[i]:= A[i+1];
+      A[i+1]:= x;
+      BANDERA:= falso;
+    FIN_SI;
+  FIN_PARA;
