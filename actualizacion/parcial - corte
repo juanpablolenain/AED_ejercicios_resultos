@@ -1,0 +1,110 @@
+ACCION ejercicio-2 ES
+  AMBIENTE
+    viaje = registro
+      dni: N(8);
+      fecha: fecha;
+      destino: N(2);
+      credito: N(10);
+    fin_registro;
+
+    fecha = registro
+      dd: 1..31;
+      mm: 1..12;
+      aa: N(4);
+    fin_registro;
+
+    viajes: archivo de viaje ordenado por dni, fecha, destino;
+    reg: viaje;
+
+
+// variables
+
+    d: arreglo de [1..23] de AN;
+    cantidad_viajes_mes, cantidad_credito_mes, mayor_credito_mes: entero;
+    mes, actual_mes: 1..12;
+    actual_destino: caracter;
+    cantidad_viajes_destino, cantidad_credito_destino, cant_destinos: entero;
+    
+
+
+    SUBACCION ver_corte ES
+      SI (actual_destino <> reg.destino) ENTONCES
+        corte_destino;
+      SINO
+        SI (actual_mes <> reg.fecha.mm) ENTONCES
+          corte_mes;
+        FS
+      FS;
+    FIN_SUBACCION;
+
+    SUBACCION tratar_registro ES
+      cantidad_viajes_mes:= cantidad_viajes_mes + 1;
+      cantidad_credito_mes:= cantidad_credito_mes + reg.credito;
+    FIN_SUBACCION;
+
+    SUBACCION corte_mes ES
+      ESC("Para el destino: ", d[actual_destino], " durante el mes: ", actual_mes, "la cantidad de viajes realizados fueron: ", cantidad_viajes_mes, ", con un total de creditos de: $", cantidad_credito_mes);
+      
+      SI (cantidad_credito_mes > mayor_credito_mes) ENTONCES
+        mayor_credito_mes:= cantidad_credito_mes;
+        mes:= actual_mes;
+      FIN_SI;
+
+      cantidad_viajes_destino:= cantidad_viajes_destino + cantidad_viajes_mes;
+      cantidad_credito_destino:= cantidad_credito_destino + cantidad_credito_mes;
+      
+      cantidad_viajes_mes:= 0;
+      cantidad_credito_mes:= 0;
+
+      actual_mes:= reg.fecha.mm;
+
+    FIN_SUBACCION;
+
+    SUBACCION corte_destino ES
+      corte_mes;
+      cant_destinos:= cant_destinos + 1;
+      ESC("Para el destino: ", d[actual_destino], "la cantidad de viajes realizados fueron: ", cantidad_viajes_destino, "con un total de creditos de: $", cantidad_credito_destino);
+      ESC("Para el destino ", d[actual_destino], "el mayor monto otorgado fue de $", mayor, "perteneciente al mes de: ", mes);
+
+      mes:= 1;
+      mayor_credito_mes:= 0;
+
+      SI (cantidad_viajes_destino > mayor_turistas_destino)
+        mayor_turistas_destino:= cantidad_viajes_destino
+        destino:= actual_destino;
+      FIN_SI;
+
+      
+      total_credito:= total_credito + cantidad_credito_destino;
+
+      cantidad_credito_destino:= 0;
+      cantidad_viajes_destino:= 0;
+
+    FIN_SUBACCION;
+
+
+
+    PROCESO
+
+      
+      ABRIR E/(viajes);
+      LEER(viajes, reg);
+
+      [acá debería inicializar todas las variables pero una paja tre]
+
+      MIENTRAS NFDA(viajes) HACER
+        ver_corte;
+        tratar_registro;
+        LEER(viajes, reg);
+      FM;
+
+      corte_destino;
+
+      ESC("El destino con más turistas fue: ", d[destino])
+      ESC("El promedio de creditos por provincia fue: ", cant_destinos/total_credito);
+
+
+
+
+
+    
