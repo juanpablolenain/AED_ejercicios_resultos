@@ -1,0 +1,138 @@
+ACCION previaje ES
+  AMBIENTE
+
+    fecha = registro
+      dd: 1..31;
+      mm: 1..12;
+      aa: N(4);
+    fin_registro;
+
+    tarjeta = registro
+      dni: N(8);
+      num_cuenta: N(8);
+      credito:N(10);
+      ult_carga: fecha;
+    fin_registro
+
+    a_tarjeta: archivo de tarjeta INDEXADO por dni;
+    r_tarjeta: tarjeta;
+
+    turista = registro
+      dni: N(8);
+      nombre: AN(100);
+      fecha_nacimiento: fecha;
+      telefono: AN(100);
+    fin_registro;
+
+    a_turista: archivo de turista INDEXADO por dni;
+    r_turista: turista;
+
+
+   factura = registro
+     nro: N(10);
+     dni: N(8);
+     id_servicio: N(10);
+     monto: N(2);
+     fecha_carga: fecha;
+   fin_registro;
+
+   a_factura: archivo de factura ORDENADO por nro, dni;
+   r_factura: factura;
+
+   fuera_plazo: entero;
+
+
+   SUBACCION verificar_carga ES
+     i:= r_factura.id_servicio;
+     SI (r_factura.fecha >= 15/9) Y (S[i] = 1) ENTONCES
+           verificar_tarjeta;
+     SINO
+       SI NO(r_factura.fecha >= 15/9) ENTONCES
+        fuera_plazo:= fuera_plazo + 1;
+       FS;
+     FS;
+   FIN_SUBACCION;
+
+   SUBACCION verificar_tarjeta ES
+     r_tarjeta.dni:= r_factura.dni;
+     SI (EXISTE) ENTONCES
+       cargar_monto;
+     SINO
+       dar_alta_tarjeta;
+       cargar_monto;
+     FIN_SI;
+   FIN_SUBACCION;
+
+   SUBACCION cargar_monto ES
+     SI (r_factura.monto > 200000) ENTONCES
+         r_tarjeta.credito:= 100000;
+     SINO
+         r_tarjeta.credito:= r_factura.monto * 0.5;
+     FS;
+     REESCRIBIR(a_tarjeta, r_tarjeta);
+   FIN_SUBACCION;
+
+   SUBACCION dar_alta_tarjeta ES
+     r_tarjeta.dni:= r_factura.dni;
+     r_num_cuenta:= obtener_nrocuenta();
+     r_tarjeta_credito:= 0;
+     r_ultima_carga:= fecha_actual();
+     ESCRIBIR(a_tarjeta, r_tarjeta);
+   FIN_SUBACCION;
+
+   SUBACCION dar_alta_turista ES
+     r_turista.dni:= r_factura.dni;
+     r_turista.nombre:= "";
+     r_turista_fecha_nacimiento.dd:= 1;
+     r_turista_fecha_nacimiento.mm:= 1;
+     r_turista_fecha_nacimiento.dd:= 1111;
+     ESCRIBIR(a_turista, r_turista);
+   FIN_SUBACCION;
+
+
+   PROCESO
+     ABRIR E/(a_factura);   
+     ABRIR E/S (a_turista);  --> maestro a modificar
+     ABRIR E/S (a_tarjeta);  --> maestro a modificar  
+
+     LEER(a_factura, r_factura)
+     
+     MIENTRAS NFDA(a_facturas) HACER
+       r_turista.dni:= r_factura.dni;
+       LEER(a_turista, r_turista);  --> va a área de índices
+       SI (EXISTE) ENTONCES
+         verificar_carga;
+       SINO
+         dar_alta_turista;
+         dar_alta_tarjeta;
+         verificar_carga;
+       FIN_SI;
+       LEER(a_factura, r_factura);
+    FIN_MIENTRAS;
+
+    ESC("La cantidad de facturas con fecha de carga fuera de plazo fueron: ", fuera_plazo);
+
+    CERRAR(a_factura);
+    CERRAR(a_turista);
+    CERRAR(a_tarjeta);
+
+FIN_ACCION;
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+      
