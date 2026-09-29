@@ -55,6 +55,7 @@ ACCION previaje ES
 
    SUBACCION verificar_tarjeta ES
      r_tarjeta.dni:= r_factura.dni;
+     LEER(a_tarjeta, r_tarjeta);
      SI (EXISTE) ENTONCES
        cargar_monto;
      SINO
