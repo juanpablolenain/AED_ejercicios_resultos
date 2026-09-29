@@ -62,9 +62,11 @@ ACCION ejercicio-2 ES
 
     SUBACCION corte_destino ES
       corte_mes;
+      promedio:= (cantidad_credito_destino/cantidad_viajes_destino)
       cant_destinos:= cant_destinos + 1;
       ESC("Para el destino: ", d[actual_destino], "la cantidad de viajes realizados fueron: ", cantidad_viajes_destino, "con un total de creditos de: $", cantidad_credito_destino);
-      ESC("Para el destino ", d[actual_destino], "el mayor monto otorgado fue de $", mayor, "perteneciente al mes de: ", mes);
+      ESC("Para el destino ", d[actual_destino], "el mayor monto otorgado fue de $", mayor_credito_mes, "perteneciente al mes de: ", mes);
+      ESC("El promedio de cretido para la privincia: ", d[actual_destino], "es: ", promedio);
 
       mes:= 1;
       mayor_credito_mes:= 0;
@@ -79,6 +81,8 @@ ACCION ejercicio-2 ES
 
       cantidad_credito_destino:= 0;
       cantidad_viajes_destino:= 0;
+
+      actual_destino:= reg.destino;
 
     FIN_SUBACCION;
 
@@ -100,9 +104,7 @@ ACCION ejercicio-2 ES
 
       corte_destino;
 
-      ESC("El destino con más turistas fue: ", d[destino])
-      ESC("El promedio de creditos por provincia fue: ", cant_destinos/total_credito);
-
+      ESC("El destino con más turistas fue: ", d[destino]);  
 
 
 
