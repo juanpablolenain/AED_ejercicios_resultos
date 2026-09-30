@@ -82,12 +82,13 @@ ACCION 2-3-10 ES
         SI EXISTE ENTONCES
           CARGAR_COMBUSTIBLE();
         SINO
-          cont:= cont + 1;
           DAR_ALTA();
+          cont:= cont + 1;
           CARGAR_COMBUSTIBLE();
         FIN_SI;
 
         ESC("Si desea hacer otra carga, presione 1. De lo contrario, precione cualquier otor número: ");
+        LEER(op);
         
       HASTA QUE (op = 1);
 
