@@ -141,10 +141,16 @@ ACCION
               leer_ejemplares;
             SINO
                ESC("Error: el ejemplar existe en EJEMPLARES, pero su cod_libro no existe en LIBROS.");
-               MIENTRAS (reg_ejemplares.cod_libro = reg_novedades_cod.libro) Y (reg_ejemplares.cod_ejemplar = reg_novedades.cod_ejemplar) HACER
+                error_cod_libro:= reg_novedades.cod_libro;
+                error_cod_ejemplar:= reg_novedades.cod_ejemplar;
+                aux_ejemplares;
+               MIENTRAS ( error_cod_libro = reg_novedades.cod_libro) Y (error_cod_ejemplar = reg_novedades.cod_ejemplar) HACER
                 leer_novedades;
-                leer_ejemplares;
               FM;
+
+              GRABAR(ejemplares_act, reg_ejemplares);
+              leer_ejemplares;
+
             FS;
           SINO                                                                        // POSIBLE ALTA EN EL CASO QUE TIPO DE NOVEDAD = 1
             reg_libros.cod_libro:= reg_novedades.cod_libro;
