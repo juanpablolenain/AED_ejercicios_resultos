@@ -146,7 +146,7 @@ ACCION
               nuevo_ejemplar:= nuevo_ejemplar + 1;
               leer_novedades;
               LOTE;
-              leer_ejemplares;
+              leer_novedades;
             SINO
               ESC("Error!" No se puede dar de alta un ejemplar de un libro que no existe);
               leer_novedades;
