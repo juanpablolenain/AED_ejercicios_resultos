@@ -148,7 +148,7 @@ ACCION
                 leer_novedades;
               FM;
 
-              GRABAR(ejemplares_act, reg_ejemplares);
+              GRABAR(ejemplares_act, reg_ejemplares);   // Estarías “corrigiendo” la inconsistencia eliminando silenciosamente el registro del maestro, y el enunciado no dice que debas eliminar ejemplares inválidos.
               leer_ejemplares;
 
             FS;
