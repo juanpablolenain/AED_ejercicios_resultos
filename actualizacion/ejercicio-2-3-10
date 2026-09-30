@@ -1,0 +1,98 @@
+ACCION 2-3-10 ES
+  AMBIENTE
+
+    fecha = registro
+      dd: 1..31;
+      mm: 1..12;
+      aa: 1900..2026;
+    
+    punto = registro
+      dni: N(8);
+      puntos: N(5);
+      ultima_carga: fecha;
+    fin_registro;
+
+    puntos: archivo de punto INDEXADO por dni;
+    p: puntos;
+
+    cliente = registro
+      dni: N(8);
+      AyN: AN(30);
+      edad: N(2);
+      cuidad: AN(30);
+    fin_registro;
+
+    clientes: archivo de cliente INDEXADO por dni;
+    c: clientes;
+
+    SUBACCION CARGAR_COMBUSTIBLE() ES
+      ESC(¿"Cuánto dinero desea cargar de combustible"?)
+      LEER(monto);
+      p.puntos:= p.puntos + (monto*10)/100;
+      p.ultima_carga:= fecha_actual();
+      SI (p.puntos >= 100) ENTONCES
+        ESC("¿Desea canjear puntos? - SI: 1, NO: 0");
+        LEER(op);
+        SI (op = 1) ENTONCES
+          APLICAR_DESCUENTO();
+        SINO
+          ESC("Su monto a pagar es: ", monto);
+          ESC("Sus puntos actuales son: ", puntos);
+        FIN_SI;
+      FIN_SI;
+      REESCRIBIR(puntos, p);
+    FIN_SUBACCION;
+
+
+    SUBACCION APLICAR_DESCUENTO() ES
+      p.puntos:= p.puntos - 100;
+      monto:= monto - 100;
+      ESC("Su monto a pagar es: ", monto);
+      ESC("Sus puntos actuales son: ", puntos);
+    FIN_SUBACCION;
+
+    SUBACCION DAR_ALTA() ES
+      p.puntos:= 0;
+      p.ultima_carga:= fecha_actual();
+      c.dni:= p.dni;
+      ESC("Ingrese su nombre y apellido: ");
+      LEER(c.NyA);
+      ESC("Ingrese su edad: ");
+      LEER(c.edad);
+      ESC("Ingrese su cuidad: ");
+      LEER(c.cuidad);
+      ESCRIBIR(cliente, c);
+      ESCRIBIR(puntos, p);
+    FIN_SUBACCION;
+
+    cont, op: entero;
+
+    PROCESO
+      ABRIR E/S (puntos);
+      ABRIR E/S (clientes);
+
+      cont:= 0;
+
+      REPETIR
+      
+        ESC("Antes de realizar la carga, ingrese su número de DNI: ");
+        LEER(p.dni);
+        LEER(puntos, p);
+
+        SI EXISTE ENTONCES
+          CARGAR_COMBUSTIBLE();
+        SINO
+          cont:= cont + 1;
+          DAR_ALTA();
+          CARGAR_COMBUSTIBLE();
+        FIN_SI;
+
+        ESC("Si desea hacer otra carga, presione 1. De lo contrario, precione cualquier otor número: ");
+        
+      HASTA QUE (op = 1);
+
+
+
+
+    
+    
