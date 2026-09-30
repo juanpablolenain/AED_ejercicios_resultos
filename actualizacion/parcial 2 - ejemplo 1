@@ -37,7 +37,7 @@ ACCION
       id_usuario: N(7);
     fin_registro;
 
-    novedades: archivo de novedad INDEXADO por cod_libro, cod_ejemplar, tipo_novedad y fecha_novedad;
+    novedades: archivo de novedad ORDENADO por cod_libro, cod_ejemplar, tipo_novedad y fecha_novedad;
     reg_novedades: novedad;
 
     HV: entero;
@@ -57,11 +57,16 @@ ACCION
       FIN_SI;
     FIN_SUBACCION;
 
+    SUBACCION COPIA_DIRECTA ES
+      GRABAR(ejemplares_act, reg_ejemplares);
+    FIN_SUBACCION;
+
     SUBACCION LOTE ES
-      MIENTRAS (aux_ejemplares.cod_libro = reg_novedades.cod_libro) Y (aux_ejemplares.cod_ejemplar = reg_novedades.cod_ejemplar) HACER
-        TRATAR_IGUALE
-        LEER(novedades, reg_novedades);
+      MIENTRAS (aux_ejemplares.cod_libro = reg_novedades.cod_libro) O (aux_ejemplares.cod_ejemplar = reg_novedades.cod_ejemplar) HACER
+        TRATAR_IGUALES
+        leer_novedades;
       FM;
+      GRABAR(ejemplares_act, aux_ejemplares);
     FIN_SUBACCION;
 
     SUBACCION TRATAR_IGUALES ES
@@ -76,28 +81,24 @@ ACCION
 
     SUBACCION DAR_PRESTAMO ES
         aux_ejemplares.disponible:= "NO";
-        aux_ejemplares.fecha:= sumar_dias(reg_novedades.fecha_novedad, reg.libros.cant_dias_max);
-        GRABAR(ejemplares_act, aux_ejemplares);
+        aux_ejemplares.fecha:= sumar_dias(reg_novedades.fecha_novedad, reg_libros.cant_dias_max);
     FIN_SUBACCION;
 
     SUBACCION DEVOLUCION ES
       aux_ejemplares.disponible:= "SI";
       aux_ejemplares.fecha:= "";
-      GRABAR(ejemplares_act, aux_ejemplares);
     FIN_SUBACCION;
 
     SUBACCION MANTENIMIENTO ES
       aux_ejemplares.disponible:= "NO";
       aux_ejemplares.estado:= "REPARACION";
-      aux_ejemplares.fecha:= eg_novedades.fecha_novedad;
-      GRABAR(ejemplares_act, aux_ejemplares);
+      aux_ejemplares.fecha:= reg_novedades.fecha_novedad;
     FIN_SUBACCION;
 
     SUBACCION BAJA ES
       aux_ejemplares.disponible:= "NO";
       aux_ejemplares.estado:= "BAJA";
       aux_ejemplares.fecha:= eg_novedades.fecha_novedad;
-      GRABAR(ejemplares_act, aux_ejemplares);
     FIN_SUBACCION;
       
 
@@ -111,14 +112,15 @@ ACCION
       ABRIR S/(ejemplares_act);
 
       HV:= 999999999;
+      nuevo_ejemplar:= 0;
 
-      LEER(ejemplares, reg_ejemplares);
-      LEER(novedades, reg_novedades);
+      leer_ejemplares;
+      leer_novedades;
 
       MIENTRAS (reg_ejemplares.cod_libro <> HV) Y (reg_novedades.cod_libro <> HV) HACER
         SI (reg_ejemplares.cod_libro < reg_novedades.cod_libro) O ((reg_ejemplar.cod_libro = reg_novedades.cod_libro) Y (reg_ejemplar.cod_ejemplar < reg_novedades.cod_ejemplar)) ENTONCES    // COPIA DIRECTA
           COPIA_DIRECTA;
-          LEER(ejemplares, reg_ejemplares);
+          leer_ejemplares;
         SINO
           SI ((reg_ejemplar.cod_libro = reg_novedades.cod_libro) Y (reg_ejemplar.cod_ejemplar = reg_novedades.cod_ejemplar)) ENTONCES   // IGUALES
             reg_libros.cod_libro:= aux.ejemplares.cod_libro;
@@ -133,15 +135,16 @@ ACCION
               leer_ejemplares;
             FS;
           SINO                                                                        // ALTA
-            reg_libros.cod_libro:= aux.ejemplares.cod_libro;
+            reg_libros.cod_libro:= reg_novedades.cod_libro;
             LEER(libros, reg_libros);
             SI EXISTE ENTONCES
               aux_ejemplares.cod_libro:= reg_novedades.cod_libro;
               aux_ejemplares.cod_ejemplar:= reg_novedades.cod_ejemplar;
               aux_ejemplares.disponible:= "SI";
-              aux_ejemaplares.estado: reg_novedades.estado;
+              aux_ejemaplares.estado: "";
               aux_ejemaplares.fecha:= "";
               nuevo_ejemplar:= nuevo_ejemplar + 1;
+              leer_novedades;
               LOTE;
               leer_ejemplares;
             SINO
@@ -157,7 +160,8 @@ ACCION
 
       CERRAR(libros);
       CERRAR(ejemplares);
-      CERRAR(NOVEDADES);
+      CERRAR(novedades);
+      CERRAR(ejemplares_act)
 
 FIN_ACCION;
 
