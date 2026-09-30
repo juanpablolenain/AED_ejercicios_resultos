@@ -1,0 +1,38 @@
+ACCION ejercicio1 ES
+  AMBIENTE
+    A: arreglo de [1..100] de enteros;
+    i: entero;
+
+    par, suma_pares: entero;
+
+    PROCESO
+
+    par, suma_pares:= 0;
+    
+      PARA i:= 1 hasta 100 HACER
+        LEER(A[i]);
+      FIN_PARA;
+
+      PARA i:= 1 hasta 100 HACER
+        SI (A[i] > A[i+1]) ENTONCES
+          mayor:= A[i];
+          manor:= A[i+1]
+        SINO
+          SI (A[i] < A[i+1]) ENTONCES
+            mayor:= A[i+1];
+            menor:= A[i];
+          FIN_SI;
+      FIN_PARA;
+
+      PARA i:= 1 hasta 100 HACER
+        SI (A[i] MOD 2 = 0) ENTONCES
+          par:= par + 1;
+          suma_pares:= suma_pares + A[i];
+        FIN_SI;
+      FIN_PARA;
+
+      ESC("La cantidad de números pares en el arreglo son: ", par, "los cuales suman: ", suma_pares);
+
+
+      
+          
