@@ -1,0 +1,170 @@
+ACCION
+  AMBIENTE
+    fecha = registro
+      dd: 1..31;
+      mm: 1..12;
+      aa: N(4);
+    fin_registro;
+
+    libro = registro
+      cod_libro: N(8);
+      titulo: AN(60);
+      isbn: N(13);
+      desc: AN(255);
+      tipo_libro: ("A","D","L","N");
+      cant_dias_max: N(2);
+    fin_registro;
+
+    libros: archivo de libro INDEXADO por cod_libro;
+    reg_libros: libro;
+
+    ejemplar = registro
+      cod_libro: N(8);
+      cod_ejemplar: N(10);
+      disponible: ("SI","NO");
+      estado: ("BIEN", "REPARACION", "BAJA");
+      fecha: fecha;
+    fin_registro;
+
+    ejemplares, ejemplares_act: archivo de ejemplar ORDENADO por cod_libro y cod_ejemplar;
+    reg_ejemplares, aux_ejemplares: ejemplar;
+
+    novedad = registro
+      cod_libro: N(8);
+      cod_ejemplar: N(10);
+      tipo_novedad: ("1","2","3","4","5");
+      fecha_novedad: fecha;
+      id_usuario: N(7);
+    fin_registro;
+
+    novedades: archivo de novedad INDEXADO por cod_libro, cod_ejemplar, tipo_novedad y fecha_novedad;
+    reg_novedades: novedad;
+
+    HV: entero;
+    nuevo_ejemplar: entero;
+
+    SUBACCION leer_ejemplares ES
+      LEER(ejemplares, reg_ejemplares);
+      SI FDA(ejemplares) ENTONCES
+        reg_ejemplares.cod_libro:= HV;
+      FIN_SI;
+    FIN_SUBACCION;
+
+    SUBACCION leer_novedades ES
+      LEER(novedades, reg_novedades);
+      SI FDA(novedades) ENTONCES
+        reg_novedades.cod_libro:= HV;
+      FIN_SI;
+    FIN_SUBACCION;
+
+    SUBACCION LOTE ES
+      MIENTRAS (aux_ejemplares.cod_libro = reg_novedades.cod_libro) Y (aux_ejemplares.cod_ejemplar = reg_novedades.cod_ejemplar) HACER
+        TRATAR_IGUALE
+        LEER(novedades, reg_novedades);
+      FM;
+    FIN_SUBACCION;
+
+    SUBACCION TRATAR_IGUALES ES
+      SEGUN (reg_novedades.tipo_novedad) HACER
+        1: ESC("Error! Ejemplar ya existe.");
+        2: DAR_PRESTAMO;
+        3: DEVOLUCION;
+        4: MANTENIMIENTO;
+        5: BAJA;
+      FIN_SEGUN;
+    FIN_SUBACCION;
+
+    SUBACCION DAR_PRESTAMO ES
+        aux_ejemplares.disponible:= "NO";
+        aux_ejemplares.fecha:= sumar_dias(reg_novedades.fecha_novedad, reg.libros.cant_dias_max);
+        GRABAR(ejemplares_act, aux_ejemplares);
+    FIN_SUBACCION;
+
+    SUBACCION DEVOLUCION ES
+      aux_ejemplares.disponible:= "SI";
+      aux_ejemplares.fecha:= "";
+      GRABAR(ejemplares_act, aux_ejemplares);
+    FIN_SUBACCION;
+
+    SUBACCION MANTENIMIENTO ES
+      aux_ejemplares.disponible:= "NO";
+      aux_ejemplares.estado:= "REPARACION";
+      aux_ejemplares.fecha:= eg_novedades.fecha_novedad;
+      GRABAR(ejemplares_act, aux_ejemplares);
+    FIN_SUBACCION;
+
+    SUBACCION BAJA ES
+      aux_ejemplares.disponible:= "NO";
+      aux_ejemplares.estado:= "BAJA";
+      aux_ejemplares.fecha:= eg_novedades.fecha_novedad;
+      GRABAR(ejemplares_act, aux_ejemplares);
+    FIN_SUBACCION;
+      
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+    PROCESO
+      ABRIR E/(ejemplares);
+      ABRIR E/(novedades);
+      ABRIR E/(libros);
+      ABRIR S/(ejemplares_act);
+
+      HV:= 999999999;
+
+      LEER(ejemplares, reg_ejemplares);
+      LEER(novedades, reg_novedades);
+
+      MIENTRAS (reg_ejemplares.cod_libro <> HV) Y (reg_novedades.cod_libro <> HV) HACER
+        SI (reg_ejemplares.cod_libro < reg_novedades.cod_libro) O ((reg_ejemplar.cod_libro = reg_novedades.cod_libro) Y (reg_ejemplar.cod_ejemplar < reg_novedades.cod_ejemplar)) ENTONCES    // COPIA DIRECTA
+          COPIA_DIRECTA;
+          LEER(ejemplares, reg_ejemplares);
+        SINO
+          SI ((reg_ejemplar.cod_libro = reg_novedades.cod_libro) Y (reg_ejemplar.cod_ejemplar = reg_novedades.cod_ejemplar)) ENTONCES   // IGUALES
+            reg_libros.cod_libro:= aux.ejemplares.cod_libro;
+            LEER(libros, reg_libros);
+            SI EXISTE ENTONCES
+              aux_ejemplares:= reg_ejemplares;
+              LOTE;
+              leer_ejemplares;
+            SINO
+              ESC("Error!" Se está queriendo tratar un ejemplar de un libro que no existe);
+              leer_novedades;
+              leer_ejemplares;
+            FS;
+          SINO                                                                        // ALTA
+            reg_libros.cod_libro:= aux.ejemplares.cod_libro;
+            LEER(libros, reg_libros);
+            SI EXISTE ENTONCES
+              aux_ejemplares.cod_libro:= reg_novedades.cod_libro;
+              aux_ejemplares.cod_ejemplar:= reg_novedades.cod_ejemplar;
+              aux_ejemplares.disponible:= "SI";
+              aux_ejemaplares.estado: reg_novedades.estado;
+              aux_ejemaplares.fecha:= "";
+              nuevo_ejemplar:= nuevo_ejemplar + 1;
+              LOTE;
+              leer_ejemplares;
+            SINO
+              ESC("Error!" No se puede dar de alta un ejemplar de un libro que no existe);
+              leer_novedades;
+              leer_ejemplares;
+            FS;
+          FS;
+        FS;
+      FM;
+      
+      ESC("La cantidad de ejemplares nuevos que ingresaron fueron: ", nuevo_ejemplar);
+
+      CERRAR(libros);
+      CERRAR(ejemplares);
+      CERRAR(NOVEDADES);
+
+FIN_ACCION;
+
+
+
+
+
+
+
+
