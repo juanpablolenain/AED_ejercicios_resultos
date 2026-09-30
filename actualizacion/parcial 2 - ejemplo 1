@@ -117,7 +117,7 @@ ACCION
       leer_ejemplares;
       leer_novedades;
 
-      MIENTRAS (reg_ejemplares.cod_libro <> HV) Y (reg_novedades.cod_libro <> HV) HACER
+      MIENTRAS (reg_ejemplares.cod_libro <> HV) 0 (reg_novedades.cod_libro <> HV) HACER
         SI (reg_ejemplares.cod_libro < reg_novedades.cod_libro) O ((reg_ejemplar.cod_libro = reg_novedades.cod_libro) Y (reg_ejemplar.cod_ejemplar < reg_novedades.cod_ejemplar)) ENTONCES    // COPIA DIRECTA
           COPIA_DIRECTA;
           leer_ejemplares;
