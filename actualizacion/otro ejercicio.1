@@ -1,0 +1,158 @@
+ACCION
+  AMBIENTE
+
+    fecha = registro
+      dd: 1..31;
+      mm: 1..12;
+      aa: N(4);
+    fin_registro;
+    
+    cliente = registro
+      clave = registro
+        id_sucursal: N(5);
+        id_cliente: N(5);
+      fin_registro;
+      AyN: AN(30);
+      saldo_actual: N(10);
+      fecha_alta: fecha;
+      fecha_baja: fecha;
+    fin_registro;
+
+    clientes, salida: archivo de cliente ORDENADO por clave;
+    cli, sal: cliente;
+
+    movimiento = registro
+      clave = registro
+        id_sucursal: N(5);
+        id_cliente: N(5);
+      fin_registro;
+      cod_mov: 0..99;
+      AyN: AN(30);
+      fecha_mov: fecha;
+      monto: N(8);
+      detalle: AN(500);
+      categoria: ("1", "2","3","4","5","6");
+      tipo: ("I", ""E);
+    fin_registro;
+
+    movimientos: archivo de movimiento ORDENADO por clave y cod_mov;
+    mov: movimiento;
+
+    cont: entero;
+
+
+    SUBPROCESO LEER_CLIENTES ES
+      LEER(clientes, cli);
+      SI FDA(clientes) ENTONCES
+        cli.clave:= HV;
+      FIN_SI;
+    FIN_SUBPROCESO;
+
+    SUBPROCESO LEER_MOVIMIENTOS ES
+      LEER(movimientos, mov);
+      SI FDA(movimientos) ENTONCES
+        mov.clave:= HV;
+      FIN_SI;
+    FIN_SUBPROCESO;
+
+    SUBPROCESO COPIADIRECTA ES
+      sal:= cli;
+      ESCRIBIR(salida, sal);
+      leer_movimiento;
+    FIN_SUBACCION;
+
+    SUBPROCESO IGUALES() ES
+      sal:= mov;
+      MIENTRAS(sal.calve = mov.clave) HACER
+        PROCESARMOV();
+        leer_movimiento;
+      FM;
+      ESCRIBIR(salida, sal);
+    FIN_SUBPROCESO;
+
+    SUBPROCESO PROCESARMOV() ES
+      SI (mov.tipo_mov = 0) ENTONCES
+        ESC("Error! Cliente ya existe");
+      SINO
+        SI (mov.tipo_mov = 99) ENTONCES
+          sal.fecha_baja:= fecha_actual();
+          cont:= cont + 1;
+        SINO
+          SI (mov.tipo = "I") ENTONCES
+            sal.saldo_actual:= sal.saldo_actual + mov.monto;
+          SINO
+            sal.saldo_actual:= sal.saldo_actual - mov.monto;
+          FIN_SI;
+        FIN_SI; 
+      FIN_SI;
+    FIN_SUBPROCESO;
+
+    SUBPROCESO DISTINTIOS ES
+      SI (mov.tipo_mov = 0) ENTONOCES
+        sal.clave.id_sucursal:= mov.clave.id_sucursal;
+        sal.clave.id_cliente:= mov.clave.id_cliente;
+        sal.NyA:= mov.NyA;
+        sal.saldo:= 0;
+        sal.fecha_alta:= mov.fecha_mov;
+        sal.fecha_baja.dd:= 1;
+        sal.fecha_baja.mm:= 1;
+        sal.fecha_baja.aa:= 1111;
+        leer_mov();
+        MIENTRAS (sal.clave = mov.clave) ENTONCES
+          PROCESARMOV();
+          leer_mov();
+        FM;
+        ESCRIBIR(salida, sal);
+      FIN_SI;
+    FIN_SUBACCION;
+
+
+    PROCESO
+    
+      ABRIR E/(clientes);
+      ABRIR E/(movimientos);
+      ABRIR S/(salida);
+
+      HV:= 99999;
+      cont:= 0;
+
+      leer_clientes;
+      leer_movimientos;
+
+      MIENTRAS (cli.clave <> HV) O (mov.clave <> HV) HACER
+        SI (cli.clave < mov.clave) ENTONCES
+          COPIA_DIRECTA;
+        SINO
+          SI (cli.clave = mov.clave) ENTONCES
+            IGUALES();
+            leer_clientes;
+          SINO
+            DISTINTIOS();
+          FIN_SI;
+        FIN_SI;
+      FM;
+
+      ESC("Las personas que se dieron de baja el útlimo son: ", cont);
+
+      CERRAR(clientes);
+      CERRAR(movimientos);
+      CERRAR(salida);
+
+FIN_ACCION;
+        
+          
+            
+        
+
+      
+
+
+
+
+
+
+
+      
+
+    
+      
