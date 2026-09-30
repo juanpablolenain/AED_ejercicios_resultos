@@ -13,15 +13,18 @@ ACCION ejercicio1 ES
         LEER(A[i]);
       FIN_PARA;
 
+ 
+      menor:= 1;
+      mayor:= 1;
+
       PARA i:= 1 hasta 100 HACER
-        SI (A[i] > A[i+1]) ENTONCES
-          mayor:= A[i];
-          manor:= A[i+1]
+        SI (A[i] > A[mayor]) ENTONCES
+          mayor:= i;
         SINO
-          SI (A[i] < A[i+1]) ENTONCES
-            mayor:= A[i+1];
-            menor:= A[i];
+          SI (A[i] < A[mayor]) ENTONCES
+            menor:= i;
           FIN_SI;
+        FIN_SI;
       FIN_PARA;
 
       PARA i:= 1 hasta 100 HACER
