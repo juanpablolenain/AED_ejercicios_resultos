@@ -40,6 +40,9 @@ ACCION
     novedades: archivo de novedad ORDENADO por cod_libro, cod_ejemplar, tipo_novedad y fecha_novedad;
     reg_novedades: novedad;
 
+    error_cod_libro: entero;
+    error_cod_ejemplar: entero;
+
     HV: entero;
     nuevo_ejemplar: entero;
 
@@ -143,23 +146,36 @@ ACCION
                 leer_ejemplares;
               FM;
             FS;
-          SINO                                                                        // ALTA
+          SINO                                                                        // POSIBLE ALTA EN EL CASO QUE TIPO DE NOVEDAD = 1
             reg_libros.cod_libro:= reg_novedades.cod_libro;
             LEER(libros, reg_libros);
             SI EXISTE ENTONCES
-              aux_ejemplares.cod_libro:= reg_novedades.cod_libro;
-              aux_ejemplares.cod_ejemplar:= reg_novedades.cod_ejemplar;
-              aux_ejemplares.disponible:= "SI";
-              aux_ejemaplares.estado: "";
-              aux_ejemaplares.fecha:= "";
-              nuevo_ejemplar:= nuevo_ejemplar + 1;
-              leer_novedades;
-              LOTE;
-              leer_ejemplares;
+              SI (reg_novedades.tipo_novedad = 1) ENTONCES
+                aux_ejemplares.cod_libro:= reg_novedades.cod_libro;
+                aux_ejemplares.cod_ejemplar:= reg_novedades.cod_ejemplar;
+                aux_ejemplares.disponible:= "SI";
+                aux_ejemaplares.estado: "BIEN";
+                aux_ejemaplares.fecha:= "";
+                leer_novedades;   
+                LOTE;
+                nuevo_ejemplar:= nuevo_ejemplar + 1;
+              SINO
+                ESC("ERROR! No se puede hacer un movimiento sobre un ejemplar que no existe")
+                error_cod_libro:= reg_novedades.cod_libro;
+                error_cod_ejemplar:= reg_novedades.cod_ejemplar;
+                leer_novedades;
+                MIENTRAS (error_cod_libro = reg_novedades.cod_libro) Y (error_cod_ejemplar = reg_novedades.cod_ejemplar) HACER
+                  leer_novedades
+                FM;
+              FIN_SI;
             SINO
               ESC("Error!" No se puede dar de alta un ejemplar de un libro que no existe);
+              error_cod_libro:= reg_novedades.cod_libro;
+              error_cod_ejemplar:= reg_novedades.cod_ejemplar;
               leer_novedades;
-              leer_ejemplares;
+              MIENTRAS (error_cod_libro = reg_novedades.cod_libro) Y (error_cod_ejemplar = reg_novedades.cod_ejemplar) HACER
+                  leer_novedades
+              FM;
             FS;
           FS;
         FS;
