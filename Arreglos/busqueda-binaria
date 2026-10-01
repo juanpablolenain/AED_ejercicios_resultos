@@ -1,0 +1,15 @@
+ESC("Ingrese el elemento que quiera encontrar: ");
+LEER(x);
+
+izq:= 1;
+der:= N;
+medio:= (izq + der) DIV 2;
+
+MIENTRAS (izq<der) Y (A[medio] <> x) HACER
+  SI (A[medio] < x) ENTONCES
+    izq:= medio + 1;
+  SINO
+    der:= medio - 1;
+  FIN_SI;
+  medio:= (izq + der) DIV 2;
+FIN_MIENTRAS;
