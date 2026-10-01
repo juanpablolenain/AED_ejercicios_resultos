@@ -17,16 +17,15 @@ ACCION 3.9 ES
       ESC("Ingrese el autor que desea buscar: ");
       LEER(autor);
 
-      i:= 1; p:= -1;
+      i:= 1; p:= -1; current_mayor:= 0;
 
       MIENTRAS (i<200) Y (libros[i.autor] <> autor) HACER
-
         i:= i + 1;
       FM;
 
       SI (libros[i.autor] = autor) ENTONCES
         ESC("Los libros que posee: ",autor, "son los siguientes: ");
-        MIENTRAS(libros[i.autor] = autor) Y (i<=200) HACER
+        MIENTRAS (i<=200) Y (libros[i.autor] = autor)HACER
           ESC(libro[i.titulo]);
 
           SI (libro[i.titulo] = "Algoritmos + Estructuras de Datos=Programa") ENTONCES
