@@ -3,7 +3,7 @@ LEER(x);
 
 i:= 1;
 
-MIENTRAS (i <= N) Y (A[i] <> x) HACER
+MIENTRAS (i < N) Y (A[i] <> x) HACER
   i:= i + 1;
 FIN_MIENTRAS;
 
