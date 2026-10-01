@@ -1,0 +1,49 @@
+Considerando un arreglo de 50 números enteros, confeccione un algoritmo para resolver las siguientes consignas:
+
+1. Modificar el arreglo dado, de modo que todos sus elementos sean múltiplos de 3.
+2. Crear otro arreglo que contenga los números que no cumplieron la condición.
+3. Informar cuántos números cumplieron la condición.
+
+
+ACCION ejercicio2 (A: arreglo de [1..50] de enteros) ES
+  AMBIENTE
+  
+    NO_MULT: arreglo de [1..50] de enteros;
+    i,j: entero;
+
+    cumple_condicion: entero;
+
+    PROCESO
+  
+      j:= 1;
+      cumple_condicion:= 0;
+
+      PARA i:= 1 HASTA 50 HACER
+        SI (A[i] MOD 3 = 0 ENTONCES)
+          cumple_condicion:= cumple_condicion + 1;
+        SINO
+          NO_MULT[j]:= A[i];
+          j:= j + 1;          // j es independiente de i 
+          A[i]:= A[i]*3;
+        FIN_SI;
+      FIN_PARA;
+
+      ESC("La cantidad de elementos que cumplieron la condición fueron: ", cumple_condicion);
+      ESC("La cantidad de elementos que NO cumplieron la condición fueron: ", j-1);
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
