@@ -26,7 +26,7 @@ ACCION
         id_sucursal: N(5);
         id_cliente: N(5);
       fin_registro;
-      cod_mov: 0..99;
+      tipo_mov: 0..99;
       AyN: AN(30);
       fecha_mov: fecha;
       monto: N(8);
@@ -58,11 +58,11 @@ ACCION
     SUBPROCESO COPIADIRECTA ES
       sal:= cli;
       ESCRIBIR(salida, sal);
-      leer_movimiento;
+      leer_clientes;
     FIN_SUBACCION;
 
     SUBPROCESO IGUALES() ES
-      sal:= mov;
+      sal:= clie;
       MIENTRAS(sal.calve = mov.clave) HACER
         PROCESARMOV();
         leer_movimiento;
@@ -103,6 +103,16 @@ ACCION
           leer_mov();
         FM;
         ESCRIBIR(salida, sal);
+      SINO
+        SI (mov.tipo_mov = 99) ENTONCES
+          ESC("No se puede dar de baja a un cliente que no existe");
+        SINO
+          ESC("No se puede modificar un registro de un cliente que no existe");
+        FIN_SI;
+        aux_mov:= mov.clave;
+        MIENTRA (aux_mov = mov.clave) HACER
+          leer_movimeinto;
+        FM;
       FIN_SI;
     FIN_SUBACCION;
 
