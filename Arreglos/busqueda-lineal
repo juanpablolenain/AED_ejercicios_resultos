@@ -1,0 +1,8 @@
+PARA i:= 1 hasta N HACER
+  SI (A[i] = buscado) ENTONCES
+    ESC("El elemento buscado está en la posición: ", i);
+    veces_encontrado:= veces_encontrado + 1;
+  FIN_SI;
+FIN_PARA;
+
+ESC("El elemento buscado fue encontrado: ", veces_encontrado, "cantidad de veces");
