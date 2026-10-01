@@ -7,7 +7,7 @@ ACCION ejercicio1 ES
       aa: N(4);
     fin_registro;
     
-    ticket = registro
+    r_ticket = registro
       nro_funcion: N(6);
       cod_complejo: 1..12;
       cod_genero: 1..5;
@@ -15,7 +15,7 @@ ACCION ejercicio1 ES
       cant_esp: N(5);
     fin_registro;
 
-    ticket: archivo de ticket;
+    ticket: archivo de r_ticket;
     reg: ticket;
 
     complejo = registro
@@ -23,13 +23,13 @@ ACCION ejercicio1 ES
       total_esp: N(10);
     fin_registro;
 
-    compejo_malo: archivo de complejo;
+    complejo_malo: archivo de complejo;
     reg_cm: complejo;
 
     esp: arreglo de [1..12,1..12] de enteros;
     nombresMeses: arreglo de [1..12] de caracteres;
     c,m,e: entero;
-    esp_mes, mayor_mes: entero;
+    esp_mes, mayor_mes, mes, esp_complejo, minimo_tolerale: entero;
 
     SUBPROCESO inicializar_arreglo() ES
       PARA c:= 1 HASTA 12 HACER
@@ -59,7 +59,7 @@ ACCION ejercicio1 ES
         FIN_PARA;
         SI (minimo_tolerale > esp_complejo) ENTONCES
           reg_cm.cod_complejo:= c;
-          reg_cm.cant_esp:= esp_complejo;
+          reg_cm.total_esp:= esp_complejo;
           ESCRIBIR(complejo_malo, reg_cm);
         FIN_SI;
         esp_complejo:= 0;
@@ -103,6 +103,7 @@ ACCION ejercicio1 ES
       mayor_mes:= -1;
       mes:= 0;
       esp_mes:= 0;
+      esp_complejo:= 0;
 
       inicializar_arreglo();         // 1) inicializo la matriz a cero
       cargarNombreMeses()
