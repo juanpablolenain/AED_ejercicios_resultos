@@ -13,3 +13,9 @@ MIENTRAS (izq<der) Y (A[medio] <> x) HACER
   FIN_SI;
   medio:= (izq + der) DIV 2;
 FIN_MIENTRAS;
+
+SI A[medio] = x ENTONCES
+  ESC("Elemento encontrado en la posición: ", medio);
+SINO
+  ESC("El elemento no está en el arreglo");
+FIN_SI;
