@@ -1,0 +1,66 @@
+ACCION 3.9 ES
+  AMBIENTE
+    libro = registro
+      nro_libro: N(5);
+      titulo: AN(40);
+      autor: AN(40);
+      hojas: N(4);
+    fin_registro;
+
+    libros: arreglo de [1..200] de libro;
+    i, p, current_mayor: entero;
+    autor: AN(40);
+    nombre_mayor: AN(40);
+
+    PROCESO
+
+      ESC("Ingrese el autor que desea buscar: ");
+      LEER(autor);
+
+      i:= 1; p:= -1;
+
+      MIENTRAS (i<200) Y (libros[i.autor] <> autor) HACER
+
+        i:= i + 1;
+      FM;
+
+      SI (libros[i.autor] = autor) ENTONCES
+        ESC("Los libros que posee: ",autor, "son los siguientes: ");
+        MIENTRAS(libros[i.autor] = autor) Y (i<=200) HACER
+          ESC(libro[i.titulo]);
+
+          SI (libro[i.titulo] = "Algoritmos + Estructuras de Datos=Programa") ENTONCES
+            p:= i;
+          FIN_SI;
+
+          SI (libro[i.hojas] > current_mayor) ENTONCES
+            current_mayor:= libro[i.hojas];
+            nombre_mayor:= libro[i.titulo];
+          FIN_SI;
+
+          i:= i + 1;
+
+        FIN_MIENTRAS;
+
+        SI (p <> -1) ENTONCES
+          ESC("El libro Algoritmos + Estructuras de Datos=Programa se encuentra en la posición: ", p);
+        SINO
+          ESC("El libro Algoritmos + Estructuras de Datos=Programa NO se encuentra en el arreglo");
+        FIN_SI;
+        ESC("El libro con mayor número de páginas del autor: ", autor, "es: ", nombre_mayor);
+      SINO
+        ESC("No existe ese autor en el registro");
+      FIN_SI;
+
+FIN_ACCION;
+
+      
+
+
+
+
+
+
+
+
+
