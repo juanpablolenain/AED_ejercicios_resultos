@@ -1,0 +1,149 @@
+ACCION ejercicio1 ES
+  AMBIENTE
+
+    fecha = registro
+      dd: 1..31;
+      mm: 1..12;
+      aa: N(4);
+    fin_registro;
+    
+    ticket = registro
+      nro_funcion: N(6);
+      cod_complejo: 1..12;
+      cod_genero: 1..5;
+      fecha: fecha;
+      cant_esp: N(5);
+    fin_registro;
+
+    ticket: archivo de ticket;
+    reg: ticket;
+
+    complejo = registro
+      cod_complejo: 1..12;
+      total_esp: N(10);
+    fin_registro;
+
+    compejo_malo: archivo de complejo;
+    reg_cm: complejo;
+
+    esp: arreglo de [1..12,1..12] de enteros;
+    nombresMeses: arreglo de [1..12] de caracteres;
+    c,m,e: entero;
+    esp_mes, mayor_mes: entero;
+
+    SUBPROCESO inicializar_arreglo() ES
+      PARA c:= 1 HASTA 12 HACER
+        PARA m:= 1 HASTA 12 HACER
+          esp[c,m]:= 0;
+        FIN_PARA;
+      FIN_PARA;
+    FIN_SUBPROCESO;
+
+    SUBPROCESO mes_mas_espectadores () ES
+      PARA (m:= 1 HASTA 12) HACER
+        PARA (c:= 1 HASTA 12) HACER
+          esp_mes:= esp_mes + esp[c,m];
+        FIN_PARA;
+        SI (esp_mes > mayor_mes) ENTONCES
+          mayor_mes:= esp_mes;
+          mes:= m;
+        FIN_SI;
+        esp_mes:= 0;
+      FIN_PARA;
+    FIN_SUBPROCESO;
+
+    SUBPROCESO analizar_complejo_malo() ES
+      PARA (c:= 1 HASTA 12) HACER
+        PARA (m:= 1 HASTA 12) HACER
+          esp_complejo:= esp_complejo + esp[c,m];
+        FIN_PARA;
+        SI (minimo_tolerale > esp_complejo) ENTONCES
+          reg_cm.cod_complejo:= c;
+          reg_cm.cant_esp:= esp_complejo;
+          ESCRIBIR(complejo_malo, reg_cm);
+        FIN_SI;
+        esp_complejo:= 0;
+      FIN_PARA;
+    FIN_SUBPROCESO;
+
+    SUBPROCESO informar__mes_mayoresp() ES
+      ESC("El mes con mayor cantidad de espectadores fue: ", nombresMeses[mes]);
+    FIN_SUBPROCESO;
+
+    SUPROCESOS cargarNombreMeses() ES
+       nombresMeses[1]:= "Enero";
+       nombresMeses[2]:= "Febrero";
+       nombresMeses[3]:= "Marzo";
+       nombresMeses[4]:= "Abril";
+       nombresMeses[5]:= "Mayo";
+       nombresMeses[6]:= "Junio";
+       nombresMeses[7]:= "Julio";
+       nombresMeses[8]:= "Agosto";
+       nombresMeses[9]:= "Septiembre";
+       nombresMeses[10]:= "Octubre";
+       nombresMeses[11]:= "Noviembre";
+       nombresMeses[12]:= "Diciembre";
+    FIN_SUBPROCESO;
+
+    SUBPROCESO mostrar_total_espectadores() ES
+      PARA (c:= 1 HASTA 12) HACER
+        ESC("Para el complejo: ", c, "la cantidad de espectadores por mes es: ")
+        PARA (m:= 1 HASTA 12) HACER
+          ESC("Para el mes: ", nombresMeses[m], "la cantidad de espectadores fue: ", esp[c,m]);
+        FIN_PARA;
+      FIN_PARA;
+    FIN_SUBPROCESO;
+
+
+    PROCESO
+    
+      ABRIR E/(ticket);
+      ABRIR S/(complejo_malo);
+
+      mayor_mes:= -1;
+      mes:= 0;
+      esp_mes:= 0;
+
+      inicializar_arreglo();         // 1) inicializo la matriz a cero
+      cargarNombreMeses()
+
+      ESC("Ingrese el mínimo tolerable de espectadores para un complejo: ");
+      LEER(minimo_tolerale);
+      
+      LEER(ticket, reg);
+
+      MIENTRAS NFDA(ticket) HACER    // 2) cargo la matriz
+        c:= reg.cod_complejo;
+        m:= reg.fecha.mm;
+        e:= reg.cant_esp;
+        esp[c,m]:= esp[c,m] + e;
+        LEER(ticket, reg);
+      FIN_MIENTRAS;
+
+      mes_mas_espectadores();
+      analizar_complejo_malo();
+      mostrar_total_espectadores();
+      informar__mes_mayoresp();
+
+      CERRAR(ticket);
+      CERRAR(complejo_malo);
+
+FIN_ACCION;
+      
+      
+      
+
+      
+        
+      
+
+
+
+
+
+
+
+
+    
+
+    
