@@ -1,0 +1,12 @@
+ESC("Ingrese el valor buscado: ");
+LEER(x);
+
+MIENTRAS (i <= N) Y (A[i] <> x) HACER
+  i:= i + 1;
+FIN_MIENTRAS;
+
+SI A[i] = x ENTONCES
+  ESC("Elemento encontrado en la posición: ", i);
+SINO
+  ESC("El elemento no fue encontrado en el arreglo");
+FIN_SI;
